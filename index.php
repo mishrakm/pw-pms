@@ -102,10 +102,10 @@ include 'header.php';
 <!-- SUITABILITY + INVEST -->
 <div class="section-wrap alt" id="invest">
   <div class="inner">
-    <div class="suit-grid">
-      <div>
-        <div class="s-eyebrow reveal">Who Should Invest</div>
-        <h2 class="s-title reveal d1">Is Fusion PMS<br><em>right for you?</em></h2>
+    <div class="suit-grid" style="grid-template-columns:1fr;justify-items:center;">
+      <div style="max-width:900px;width:100%;">
+        <div class="s-eyebrow reveal" style="justify-content:center;">Who Should Invest</div>
+        <h2 class="s-title reveal d1" style="text-align:center;">Is Fusion PMS<br><em>right for you?</em></h2>
         <div class="suit-checks">
           <div class="suit-row reveal d1">
             <div class="suit-check">✓</div>
