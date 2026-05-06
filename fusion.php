@@ -1,5 +1,5 @@
 <?php
-$page_title = 'Strategy — PlusWealth PMS';
+$page_title = 'The strategy - Pluswealth Fusion';
 include 'header.php';
 
 $performanceRows = [
