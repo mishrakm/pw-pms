@@ -417,7 +417,7 @@ try {
 <!-- INVESTMENT PROCESS -->
 <div class="section-wrap" id="process">
   <div class="inner">
-    <div style="max-width:680px;margin:0 auto 48px;">
+    <div style="max-width:680px;margin:0 0 48px;">
       <div class="s-eyebrow reveal" style="justify-content:flex-start;">How We Invest</div>
       <h2 class="s-title reveal d1">A repeatable, <em>rules-driven</em> process</h2>
       <p class="s-body reveal d2" style="margin: 16px 0 0;">
