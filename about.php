@@ -45,28 +45,12 @@ include 'header.php';
             <div class="stat-row-val g">+6.95%</div>
           </div>
           <div class="stat-row">
-            <div class="stat-row-label">Alpha vs Nifty 50 benchmark</div>
-            <div class="stat-row-val t">+5.98%</div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-row-label">Category rank — Multi Asset PMS</div>
-            <div class="stat-row-val gold">#1 / 13</div>
-          </div>
-          <div class="stat-row">
             <div class="stat-row-label">Max drawdown (vs Nifty −5.71%)</div>
             <div class="stat-row-val w">−5.07%</div>
           </div>
-          <div class="stat-row">
-            <div class="stat-row-label">Simulated CAGR (Sep'22–Nov'25)</div>
-            <div class="stat-row-val gold">33.8%</div>
-          </div>
-          <div class="stat-row">
-            <div class="stat-row-label">Simulated Calmar ratio (vs 0.74 benchmark)</div>
-            <div class="stat-row-val t">5.84</div>
-          </div>
         </div>
         <div style="font-size:11px;color:var(--slate);margin-top:12px;font-style:italic;line-height:1.6;">
-          Live data as of 24 Feb 2026. Simulated/backtested results are before fees. Past performance is not indicative of future results.
+          Live data as of 24 Feb 2026. Past performance is not indicative of future results.
         </div>
       </div>
     </div>
