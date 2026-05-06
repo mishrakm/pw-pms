@@ -1,6 +1,6 @@
 {
-  "repo_path": "D:\\PW8_Amit\\pms-new",
-  "branch": "release",
+  "repo_path": "D:\\temp\\pms_new",
+  "branch": "main",
   "deploy_dir": ".",
 
   "ftp": {
