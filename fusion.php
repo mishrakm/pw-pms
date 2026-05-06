@@ -135,14 +135,14 @@ try {
         <div class="s-card-icon t">🔄</div>
         <h3>Multi-Asset<br>Allocation</h3>
         <p>Dynamically rotate between equity, debt, and gold based on quantitative macro signals — not hunches. Capital shifts to safety before markets punish those who wait.</p>
-        <div class="s-card-proof t">Drawdown 70% smaller vs pure equity</div>
+        <!--<div class="s-card-proof t">Drawdown 70% smaller vs pure equity</div>--!>
       </div>
       <div class="s-card c2">
         <div class="s-card-num">02 / EQUITY</div>
         <div class="s-card-icon g">⚡</div>
         <h3>Factor-Based<br>Equity Exposure</h3>
         <p>Rotate between Value, Quality, and Momentum factors as market leadership shifts. Our signals identify the winning factor monthly — and tilt sharply toward it.</p>
-        <div class="s-card-proof g">66% monthly outperformance rate (backtest)</div>
+        <!--<div class="s-card-proof g">66% monthly outperformance rate (backtest)</div>--!>
       </div>
       <div class="s-card c3">
         <div class="s-card-num">03 / PROTECTION</div>
