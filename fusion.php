@@ -160,7 +160,7 @@ try {
 <!-- GOVERNANCE FILTER -->
 <div class="section-wrap" id="governance">
   <div class="inner">
-    <div style="max-width:680px;margin:0 auto 48px;">
+    <div style="max-width:680px;margin:0 0 48px;">
       <div class="s-eyebrow reveal" style="justify-content:flex-start;">Governance Filter</div>
       <h2 class="s-title reveal d1">Every stock screened before<br>capital is deployed</h2>
       <p class="s-body reveal d2" style="margin:16px 0 0;">
