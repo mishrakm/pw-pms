@@ -38,7 +38,7 @@ include 'header.php';
         </div>
       </div>
 
-      <div>
+      <div style="align-self:end;">
         <div class="stat-stack reveal d2">
           <div class="stat-row">
             <div class="stat-row-label">Annualised return (live, since inception)</div>
