@@ -148,8 +148,8 @@ try {
         <div class="s-card-num">03 / PROTECTION</div>
         <div class="s-card-icon gr">🛡️</div>
         <h3>Protective Hedge<br>Overlay</h3>
-        <p>Adaptive NIFTY put options — fully funded, zero leverage. Activated at elevated valuations. In Sep 2022, when NIFTY fell 6.7%, our put position gained +127%, limiting portfolio loss to −0.76%.</p>
-        <div class="s-card-proof gr">+127% put gain in Sep 2022 correction</div>
+        <p>Adaptive NIFTY put options — fully funded, zero leverage. Activated at elevated valuations.</p>
+        <!--<div class="s-card-proof gr">+127% put gain in Sep 2022 correction</div> -->
       </div>
     </div>
 
