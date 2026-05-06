@@ -1,0 +1,16 @@
+{
+  "repo_path": "D:\\PW8_Amit\\pms-new",
+  "branch": "release",
+  "deploy_dir": ".",
+
+  "ftp": {
+    "host": "ftp.pluswealth.com",
+    "user": "pluswoir_pms+pms.pluswealth.com",
+    "password": "Pm$plusW3alth",
+    "root": "/new"
+  },
+
+  "delete_remote": true,
+  "deploy_state_file": ".last_deploy",
+  "pull_before_deploy": false
+}

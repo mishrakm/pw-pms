@@ -1,0 +1,18 @@
+[10-Mar-2026 03:29:01 UTC] PHP Warning:  require_once(/home1/pluswoir/pms.pluswealth.com/new/assets/../PHPMailer/src/PHPMailer.php): Failed to open stream: No such file or directory in /home1/pluswoir/pms.pluswealth.com/new/assets/mail.php on line 16
+[10-Mar-2026 03:29:01 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/pluswoir/pms.pluswealth.com/new/assets/../PHPMailer/src/PHPMailer.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/pluswoir/pms.pluswealth.com/new/assets/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home1/pluswoir/pms.pluswealth.com/new/assets/mail.php on line 16
+[10-Mar-2026 03:33:50 UTC] PHP Warning:  require_once(/home1/pluswoir/pms.pluswealth.com/new/assets/../includes/db_config.php): Failed to open stream: No such file or directory in /home1/pluswoir/pms.pluswealth.com/new/assets/mail.php on line 19
+[10-Mar-2026 03:33:50 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/pluswoir/pms.pluswealth.com/new/assets/../includes/db_config.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/pluswoir/pms.pluswealth.com/new/assets/mail.php:19
+Stack trace:
+#0 {main}
+  thrown in /home1/pluswoir/pms.pluswealth.com/new/assets/mail.php on line 19
+[10-Mar-2026 03:36:48 UTC] PHP Warning:  require_once(/home1/pluswoir/pms.pluswealth.com/new/assets/../includes/db_config.php): Failed to open stream: No such file or directory in /home1/pluswoir/pms.pluswealth.com/new/assets/mail.php on line 19
+[10-Mar-2026 03:36:48 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home1/pluswoir/pms.pluswealth.com/new/assets/../includes/db_config.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home1/pluswoir/pms.pluswealth.com/new/assets/mail.php:19
+Stack trace:
+#0 {main}
+  thrown in /home1/pluswoir/pms.pluswealth.com/new/assets/mail.php on line 19
+[10-Mar-2026 03:37:13 UTC] Contact form submission saved with ID: 10
+[10-Mar-2026 03:37:52 UTC] Contact form submission saved with ID: 11
+[10-Mar-2026 03:39:44 UTC] Contact form submission saved with ID: 12
