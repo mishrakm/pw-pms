@@ -121,7 +121,7 @@ try {
   <div class="inner">
     <div class="strategy-intro">
       <div>
-        <div class="s-eyebrow reveal">The Strategy</div>
+        <div class="s-eyebrow reveal">The Strategy - PlusWealth Fusion</div>
         <h2 class="s-title reveal d1">Three engines.<br><em>One mission.</em></h2>
       </div>
       <div class="s-body reveal d2" style="margin: 0;">
@@ -248,7 +248,7 @@ try {
     <!-- Pipeline footer bar -->
     <div class="reveal d3" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-        <span style="font-family:var(--f-body);font-size:14px;color:var(--white);"><strong>1,000+</strong> stocks universe</span>
+        <span style="font-family:var(--f-body);font-size:14px;color:var(--white);"><strong>200+</strong> stocks universe</span>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ash)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         <span style="font-family:var(--f-body);font-size:14px;color:var(--white);">15-signal check</span>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ash)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
