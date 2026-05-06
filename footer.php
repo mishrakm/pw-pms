@@ -10,21 +10,9 @@
     </div>
 
     <div class="footer-col">
-      <h5>Strategies</h5>
-      <ul>
-        <li><a href="fusion.php">Fusion PMS</a></li>
-        <li><a href="index.php#process">Investment Process</a></li>
-        <li><a href="invest.php">Risk Framework</a></li>
-        <li><a href="fusion.php#performance">Performance</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
       <h5>Company</h5>
       <ul>
         <li><a href="about.php">About PlusWealth</a></li>
-        <li><a href="team.php">Team</a></li>
-        <li><a href="download.php">Downloads</a></li>
         <li><a href="compliance.php">Compliance</a></li>
       </ul>
     </div>
