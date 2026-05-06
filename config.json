@@ -12,5 +12,27 @@
 
   "delete_remote": true,
   "deploy_state_file": ".last_deploy",
-  "pull_before_deploy": false
+  "pull_before_deploy": false,
+
+  "exclude_dirs": [
+    ".git",
+    ".venv",
+    "__pycache__",
+    ".pytest_cache",
+    "node_modules"
+  ],
+  "exclude_files": [
+    ".last_deploy",
+    "config.json",
+    "git_to_ftp.py"
+  ],
+  "exclude_globs": [
+    "*.pyc",
+    "*.pyo",
+    "*.log",
+    "error_log",
+    "error_log/**",
+    "assets/error_log",
+    "assets/error_log/**"
+  ]
 }

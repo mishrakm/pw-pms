@@ -15,6 +15,7 @@ Run:
 """
 
 import json
+import fnmatch
 import os
 import posixpath
 import subprocess
@@ -222,6 +223,31 @@ def upload_all_under_deploy_dir(repo: str, deploy_dir: str, ftp: FTP, ftp_root: 
     return uploaded
 
 
+def _norm_rel(path: str) -> str:
+    return path.replace("\\", "/").lstrip("/")
+
+
+def should_exclude(
+    rel_under_deploy: str,
+    exclude_dirs: set,
+    exclude_files: set,
+    exclude_globs: List[str],
+) -> bool:
+    rel = _norm_rel(rel_under_deploy)
+    if not rel:
+        return False
+
+    parts = rel.split("/")
+    if any(part in exclude_dirs for part in parts):
+        return True
+
+    name = parts[-1]
+    if name in exclude_files:
+        return True
+
+    return any(fnmatch.fnmatchcase(rel, pat) for pat in exclude_globs)
+
+
 # ----------------------------
 # Main
 # ----------------------------
@@ -240,6 +266,10 @@ def main() -> None:
     delete_remote = bool(cfg.get("delete_remote", False))
     pull_before_deploy = bool(cfg.get("pull_before_deploy", False))
     state_file = cfg.get("deploy_state_file", ".last_deploy")
+
+    exclude_dirs = set(cfg.get("exclude_dirs", [".git", ".venv", "__pycache__", ".pytest_cache", "node_modules"]))
+    exclude_files = set(cfg.get("exclude_files", [state_file, "config.json", "git_to_ftp.py"]))
+    exclude_globs = list(cfg.get("exclude_globs", ["*.pyc", "*.pyo", "*.log", "error_log", "error_log/**", "assets/error_log", "assets/error_log/**"]))
 
     if not os.path.isdir(repo):
         raise SystemExit(f"Repo folder does not exist: {repo}")
@@ -298,7 +328,21 @@ def main() -> None:
     uploaded = 0
     try:
         if first_deploy:
-            uploaded += upload_all_under_deploy_dir(repo, deploy_dir, ftp, ftp_root)
+            base = repo if deploy_dir == "." else os.path.join(repo, deploy_dir)
+            if not os.path.isdir(base):
+                raise RuntimeError(f"deploy_dir does not exist: {base}")
+
+            for root, _, files in os.walk(base):
+                for fn in files:
+                    local_file = os.path.join(root, fn)
+                    rel_under_deploy = os.path.relpath(local_file, base).replace("\\", "/")
+                    if should_exclude(rel_under_deploy, exclude_dirs, exclude_files, exclude_globs):
+                        print(f"Skip (excluded): {rel_under_deploy}")
+                        continue
+                    remote_file = posixpath.join(ftp_root, rel_under_deploy)
+                    print(f"Upload (all): {rel_under_deploy}")
+                    upload_file(ftp, local_file, remote_file)
+                    uploaded += 1
         else:
             # For renames: delete old remote path (if enabled) and upload new file
             for ch in changes:
@@ -312,6 +356,9 @@ def main() -> None:
                     if not os.path.isfile(local_file):
                         continue
                     remote_rel = rel_under.replace("\\", "/")
+                    if should_exclude(remote_rel, exclude_dirs, exclude_files, exclude_globs):
+                        print(f"Skip (excluded): {remote_rel}")
+                        continue
                     remote_file = posixpath.join(ftp_root, remote_rel)
                     print(f"Upload: {remote_rel}")
                     upload_file(ftp, local_file, remote_file)
@@ -324,6 +371,8 @@ def main() -> None:
                     if not should or not rel_under:
                         continue
                     remote_rel = rel_under.replace("\\", "/")
+                    if should_exclude(remote_rel, exclude_dirs, exclude_files, exclude_globs):
+                        continue
                     remote_file = posixpath.join(ftp_root, remote_rel)
                     print(f"🗑️ Delete: {remote_file}")
                     delete_remote_file(ftp, remote_file)
@@ -333,17 +382,23 @@ def main() -> None:
                     if delete_remote and ch.old_path:
                         should_old, rel_old = is_under_deploy_dir(ch.old_path, deploy_dir)
                         if should_old and rel_old:
-                            remote_old = posixpath.join(ftp_root, rel_old.replace("\\", "/"))
-                            print(f"🗑️ Delete (rename old): {remote_old}")
-                            delete_remote_file(ftp, remote_old)
+                            if should_exclude(rel_old.replace("\\", "/"), exclude_dirs, exclude_files, exclude_globs):
+                                pass
+                            else:
+                                remote_old = posixpath.join(ftp_root, rel_old.replace("\\", "/"))
+                                print(f"🗑️ Delete (rename old): {remote_old}")
+                                delete_remote_file(ftp, remote_old)
 
                     if ch.new_path:
                         should_new, rel_new = is_under_deploy_dir(ch.new_path, deploy_dir)
                         if should_new:
                             local_file = os.path.join(repo, os.path.normpath(ch.new_path))
                             if os.path.isfile(local_file):
-                                remote_new = posixpath.join(ftp_root, rel_new.replace("\\", "/"))
                                 remote_rel = rel_new.replace("\\", "/")
+                                if should_exclude(remote_rel, exclude_dirs, exclude_files, exclude_globs):
+                                    print(f"Skip (excluded): {remote_rel}")
+                                    continue
+                                remote_new = posixpath.join(ftp_root, rel_new.replace("\\", "/"))
                                 print(f"Upload (rename new): {remote_rel}")
                                 upload_file(ftp, local_file, remote_new)
                                 uploaded += 1
@@ -359,6 +414,9 @@ def main() -> None:
                     if not os.path.isfile(local_file):
                         continue
                     remote_rel = rel_under.replace("\\", "/")
+                    if should_exclude(remote_rel, exclude_dirs, exclude_files, exclude_globs):
+                        print(f"Skip (excluded): {remote_rel}")
+                        continue
                     remote_file = posixpath.join(ftp_root, remote_rel)
                     print(f"Upload (copy): {remote_rel}")
                     upload_file(ftp, local_file, remote_file)
