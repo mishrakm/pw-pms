@@ -26,6 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cms_login'])) {
 }
 
 $modules = [
+  'downloads' => [
+    'title' => 'Downloads Uploads',
+    'file' => 'admin_uploads.php',
+    'desc' => 'Upload, enable/disable, and delete downloadable files',
+  ],
   'contacts' => [
     'title' => 'Contact Leads',
     'file' => 'admin_contact.php',

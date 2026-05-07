@@ -29,9 +29,11 @@ try {
     $file = $result->fetch_assoc();
     $stmt->close();
     
-    // Check if file exists
-    $filepath = __DIR__ . '/../' . $file['filepath'];
-    //$filepath =  '/uploads/' . $file['filepath'];
+    // Check if file exists (support both historical and current upload paths)
+    $filepath = __DIR__ . '/' . $file['filepath'];
+    if (!file_exists($filepath)) {
+        $filepath = __DIR__ . '/../' . $file['filepath'];
+    }
     if (!file_exists($filepath)) {
         http_response_code(404);
         die('File not found on server');
