@@ -261,6 +261,23 @@ try {
 </div>
 
 <!-- LIVE PERFORMANCE -->
+<?php
+$latestDataDate = 'Date unknown';
+try {
+  $conn = get_db_connection();
+  $r = $conn->query(
+    "SELECT DATE_FORMAT(MAX(month_year), '%d %b %Y') AS latest
+     FROM performance_returns
+     WHERE is_active = 1"
+  );
+  if ($r instanceof mysqli_result && $r->num_rows > 0) {
+    $row = $r->fetch_assoc();
+    $latestDataDate = $row['latest'] ?? 'Date unknown';
+  }
+} catch (Throwable $e) {
+  error_log('Latest data date query failed: ' . $e->getMessage());
+}
+?>
 <div class="section-wrap" id="performance">
   <div class="inner">
     <div class="perf-header">
@@ -270,7 +287,7 @@ try {
       </div>
       <div class="actual-badge reveal d2">
         <div class="signal-dot"></div>
-        LIVE DATA · UPDATED 31 MAR 2026
+        LIVE DATA · UPDATED <?= htmlspecialchars($latestDataDate, ENT_QUOTES) ?>
       </div>
     </div>
 
