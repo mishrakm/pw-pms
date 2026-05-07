@@ -44,8 +44,8 @@ INSERT INTO key_metrics (
 ),
 (
   'latest_data_date',
-  'Latest data date',
-  '07 May 2026',
+  'Latest data date (user entered)',
+  '',
   NULL,
   1
 );

@@ -6,7 +6,7 @@ require_once __DIR__ . '/includes/db_config.php';
 
 $annualizedReturn = '+5.9%';
 $niftyReturn = '+0.0%';
-$latestDataDate = '07 May 2026';
+$latestDataDate = 'Not updated';
 $maxDrawdown = '-5.8%';
 $benchmarkDrawdown = '-15.2%';
 
@@ -85,7 +85,7 @@ try {
       <div style="padding-top:210px;">
         <div class="stat-stack reveal d2">
           <div class="stat-row">
-            <div class="stat-row-label">Annualised return <!--(vs Nifty <?= $niftyReturn ?>) --!></div>
+            <div class="stat-row-label">Annualised return</div>
             <div class="stat-row-val g"><?= $annualizedReturn ?></div>
           </div>
           <div class="stat-row">

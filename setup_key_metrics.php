@@ -41,7 +41,7 @@ try {
     ['annualized_return', 'Annualized return (live, since inception)', '+5.9%', null],
     ['nifty_return', 'Nifty return (benchmark)', '+0.0%', null],
     ['max_drawdown', 'Max drawdown', '-5.8%', '-15.2%'],
-    ['latest_data_date', 'Latest data date', '07 May 2026', null]
+    ['latest_data_date', 'Latest data date (user entered)', '', null]
   ];
 
   foreach ($metrics_data as $metric) {

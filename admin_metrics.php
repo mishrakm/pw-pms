@@ -365,12 +365,12 @@ if (!$authenticated) {
         </div>
 
         <div class="form-group">
-          <label for="latest_data_date">Latest Data Date</label>
+          <label for="latest_data_date">Latest Data Date (user entered)</label>
           <input 
             type="text" 
             id="latest_data_date"
             name="latest_data_date" 
-            value="<?= htmlspecialchars($metricsByKey['latest_data_date']['metric_value'] ?? '07 May 2026') ?>"
+            value="<?= htmlspecialchars($metricsByKey['latest_data_date']['metric_value'] ?? '') ?>"
             placeholder="e.g., 07 May 2026"
           >
         </div>
