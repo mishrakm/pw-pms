@@ -22,9 +22,30 @@ INSERT INTO key_metrics (
   is_active
 ) VALUES
 (
+  'annualized_return',
+  'Annualized return (live, since inception)',
+  '+5.9%',
+  NULL,
+  1
+),
+(
+  'nifty_return',
+  'Nifty return (benchmark)',
+  '+0.0%',
+  NULL,
+  1
+),
+(
   'max_drawdown',
   'Max drawdown',
-  '−5.07%',
-  '−5.71%',
+  '-5.8%',
+  '-15.2%',
+  1
+),
+(
+  'latest_data_date',
+  'Latest data date',
+  '07 May 2026',
+  NULL,
   1
 );

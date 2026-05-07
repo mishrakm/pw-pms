@@ -10,6 +10,12 @@ $metrics = [];
 
 session_start();
 
+if (isset($_GET['logout']) && $_GET['logout'] === '1') {
+  session_destroy();
+  header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
+  exit;
+}
+
 // Check authentication
 if (!isset($_SESSION['admin_authenticated'])) {
   if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_password'])) {
@@ -31,24 +37,52 @@ try {
   // Handle form submission
   if ($authenticated && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'save_metrics') {
-      // Update max_drawdown metric
-      $metric_value = trim($_POST['max_drawdown_value'] ?? '');
-      $benchmark_value = trim($_POST['benchmark_value'] ?? '');
+      $annualized = trim($_POST['annualized_return'] ?? '');
+      $nifty = trim($_POST['nifty_return'] ?? '');
+      $maxDrawdown = trim($_POST['max_drawdown_value'] ?? '');
+      $benchmarkDrawdown = trim($_POST['benchmark_value'] ?? '');
+      $latestDate = trim($_POST['latest_data_date'] ?? '');
+
+      $updates = [
+        ['annualized_return', $annualized, null],
+        ['nifty_return', $nifty, null],
+        ['max_drawdown', $maxDrawdown, $benchmarkDrawdown],
+        ['latest_data_date', $latestDate, null],
+      ];
 
       $stmt = $conn->prepare(
-        "UPDATE key_metrics
-         SET metric_value = ?, benchmark_value = ?
-         WHERE metric_key = 'max_drawdown'"
+        "INSERT INTO key_metrics (metric_key, metric_label, metric_value, benchmark_value, is_active)
+         VALUES (?, ?, ?, ?, 1)
+         ON DUPLICATE KEY UPDATE
+           metric_label = VALUES(metric_label),
+           metric_value = VALUES(metric_value),
+           benchmark_value = VALUES(benchmark_value),
+           is_active = 1"
       );
-      if ($stmt) {
-        $stmt->bind_param('ss', $metric_value, $benchmark_value);
-        if ($stmt->execute()) {
-          $success_msg = 'Metrics updated successfully';
-        } else {
-          $error_msg = 'Failed to update metrics: ' . $stmt->error;
-        }
-        $stmt->close();
+
+      if (!$stmt) {
+        throw new Exception('Failed to prepare metric update statement: ' . $conn->error);
       }
+
+      $labels = [
+        'annualized_return' => 'Annualized return (live, since inception)',
+        'nifty_return' => 'Nifty return (benchmark)',
+        'max_drawdown' => 'Max drawdown',
+        'latest_data_date' => 'Latest data date',
+      ];
+
+      foreach ($updates as $update) {
+        $key = $update[0];
+        $value = $update[1];
+        $benchmark = $update[2];
+        $label = $labels[$key];
+        $stmt->bind_param('ssss', $key, $label, $value, $benchmark);
+        if (!$stmt->execute()) {
+          throw new Exception('Failed to update ' . $key . ': ' . $stmt->error);
+        }
+      }
+      $stmt->close();
+      $success_msg = 'Metrics updated successfully';
     }
   }
 
@@ -273,37 +307,73 @@ if (!$authenticated) {
     <?php endif; ?>
 
     <div class="metrics-form">
-      <h2 style="margin: 0 0 20px 0; font-size: 18px;">Max Drawdown Metrics</h2>
+      <h2 style="margin: 0 0 20px 0; font-size: 18px;">About Page Metrics</h2>
       
       <form method="post">
         <input type="hidden" name="action" value="save_metrics">
+        <?php
+          $metricsByKey = [];
+          foreach ($metrics as $metric) {
+            $metricsByKey[$metric['metric_key']] = $metric;
+          }
+        ?>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="annualized_return">Annualized Return</label>
+            <input 
+              type="text" 
+              id="annualized_return"
+              name="annualized_return" 
+              value="<?= htmlspecialchars($metricsByKey['annualized_return']['metric_value'] ?? '+5.9%') ?>"
+              placeholder="e.g., +5.9%"
+            >
+          </div>
+          <div class="form-group">
+            <label for="nifty_return">Vs Nifty Return</label>
+            <input 
+              type="text" 
+              id="nifty_return"
+              name="nifty_return" 
+              value="<?= htmlspecialchars($metricsByKey['nifty_return']['metric_value'] ?? '+0.0%') ?>"
+              placeholder="e.g., +0.0%"
+            >
+          </div>
+        </div>
         
-        <?php foreach ($metrics as $metric): ?>
-          <?php if ($metric['metric_key'] === 'max_drawdown'): ?>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="max_drawdown_value">Max Drawdown</label>
-                <input 
-                  type="text" 
-                  id="max_drawdown_value"
-                  name="max_drawdown_value" 
-                  value="<?= htmlspecialchars($metric['metric_value']) ?>"
-                  placeholder="e.g., −5.07%"
-                >
-              </div>
-              <div class="form-group">
-                <label for="benchmark_value">Benchmark (Nifty)</label>
-                <input 
-                  type="text" 
-                  id="benchmark_value"
-                  name="benchmark_value" 
-                  value="<?= htmlspecialchars($metric['benchmark_value'] ?? '') ?>"
-                  placeholder="e.g., −5.71%"
-                >
-              </div>
-            </div>
-          <?php endif; ?>
-        <?php endforeach; ?>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="max_drawdown_value">Max Drawdown</label>
+            <input 
+              type="text" 
+              id="max_drawdown_value"
+              name="max_drawdown_value" 
+              value="<?= htmlspecialchars($metricsByKey['max_drawdown']['metric_value'] ?? '-5.8%') ?>"
+              placeholder="e.g., -5.8%"
+            >
+          </div>
+          <div class="form-group">
+            <label for="benchmark_value">Max Drawdown Vs Nifty</label>
+            <input 
+              type="text" 
+              id="benchmark_value"
+              name="benchmark_value" 
+              value="<?= htmlspecialchars($metricsByKey['max_drawdown']['benchmark_value'] ?? '-15.2%') ?>"
+              placeholder="e.g., -15.2%"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="latest_data_date">Latest Data Date</label>
+          <input 
+            type="text" 
+            id="latest_data_date"
+            name="latest_data_date" 
+            value="<?= htmlspecialchars($metricsByKey['latest_data_date']['metric_value'] ?? '07 May 2026') ?>"
+            placeholder="e.g., 07 May 2026"
+          >
+        </div>
 
         <button type="submit">Save Metrics</button>
       </form>
@@ -313,12 +383,5 @@ if (!$authenticated) {
       <a href="?logout=1">Logout</a>
     </div>
   </div>
-
-  <script>
-    if (new URL(window.location).searchParams.get('logout')) {
-      <?php session_destroy(); ?>
-      window.location.href = window.location.pathname;
-    }
-  </script>
 </body>
 </html>

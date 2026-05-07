@@ -33,17 +33,31 @@ try {
   $output .= "✓ Table created successfully\n";
 
   // Delete existing data
-  $conn->query("DELETE FROM key_metrics WHERE metric_key = 'max_drawdown'");
+  $conn->query("DELETE FROM key_metrics");
   $output .= "✓ Cleared existing data\n";
 
-  // Insert initial data
-  $insert_sql = "INSERT INTO key_metrics (metric_key, metric_label, metric_value, benchmark_value, is_active)
-                 VALUES ('max_drawdown', 'Max drawdown', '−5.07%', '−5.71%', 1)";
-  
-  if (!$conn->query($insert_sql)) {
-    throw new Exception('Failed to insert data: ' . $conn->error);
+  // Insert initial data for all required metrics
+  $metrics_data = [
+    ['annualized_return', 'Annualized return (live, since inception)', '+5.9%', null],
+    ['nifty_return', 'Nifty return (benchmark)', '+0.0%', null],
+    ['max_drawdown', 'Max drawdown', '-5.8%', '-15.2%'],
+    ['latest_data_date', 'Latest data date', '07 May 2026', null]
+  ];
+
+  foreach ($metrics_data as $metric) {
+    $insert_sql = "INSERT INTO key_metrics (metric_key, metric_label, metric_value, benchmark_value, is_active)
+                   VALUES (?, ?, ?, ?, 1)";
+    $stmt = $conn->prepare($insert_sql);
+    if (!$stmt) {
+      throw new Exception('Prepare failed: ' . $conn->error);
+    }
+    $stmt->bind_param('ssss', $metric[0], $metric[1], $metric[2], $metric[3]);
+    if (!$stmt->execute()) {
+      throw new Exception('Insert failed: ' . $stmt->error);
+    }
+    $stmt->close();
   }
-  $output .= "✓ Initial data inserted\n";
+  $output .= "✓ All metrics inserted (annualized_return, nifty_return, max_drawdown, latest_data_date)\n";
 
   $success = true;
   $output .= "\n✓ Setup complete! You can now delete this file.";

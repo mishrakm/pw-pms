@@ -4,39 +4,43 @@ include 'header.php';
 
 require_once __DIR__ . '/includes/db_config.php';
 
-$annualizedReturn = '+6.95%';
-$latestDataDate = '24 Feb 2026';
-$maxDrawdown = '−5.07%';
-$benchmarkDrawdown = '−5.71%';
+$annualizedReturn = '+5.9%';
+$niftyReturn = '+0.0%';
+$latestDataDate = '07 May 2026';
+$maxDrawdown = '-5.8%';
+$benchmarkDrawdown = '-15.2%';
 
 try {
   $conn = get_db_connection();
-  $r = $conn->query(
-    "SELECT since_inception, DATE_FORMAT(LAST_DAY(month_year), '%d %b %Y') AS latest_date
-     FROM performance_returns
-     WHERE is_active = 1 AND strategy = 'PlusWealth Fusion'
-     ORDER BY month_year DESC
-     LIMIT 1"
-  );
-  if ($r instanceof mysqli_result && $r->num_rows > 0) {
-    $row = $r->fetch_assoc();
-    $val = trim($row['since_inception'] ?? '');
-    if ($val && $val !== '-') {
-      $annualizedReturn = (strpos($val, '%') === false ? '+' : '') . htmlspecialchars($val, ENT_QUOTES);
-    }
-    $latestDataDate = htmlspecialchars($row['latest_date'], ENT_QUOTES);
-  }
-
-  // Fetch max drawdown from key_metrics table
+  // Fetch all about-page metrics from key_metrics table
   $m = $conn->query(
-    "SELECT metric_value, benchmark_value
+    "SELECT metric_key, metric_value, benchmark_value
      FROM key_metrics
-     WHERE metric_key = 'max_drawdown' AND is_active = 1"
+     WHERE is_active = 1
+       AND metric_key IN ('annualized_return', 'nifty_return', 'max_drawdown', 'latest_data_date')"
   );
-  if ($m instanceof mysqli_result && $m->num_rows > 0) {
-    $metrics = $m->fetch_assoc();
-    $maxDrawdown = htmlspecialchars($metrics['metric_value'], ENT_QUOTES);
-    $benchmarkDrawdown = htmlspecialchars($metrics['benchmark_value'], ENT_QUOTES);
+  if ($m instanceof mysqli_result) {
+    while ($metric = $m->fetch_assoc()) {
+      $key = $metric['metric_key'] ?? '';
+      $value = htmlspecialchars(trim($metric['metric_value'] ?? ''), ENT_QUOTES);
+      $benchmark = htmlspecialchars(trim($metric['benchmark_value'] ?? ''), ENT_QUOTES);
+
+      if ($key === 'annualized_return' && $value !== '') {
+        $annualizedReturn = $value;
+      }
+      if ($key === 'nifty_return' && $value !== '') {
+        $niftyReturn = $value;
+      }
+      if ($key === 'max_drawdown' && $value !== '') {
+        $maxDrawdown = $value;
+      }
+      if ($key === 'max_drawdown' && $benchmark !== '') {
+        $benchmarkDrawdown = $benchmark;
+      }
+      if ($key === 'latest_data_date' && $value !== '') {
+        $latestDataDate = $value;
+      }
+    }
   }
 } catch (Throwable $e) {
   error_log('About page stats query failed: ' . $e->getMessage());
@@ -81,7 +85,7 @@ try {
       <div style="padding-top:210px;">
         <div class="stat-stack reveal d2">
           <div class="stat-row">
-            <div class="stat-row-label">Annualised return (live, since inception)</div>
+            <div class="stat-row-label">Annualised return (vs Nifty <?= $niftyReturn ?>)</div>
             <div class="stat-row-val g"><?= $annualizedReturn ?></div>
           </div>
           <div class="stat-row">
