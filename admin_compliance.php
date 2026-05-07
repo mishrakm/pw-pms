@@ -3,168 +3,17 @@ define('ADMIN_PASSWORD', 'PwAdmin2026!');
 
 require_once __DIR__ . '/includes/db_config.php';
 
+session_start();
+
 $authenticated = false;
 $error_msg = '';
 $success_msg = '';
-$data = [];
-
-session_start();
 
 if (isset($_GET['logout']) && $_GET['logout'] === '1') {
   session_destroy();
   header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
   exit;
 }
-
-$defaults = [
-  'month_ending' => 'Apr 30, 2026',
-
-  't1_r1_source' => 'Directly from Investors',
-  't1_r1_pending_last' => '0',
-  't1_r1_received' => '0',
-  't1_r1_resolved' => '0',
-  't1_r1_total_pending' => '0',
-  't1_r1_pending_gt3' => '0',
-  't1_r1_avg_days' => '0',
-
-  't1_r2_source' => 'SEBI (SCORES)',
-  't1_r2_pending_last' => '0',
-  't1_r2_received' => '0',
-  't1_r2_resolved' => '0',
-  't1_r2_total_pending' => '0',
-  't1_r2_pending_gt3' => '0',
-  't1_r2_avg_days' => '0',
-
-  't1_r3_source' => 'Other Sources (if any)',
-  't1_r3_pending_last' => '0',
-  't1_r3_received' => '0',
-  't1_r3_resolved' => '0',
-  't1_r3_total_pending' => '0',
-  't1_r3_pending_gt3' => '0',
-  't1_r3_avg_days' => '0',
-
-  't1_total_pending_last' => '0',
-  't1_total_received' => '0',
-  't1_total_resolved' => '0',
-  't1_total_pending' => '0',
-  't1_total_pending_gt3' => '0',
-  't1_total_avg_days' => '0',
-
-  't2_r1_month' => 'April 2026',
-  't2_r1_carried' => '0',
-  't2_r1_received' => '0',
-  't2_r1_resolved' => '0',
-  't2_r1_pending' => '0',
-
-  't2_total_carried' => '0',
-  't2_total_received' => '0',
-  't2_total_resolved' => '0',
-  't2_total_pending' => '0',
-
-  't3_r1_year' => '2023-2024',
-  't3_r1_carried' => 'Not Applicable',
-  't3_r1_received' => 'Not Applicable',
-  't3_r1_resolved' => 'Not Applicable',
-  't3_r1_pending' => 'Not Applicable',
-
-  't3_r2_year' => '2024-2025',
-  't3_r2_carried' => 'Not Applicable',
-  't3_r2_received' => 'Not Applicable',
-  't3_r2_resolved' => 'Not Applicable',
-  't3_r2_pending' => 'Not Applicable',
-
-  't3_r3_year' => '2025-2026',
-  't3_r3_carried' => '0',
-  't3_r3_received' => '0',
-  't3_r3_resolved' => '0',
-  't3_r3_pending' => '0',
-
-  't3_r4_year' => '2026-2027',
-  't3_r4_carried' => '0',
-  't3_r4_received' => '0',
-  't3_r4_resolved' => '0',
-  't3_r4_pending' => '0',
-
-  't3_total_carried' => '0',
-  't3_total_received' => '0',
-  't3_total_resolved' => '0',
-  't3_total_pending' => '0',
-];
-
-$labels = [
-  'month_ending' => 'Month Ending (Header)',
-
-  't1_r1_source' => 'Table 1 Row 1 Source',
-  't1_r1_pending_last' => 'Table 1 Row 1 Pending Last Month',
-  't1_r1_received' => 'Table 1 Row 1 Received',
-  't1_r1_resolved' => 'Table 1 Row 1 Resolved',
-  't1_r1_total_pending' => 'Table 1 Row 1 Total Pending',
-  't1_r1_pending_gt3' => 'Table 1 Row 1 Pending > 3 Months',
-  't1_r1_avg_days' => 'Table 1 Row 1 Avg Resolution Days',
-
-  't1_r2_source' => 'Table 1 Row 2 Source',
-  't1_r2_pending_last' => 'Table 1 Row 2 Pending Last Month',
-  't1_r2_received' => 'Table 1 Row 2 Received',
-  't1_r2_resolved' => 'Table 1 Row 2 Resolved',
-  't1_r2_total_pending' => 'Table 1 Row 2 Total Pending',
-  't1_r2_pending_gt3' => 'Table 1 Row 2 Pending > 3 Months',
-  't1_r2_avg_days' => 'Table 1 Row 2 Avg Resolution Days',
-
-  't1_r3_source' => 'Table 1 Row 3 Source',
-  't1_r3_pending_last' => 'Table 1 Row 3 Pending Last Month',
-  't1_r3_received' => 'Table 1 Row 3 Received',
-  't1_r3_resolved' => 'Table 1 Row 3 Resolved',
-  't1_r3_total_pending' => 'Table 1 Row 3 Total Pending',
-  't1_r3_pending_gt3' => 'Table 1 Row 3 Pending > 3 Months',
-  't1_r3_avg_days' => 'Table 1 Row 3 Avg Resolution Days',
-
-  't1_total_pending_last' => 'Table 1 Grand Total Pending Last Month',
-  't1_total_received' => 'Table 1 Grand Total Received',
-  't1_total_resolved' => 'Table 1 Grand Total Resolved',
-  't1_total_pending' => 'Table 1 Grand Total Pending',
-  't1_total_pending_gt3' => 'Table 1 Grand Total Pending > 3 Months',
-  't1_total_avg_days' => 'Table 1 Grand Total Avg Resolution Days',
-
-  't2_r1_month' => 'Table 2 Row 1 Month',
-  't2_r1_carried' => 'Table 2 Row 1 Carried Forward',
-  't2_r1_received' => 'Table 2 Row 1 Received',
-  't2_r1_resolved' => 'Table 2 Row 1 Resolved',
-  't2_r1_pending' => 'Table 2 Row 1 Pending',
-
-  't2_total_carried' => 'Table 2 Grand Total Carried Forward',
-  't2_total_received' => 'Table 2 Grand Total Received',
-  't2_total_resolved' => 'Table 2 Grand Total Resolved',
-  't2_total_pending' => 'Table 2 Grand Total Pending',
-
-  't3_r1_year' => 'Table 3 Row 1 Year',
-  't3_r1_carried' => 'Table 3 Row 1 Carried Forward',
-  't3_r1_received' => 'Table 3 Row 1 Received',
-  't3_r1_resolved' => 'Table 3 Row 1 Resolved',
-  't3_r1_pending' => 'Table 3 Row 1 Pending',
-
-  't3_r2_year' => 'Table 3 Row 2 Year',
-  't3_r2_carried' => 'Table 3 Row 2 Carried Forward',
-  't3_r2_received' => 'Table 3 Row 2 Received',
-  't3_r2_resolved' => 'Table 3 Row 2 Resolved',
-  't3_r2_pending' => 'Table 3 Row 2 Pending',
-
-  't3_r3_year' => 'Table 3 Row 3 Year',
-  't3_r3_carried' => 'Table 3 Row 3 Carried Forward',
-  't3_r3_received' => 'Table 3 Row 3 Received',
-  't3_r3_resolved' => 'Table 3 Row 3 Resolved',
-  't3_r3_pending' => 'Table 3 Row 3 Pending',
-
-  't3_r4_year' => 'Table 3 Row 4 Year',
-  't3_r4_carried' => 'Table 3 Row 4 Carried Forward',
-  't3_r4_received' => 'Table 3 Row 4 Received',
-  't3_r4_resolved' => 'Table 3 Row 4 Resolved',
-  't3_r4_pending' => 'Table 3 Row 4 Pending',
-
-  't3_total_carried' => 'Table 3 Grand Total Carried Forward',
-  't3_total_received' => 'Table 3 Grand Total Received',
-  't3_total_resolved' => 'Table 3 Grand Total Resolved',
-  't3_total_pending' => 'Table 3 Grand Total Pending',
-];
 
 if (!isset($_SESSION['admin_authenticated'])) {
   if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_password'])) {
@@ -180,68 +29,168 @@ if (!isset($_SESSION['admin_authenticated'])) {
   $authenticated = true;
 }
 
+$defaultMeta = ['month_ending' => 'Apr 30, 2026'];
+$defaultMonthlyComplaints = [
+  ['received_from' => 'Directly from Investors', 'pending_last_month' => '0', 'received' => '0', 'resolved' => '0', 'total_pending' => '0', 'pending_gt_3_months' => '0', 'avg_resolution_days' => '0'],
+  ['received_from' => 'SEBI (SCORES)', 'pending_last_month' => '0', 'received' => '0', 'resolved' => '0', 'total_pending' => '0', 'pending_gt_3_months' => '0', 'avg_resolution_days' => '0'],
+  ['received_from' => 'Other Sources (if any)', 'pending_last_month' => '0', 'received' => '0', 'resolved' => '0', 'total_pending' => '0', 'pending_gt_3_months' => '0', 'avg_resolution_days' => '0'],
+];
+$defaultMonthlyTrend = [
+  ['month' => 'April 2026', 'carried_forward' => '0', 'received' => '0', 'resolved' => '0', 'pending' => '0'],
+];
+$defaultAnnualTrend = [
+  ['year' => '2023-2024', 'carried_forward' => 'Not Applicable', 'received' => 'Not Applicable', 'resolved' => 'Not Applicable', 'pending' => 'Not Applicable'],
+  ['year' => '2024-2025', 'carried_forward' => 'Not Applicable', 'received' => 'Not Applicable', 'resolved' => 'Not Applicable', 'pending' => 'Not Applicable'],
+  ['year' => '2025-2026', 'carried_forward' => '0', 'received' => '0', 'resolved' => '0', 'pending' => '0'],
+  ['year' => '2026-2027', 'carried_forward' => '0', 'received' => '0', 'resolved' => '0', 'pending' => '0'],
+];
+
+$meta = $defaultMeta;
+$monthlyComplaints = $defaultMonthlyComplaints;
+$monthlyTrend = $defaultMonthlyTrend;
+$annualTrend = $defaultAnnualTrend;
+
+function section_load(mysqli $conn, string $key, array $fallback): array {
+  $stmt = $conn->prepare('SELECT data_json FROM compliance_sections WHERE section_key = ? LIMIT 1');
+  if (!$stmt) {
+    return $fallback;
+  }
+  $stmt->bind_param('s', $key);
+  $stmt->execute();
+  $res = $stmt->get_result();
+  if ($res instanceof mysqli_result && $res->num_rows > 0) {
+    $row = $res->fetch_assoc();
+    $decoded = json_decode($row['data_json'] ?? '', true);
+    $stmt->close();
+    return is_array($decoded) ? $decoded : $fallback;
+  }
+  $stmt->close();
+  return $fallback;
+}
+
+function section_save(mysqli $conn, string $key, array $value): void {
+  $json = json_encode($value, JSON_UNESCAPED_SLASHES);
+  $stmt = $conn->prepare(
+    'INSERT INTO compliance_sections (section_key, data_json) VALUES (?, ?) ON DUPLICATE KEY UPDATE data_json = VALUES(data_json)'
+  );
+  if (!$stmt) {
+    throw new Exception('Failed to prepare save statement for ' . $key);
+  }
+  $stmt->bind_param('ss', $key, $json);
+  if (!$stmt->execute()) {
+    $err = $stmt->error;
+    $stmt->close();
+    throw new Exception('Failed to save section ' . $key . ': ' . $err);
+  }
+  $stmt->close();
+}
+
 try {
   $conn = get_db_connection();
-
   $conn->query(
-    "CREATE TABLE IF NOT EXISTS compliance_kv (
+    'CREATE TABLE IF NOT EXISTS compliance_sections (
       id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-      data_key VARCHAR(120) NOT NULL UNIQUE,
-      data_value TEXT NOT NULL,
-      is_active TINYINT(1) NOT NULL DEFAULT 1,
+      section_key VARCHAR(80) NOT NULL UNIQUE,
+      data_json LONGTEXT NOT NULL,
       updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       PRIMARY KEY (id),
-      UNIQUE KEY idx_data_key (data_key)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
+      UNIQUE KEY idx_section_key (section_key)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4'
   );
-
-  $seedStmt = $conn->prepare(
-    "INSERT INTO compliance_kv (data_key, data_value, is_active)
-     VALUES (?, ?, 1)
-     ON DUPLICATE KEY UPDATE
-       data_value = IF(data_value IS NULL OR data_value = '', VALUES(data_value), data_value),
-       is_active = 1"
-  );
-  if ($seedStmt) {
-    foreach ($defaults as $k => $v) {
-      $seedStmt->bind_param('ss', $k, $v);
-      $seedStmt->execute();
-    }
-    $seedStmt->close();
-  }
 
   if ($authenticated && $_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'save_compliance') {
-    $saveStmt = $conn->prepare(
-      "INSERT INTO compliance_kv (data_key, data_value, is_active)
-       VALUES (?, ?, 1)
-       ON DUPLICATE KEY UPDATE data_value = VALUES(data_value), is_active = 1"
-    );
-
-    if (!$saveStmt) {
-      throw new Exception('Failed to prepare save statement: ' . $conn->error);
+    $metaInput = [
+      'month_ending' => trim($_POST['month_ending'] ?? ''),
+    ];
+    if ($metaInput['month_ending'] === '') {
+      $metaInput['month_ending'] = $defaultMeta['month_ending'];
     }
 
-    foreach ($defaults as $k => $v) {
-      $posted = trim($_POST[$k] ?? '');
-      $val = ($posted === '') ? $v : $posted;
-      $saveStmt->bind_param('ss', $k, $val);
-      if (!$saveStmt->execute()) {
-        throw new Exception('Failed to save ' . $k . ': ' . $saveStmt->error);
+    $mcSources = $_POST['mc_received_from'] ?? [];
+    $mcPendingLast = $_POST['mc_pending_last_month'] ?? [];
+    $mcReceived = $_POST['mc_received'] ?? [];
+    $mcResolved = $_POST['mc_resolved'] ?? [];
+    $mcTotalPending = $_POST['mc_total_pending'] ?? [];
+    $mcPendingGt3 = $_POST['mc_pending_gt_3_months'] ?? [];
+    $mcAvgDays = $_POST['mc_avg_resolution_days'] ?? [];
+
+    $monthlyComplaintsInput = [];
+    $mcCount = max(count($mcSources), count($mcPendingLast), count($mcReceived), count($mcResolved), count($mcTotalPending), count($mcPendingGt3), count($mcAvgDays));
+    for ($i = 0; $i < $mcCount; $i++) {
+      $monthlyComplaintsInput[] = [
+        'received_from' => trim((string)($mcSources[$i] ?? '')),
+        'pending_last_month' => trim((string)($mcPendingLast[$i] ?? '')),
+        'received' => trim((string)($mcReceived[$i] ?? '')),
+        'resolved' => trim((string)($mcResolved[$i] ?? '')),
+        'total_pending' => trim((string)($mcTotalPending[$i] ?? '')),
+        'pending_gt_3_months' => trim((string)($mcPendingGt3[$i] ?? '')),
+        'avg_resolution_days' => trim((string)($mcAvgDays[$i] ?? '')),
+      ];
+    }
+    if (count($monthlyComplaintsInput) === 0) {
+      $monthlyComplaintsInput = $defaultMonthlyComplaints;
+    }
+
+    $mdMonth = $_POST['md_month'] ?? [];
+    $mdCarried = $_POST['md_carried_forward'] ?? [];
+    $mdReceived = $_POST['md_received'] ?? [];
+    $mdResolved = $_POST['md_resolved'] ?? [];
+    $mdPending = $_POST['md_pending'] ?? [];
+
+    $monthlyTrendInput = [];
+    $mdCount = max(count($mdMonth), count($mdCarried), count($mdReceived), count($mdResolved), count($mdPending));
+    for ($i = 0; $i < $mdCount; $i++) {
+      $row = [
+        'month' => trim((string)($mdMonth[$i] ?? '')),
+        'carried_forward' => trim((string)($mdCarried[$i] ?? '')),
+        'received' => trim((string)($mdReceived[$i] ?? '')),
+        'resolved' => trim((string)($mdResolved[$i] ?? '')),
+        'pending' => trim((string)($mdPending[$i] ?? '')),
+      ];
+      if (implode('', $row) !== '') {
+        $monthlyTrendInput[] = $row;
       }
     }
+    if (count($monthlyTrendInput) === 0) {
+      $monthlyTrendInput = $defaultMonthlyTrend;
+    }
 
-    $saveStmt->close();
+    $adYear = $_POST['ad_year'] ?? [];
+    $adCarried = $_POST['ad_carried_forward'] ?? [];
+    $adReceived = $_POST['ad_received'] ?? [];
+    $adResolved = $_POST['ad_resolved'] ?? [];
+    $adPending = $_POST['ad_pending'] ?? [];
+
+    $annualTrendInput = [];
+    $adCount = max(count($adYear), count($adCarried), count($adReceived), count($adResolved), count($adPending));
+    for ($i = 0; $i < $adCount; $i++) {
+      $row = [
+        'year' => trim((string)($adYear[$i] ?? '')),
+        'carried_forward' => trim((string)($adCarried[$i] ?? '')),
+        'received' => trim((string)($adReceived[$i] ?? '')),
+        'resolved' => trim((string)($adResolved[$i] ?? '')),
+        'pending' => trim((string)($adPending[$i] ?? '')),
+      ];
+      if (implode('', $row) !== '') {
+        $annualTrendInput[] = $row;
+      }
+    }
+    if (count($annualTrendInput) === 0) {
+      $annualTrendInput = $defaultAnnualTrend;
+    }
+
+    section_save($conn, 'meta', $metaInput);
+    section_save($conn, 'monthly_complaints', $monthlyComplaintsInput);
+    section_save($conn, 'monthly_trend', $monthlyTrendInput);
+    section_save($conn, 'annual_trend', $annualTrendInput);
+
     $success_msg = 'Compliance data saved successfully';
   }
 
-  if ($authenticated) {
-    $result = $conn->query("SELECT data_key, data_value FROM compliance_kv WHERE is_active = 1");
-    if ($result instanceof mysqli_result) {
-      while ($row = $result->fetch_assoc()) {
-        $data[$row['data_key']] = $row['data_value'];
-      }
-    }
-  }
+  $meta = section_load($conn, 'meta', $defaultMeta);
+  $monthlyComplaints = section_load($conn, 'monthly_complaints', $defaultMonthlyComplaints);
+  $monthlyTrend = section_load($conn, 'monthly_trend', $defaultMonthlyTrend);
+  $annualTrend = section_load($conn, 'annual_trend', $defaultAnnualTrend);
 } catch (Throwable $e) {
   $error_msg = 'Database error: ' . $e->getMessage();
 }
@@ -253,26 +202,26 @@ if (!$authenticated) {
 <head>
   <title>Admin - Compliance Data</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #0a0a0a; color: #fff; padding: 40px 20px; margin: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; padding: 40px 20px; margin: 0; }
     .container { max-width: 420px; margin: 0 auto; background: #1a1a1a; padding: 30px; border-radius: 8px; }
     h1 { font-size: 24px; margin: 0 0 24px 0; text-align: center; }
     .form-group { margin-bottom: 20px; }
     label { display: block; margin-bottom: 8px; color: #aaa; font-size: 14px; }
-    input[type="password"] { width: 100%; padding: 10px; border: 1px solid #333; border-radius: 4px; background: #0a0a0a; color: #fff; box-sizing: border-box; }
+    input[type='password'] { width: 100%; padding: 10px; border: 1px solid #333; border-radius: 4px; background: #0a0a0a; color: #fff; box-sizing: border-box; }
     button { width: 100%; padding: 10px; background: #007bff; border: none; border-radius: 4px; color: #fff; cursor: pointer; }
     .error { color: #ff6b6b; margin-bottom: 14px; font-size: 14px; }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class='container'>
     <h1>Admin - Compliance Data</h1>
-    <?php if ($error_msg): ?><div class="error"><?= htmlspecialchars($error_msg) ?></div><?php endif; ?>
-    <form method="post">
-      <div class="form-group">
-        <label for="admin_password">Admin Password</label>
-        <input type="password" id="admin_password" name="admin_password" required autofocus>
+    <?php if ($error_msg): ?><div class='error'><?= htmlspecialchars($error_msg) ?></div><?php endif; ?>
+    <form method='post'>
+      <div class='form-group'>
+        <label for='admin_password'>Admin Password</label>
+        <input type='password' id='admin_password' name='admin_password' required autofocus>
       </div>
-      <button type="submit">Authenticate</button>
+      <button type='submit'>Authenticate</button>
     </form>
   </div>
 </body>
@@ -281,8 +230,8 @@ if (!$authenticated) {
   exit;
 }
 
-function val(array $data, array $defaults, string $key): string {
-  return htmlspecialchars($data[$key] ?? $defaults[$key] ?? '', ENT_QUOTES);
+function esc(string $v): string {
+  return htmlspecialchars($v, ENT_QUOTES);
 }
 ?>
 <!DOCTYPE html>
@@ -290,111 +239,128 @@ function val(array $data, array $defaults, string $key): string {
 <head>
   <title>Admin - Compliance Data</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #0a0a0a; color: #fff; padding: 30px 16px; margin: 0; }
-    .container { max-width: 1100px; margin: 0 auto; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; padding: 30px 16px; margin: 0; }
+    .container { max-width: 1200px; margin: 0 auto; }
     h1 { font-size: 28px; margin: 0 0 22px 0; }
+    h2 { margin: 0 0 14px 0; font-size: 18px; }
     .card { background: #1a1a1a; padding: 20px; border-radius: 8px; margin-bottom: 18px; }
-    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .field { margin-bottom: 10px; }
+    .row-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; margin-bottom: 10px; }
+    .row-grid-5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-bottom: 10px; }
     label { display: block; margin-bottom: 6px; font-size: 12px; color: #aaa; }
-    input[type="text"] { width: 100%; padding: 9px; border: 1px solid #333; border-radius: 4px; background: #0a0a0a; color: #fff; box-sizing: border-box; }
-    button { padding: 11px 18px; background: #007bff; border: none; border-radius: 4px; color: #fff; cursor: pointer; }
+    input[type='text'] { width: 100%; padding: 9px; border: 1px solid #333; border-radius: 4px; background: #0a0a0a; color: #fff; box-sizing: border-box; }
+    button { padding: 10px 16px; background: #007bff; border: none; border-radius: 4px; color: #fff; cursor: pointer; }
+    .secondary { background: #2a2a2a; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
     .success { color: #51cf66; margin-bottom: 14px; }
     .error { color: #ff6b6b; margin-bottom: 14px; }
     .logout { margin-top: 14px; }
     .logout a { color: #aaa; text-decoration: none; }
-    @media (max-width: 900px) { .grid, .grid-2 { grid-template-columns: 1fr; } }
+    @media (max-width: 1100px) {
+      .row-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .row-grid-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class='container'>
     <h1>Admin - Compliance Data</h1>
-    <?php if ($success_msg): ?><div class="success"><?= htmlspecialchars($success_msg) ?></div><?php endif; ?>
-    <?php if ($error_msg): ?><div class="error"><?= htmlspecialchars($error_msg) ?></div><?php endif; ?>
+    <?php if ($success_msg): ?><div class='success'><?= htmlspecialchars($success_msg) ?></div><?php endif; ?>
+    <?php if ($error_msg): ?><div class='error'><?= htmlspecialchars($error_msg) ?></div><?php endif; ?>
 
-    <form method="post">
-      <input type="hidden" name="action" value="save_compliance">
+    <form method='post'>
+      <input type='hidden' name='action' value='save_compliance'>
 
-      <div class="card">
-        <h2 style="margin-top:0;">Header</h2>
-        <div class="field">
-          <label for="month_ending">Data for the month ending</label>
-          <input type="text" id="month_ending" name="month_ending" value="<?= val($data, $defaults, 'month_ending') ?>">
-        </div>
+      <div class='card'>
+        <h2>Section 1: Header</h2>
+        <label for='month_ending'>Data for the month ending</label>
+        <input type='text' id='month_ending' name='month_ending' value='<?= esc((string)($meta['month_ending'] ?? '')) ?>'>
       </div>
 
-      <div class="card">
-        <h2 style="margin-top:0;">Monthly Complaint Data (Table 1)</h2>
-        <?php for ($i = 1; $i <= 3; $i++): ?>
-          <h3>Row <?= $i ?></h3>
-          <div class="grid">
-            <div class="field"><label>Source</label><input type="text" name="t1_r<?= $i ?>_source" value="<?= val($data, $defaults, 't1_r' . $i . '_source') ?>"></div>
-            <div class="field"><label>Pending Last Month</label><input type="text" name="t1_r<?= $i ?>_pending_last" value="<?= val($data, $defaults, 't1_r' . $i . '_pending_last') ?>"></div>
-            <div class="field"><label>Received</label><input type="text" name="t1_r<?= $i ?>_received" value="<?= val($data, $defaults, 't1_r' . $i . '_received') ?>"></div>
-            <div class="field"><label>Resolved</label><input type="text" name="t1_r<?= $i ?>_resolved" value="<?= val($data, $defaults, 't1_r' . $i . '_resolved') ?>"></div>
-            <div class="field"><label>Total Pending</label><input type="text" name="t1_r<?= $i ?>_total_pending" value="<?= val($data, $defaults, 't1_r' . $i . '_total_pending') ?>"></div>
-            <div class="field"><label>Pending > 3 Months</label><input type="text" name="t1_r<?= $i ?>_pending_gt3" value="<?= val($data, $defaults, 't1_r' . $i . '_pending_gt3') ?>"></div>
-            <div class="field"><label>Avg Resolution Days</label><input type="text" name="t1_r<?= $i ?>_avg_days" value="<?= val($data, $defaults, 't1_r' . $i . '_avg_days') ?>"></div>
+      <div class='card'>
+        <h2>Section 2: Monthly Complaint Data</h2>
+        <div style='font-size:12px;color:#aaa;margin-bottom:10px;'>This section is separate. Edit each source row below.</div>
+        <?php foreach ($monthlyComplaints as $i => $row): ?>
+          <div style='margin:12px 0 6px 0;'>Row <?= $i + 1 ?></div>
+          <div class='row-grid'>
+            <div><label>Received From</label><input type='text' name='mc_received_from[]' value='<?= esc((string)($row['received_from'] ?? '')) ?>'></div>
+            <div><label>Pending Last Month</label><input type='text' name='mc_pending_last_month[]' value='<?= esc((string)($row['pending_last_month'] ?? '')) ?>'></div>
+            <div><label>Received</label><input type='text' name='mc_received[]' value='<?= esc((string)($row['received'] ?? '')) ?>'></div>
+            <div><label>Resolved</label><input type='text' name='mc_resolved[]' value='<?= esc((string)($row['resolved'] ?? '')) ?>'></div>
+            <div><label>Total Pending</label><input type='text' name='mc_total_pending[]' value='<?= esc((string)($row['total_pending'] ?? '')) ?>'></div>
+            <div><label>Pending > 3 Months</label><input type='text' name='mc_pending_gt_3_months[]' value='<?= esc((string)($row['pending_gt_3_months'] ?? '')) ?>'></div>
+            <div><label>Avg Resolution Days</label><input type='text' name='mc_avg_resolution_days[]' value='<?= esc((string)($row['avg_resolution_days'] ?? '')) ?>'></div>
           </div>
-        <?php endfor; ?>
+        <?php endforeach; ?>
+      </div>
 
-        <h3>Grand Total</h3>
-        <div class="grid">
-          <div class="field"><label>Pending Last Month</label><input type="text" name="t1_total_pending_last" value="<?= val($data, $defaults, 't1_total_pending_last') ?>"></div>
-          <div class="field"><label>Received</label><input type="text" name="t1_total_received" value="<?= val($data, $defaults, 't1_total_received') ?>"></div>
-          <div class="field"><label>Resolved</label><input type="text" name="t1_total_resolved" value="<?= val($data, $defaults, 't1_total_resolved') ?>"></div>
-          <div class="field"><label>Total Pending</label><input type="text" name="t1_total_pending" value="<?= val($data, $defaults, 't1_total_pending') ?>"></div>
-          <div class="field"><label>Pending > 3 Months</label><input type="text" name="t1_total_pending_gt3" value="<?= val($data, $defaults, 't1_total_pending_gt3') ?>"></div>
-          <div class="field"><label>Avg Resolution Days</label><input type="text" name="t1_total_avg_days" value="<?= val($data, $defaults, 't1_total_avg_days') ?>"></div>
+      <div class='card'>
+        <h2>Section 3: Trend of Monthly Disposal</h2>
+        <div id='monthly-trend-rows'>
+          <?php foreach ($monthlyTrend as $i => $row): ?>
+            <div class='row-grid-5 monthly-trend-row'>
+              <div><label>Month</label><input type='text' name='md_month[]' value='<?= esc((string)($row['month'] ?? '')) ?>'></div>
+              <div><label>Carried Forward</label><input type='text' name='md_carried_forward[]' value='<?= esc((string)($row['carried_forward'] ?? '')) ?>'></div>
+              <div><label>Received</label><input type='text' name='md_received[]' value='<?= esc((string)($row['received'] ?? '')) ?>'></div>
+              <div><label>Resolved</label><input type='text' name='md_resolved[]' value='<?= esc((string)($row['resolved'] ?? '')) ?>'></div>
+              <div><label>Pending</label><input type='text' name='md_pending[]' value='<?= esc((string)($row['pending'] ?? '')) ?>'></div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+        <div class='actions'>
+          <button type='button' class='secondary' id='add-monthly-row'>Add Monthly Row</button>
         </div>
       </div>
 
-      <div class="card">
-        <h2 style="margin-top:0;">Trend of Monthly Disposal (Table 2)</h2>
-        <div class="grid">
-          <div class="field"><label>Month</label><input type="text" name="t2_r1_month" value="<?= val($data, $defaults, 't2_r1_month') ?>"></div>
-          <div class="field"><label>Carried Forward</label><input type="text" name="t2_r1_carried" value="<?= val($data, $defaults, 't2_r1_carried') ?>"></div>
-          <div class="field"><label>Received</label><input type="text" name="t2_r1_received" value="<?= val($data, $defaults, 't2_r1_received') ?>"></div>
-          <div class="field"><label>Resolved</label><input type="text" name="t2_r1_resolved" value="<?= val($data, $defaults, 't2_r1_resolved') ?>"></div>
-          <div class="field"><label>Pending</label><input type="text" name="t2_r1_pending" value="<?= val($data, $defaults, 't2_r1_pending') ?>"></div>
+      <div class='card'>
+        <h2>Section 4: Trend of Annual Disposal</h2>
+        <div id='annual-trend-rows'>
+          <?php foreach ($annualTrend as $i => $row): ?>
+            <div class='row-grid-5 annual-trend-row'>
+              <div><label>Year</label><input type='text' name='ad_year[]' value='<?= esc((string)($row['year'] ?? '')) ?>'></div>
+              <div><label>Carried Forward</label><input type='text' name='ad_carried_forward[]' value='<?= esc((string)($row['carried_forward'] ?? '')) ?>'></div>
+              <div><label>Received</label><input type='text' name='ad_received[]' value='<?= esc((string)($row['received'] ?? '')) ?>'></div>
+              <div><label>Resolved</label><input type='text' name='ad_resolved[]' value='<?= esc((string)($row['resolved'] ?? '')) ?>'></div>
+              <div><label>Pending</label><input type='text' name='ad_pending[]' value='<?= esc((string)($row['pending'] ?? '')) ?>'></div>
+            </div>
+          <?php endforeach; ?>
         </div>
-
-        <h3>Grand Total</h3>
-        <div class="grid-2">
-          <div class="field"><label>Carried Forward</label><input type="text" name="t2_total_carried" value="<?= val($data, $defaults, 't2_total_carried') ?>"></div>
-          <div class="field"><label>Received</label><input type="text" name="t2_total_received" value="<?= val($data, $defaults, 't2_total_received') ?>"></div>
-          <div class="field"><label>Resolved</label><input type="text" name="t2_total_resolved" value="<?= val($data, $defaults, 't2_total_resolved') ?>"></div>
-          <div class="field"><label>Pending</label><input type="text" name="t2_total_pending" value="<?= val($data, $defaults, 't2_total_pending') ?>"></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2 style="margin-top:0;">Trend of Annual Disposal (Table 3)</h2>
-        <?php for ($i = 1; $i <= 4; $i++): ?>
-          <h3>Row <?= $i ?></h3>
-          <div class="grid">
-            <div class="field"><label>Year</label><input type="text" name="t3_r<?= $i ?>_year" value="<?= val($data, $defaults, 't3_r' . $i . '_year') ?>"></div>
-            <div class="field"><label>Carried Forward</label><input type="text" name="t3_r<?= $i ?>_carried" value="<?= val($data, $defaults, 't3_r' . $i . '_carried') ?>"></div>
-            <div class="field"><label>Received</label><input type="text" name="t3_r<?= $i ?>_received" value="<?= val($data, $defaults, 't3_r' . $i . '_received') ?>"></div>
-            <div class="field"><label>Resolved</label><input type="text" name="t3_r<?= $i ?>_resolved" value="<?= val($data, $defaults, 't3_r' . $i . '_resolved') ?>"></div>
-            <div class="field"><label>Pending</label><input type="text" name="t3_r<?= $i ?>_pending" value="<?= val($data, $defaults, 't3_r' . $i . '_pending') ?>"></div>
-          </div>
-        <?php endfor; ?>
-
-        <h3>Grand Total</h3>
-        <div class="grid-2">
-          <div class="field"><label>Carried Forward</label><input type="text" name="t3_total_carried" value="<?= val($data, $defaults, 't3_total_carried') ?>"></div>
-          <div class="field"><label>Received</label><input type="text" name="t3_total_received" value="<?= val($data, $defaults, 't3_total_received') ?>"></div>
-          <div class="field"><label>Resolved</label><input type="text" name="t3_total_resolved" value="<?= val($data, $defaults, 't3_total_resolved') ?>"></div>
-          <div class="field"><label>Pending</label><input type="text" name="t3_total_pending" value="<?= val($data, $defaults, 't3_total_pending') ?>"></div>
+        <div class='actions'>
+          <button type='button' class='secondary' id='add-annual-row'>Add Annual Row</button>
         </div>
       </div>
 
-      <button type="submit">Save All Compliance Data</button>
+      <button type='submit'>Save All Sections</button>
     </form>
 
-    <div class="logout"><a href="?logout=1">Logout</a></div>
+    <div class='logout'><a href='?logout=1'>Logout</a></div>
   </div>
+
+  <script>
+    function addRow(containerId, namePrefix) {
+      const container = document.getElementById(containerId);
+      const row = document.createElement('div');
+      row.className = 'row-grid-5';
+
+      const fieldA = namePrefix === 'md' ? 'Month' : 'Year';
+      const html = `
+        <div><label>${fieldA}</label><input type='text' name='${namePrefix}_${namePrefix === 'md' ? 'month' : 'year'}[]' value=''></div>
+        <div><label>Carried Forward</label><input type='text' name='${namePrefix}_carried_forward[]' value=''></div>
+        <div><label>Received</label><input type='text' name='${namePrefix}_received[]' value=''></div>
+        <div><label>Resolved</label><input type='text' name='${namePrefix}_resolved[]' value=''></div>
+        <div><label>Pending</label><input type='text' name='${namePrefix}_pending[]' value=''></div>
+      `;
+
+      row.innerHTML = html;
+      container.appendChild(row);
+    }
+
+    document.getElementById('add-monthly-row').addEventListener('click', function () {
+      addRow('monthly-trend-rows', 'md');
+    });
+
+    document.getElementById('add-annual-row').addEventListener('click', function () {
+      addRow('annual-trend-rows', 'ad');
+    });
+  </script>
 </body>
 </html>
