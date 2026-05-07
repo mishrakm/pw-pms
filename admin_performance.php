@@ -15,15 +15,18 @@ $authError = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_login'])) {
     if ($_POST['admin_password'] === ADMIN_PASSWORD) {
         $_SESSION['pw_admin_auth'] = true;
+    $_SESSION['admin_authenticated'] = true;
+    $_SESSION['admin_time'] = time();
     } else {
         $authError = 'Incorrect password.';
     }
 }
 if (isset($_POST['admin_logout'])) {
     unset($_SESSION['pw_admin_auth']);
+  unset($_SESSION['admin_authenticated']);
 }
 
-$authed = !empty($_SESSION['pw_admin_auth']);
+$authed = !empty($_SESSION['pw_admin_auth']) || !empty($_SESSION['admin_authenticated']);
 
 // ── Process form submission ─────────────────────────────────────────────────
 $successMsg = '';
