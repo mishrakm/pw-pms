@@ -85,7 +85,7 @@ try {
       <div style="padding-top:210px;">
         <div class="stat-stack reveal d2">
           <div class="stat-row">
-            <div class="stat-row-label">Annualised return (vs Nifty <?= $niftyReturn ?>)</div>
+            <div class="stat-row-label">Annualised return <!--(vs Nifty <?= $niftyReturn ?>) --!></div>
             <div class="stat-row-val g"><?= $annualizedReturn ?></div>
           </div>
           <div class="stat-row">
