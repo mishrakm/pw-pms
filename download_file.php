@@ -30,7 +30,8 @@ try {
     $stmt->close();
     
     // Check if file exists
-    $filepath = __DIR__ . '/' . $file['filepath'];
+    //$filepath = __DIR__ . '/' . $file['filepath'];
+    $filepath =  '/uploads/' . $file['filepath'];
     if (!file_exists($filepath)) {
         http_response_code(404);
         die('File not found on server');
