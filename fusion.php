@@ -266,7 +266,7 @@ $latestDataDate = 'Date unknown';
 try {
   $conn = get_db_connection();
   $r = $conn->query(
-    "SELECT DATE_FORMAT(MAX(month_year), '%d %b %Y') AS latest
+    "SELECT DATE_FORMAT(LAST_DAY(MAX(month_year)), '%d %b %Y') AS latest
      FROM performance_returns
      WHERE is_active = 1"
   );
