@@ -26,6 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cms_login'])) {
 }
 
 $modules = [
+  'contacts' => [
+    'title' => 'Contact Leads',
+    'file' => 'admin_contact.php',
+    'desc' => 'Review Contact Us submissions and update lead status',
+  ],
   'performance' => [
     'title' => 'Performance Returns',
     'file' => 'admin_performance.php',
