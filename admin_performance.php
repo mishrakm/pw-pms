@@ -29,6 +29,26 @@ $authed = !empty($_SESSION['pw_admin_auth']);
 $successMsg = '';
 $errorMsg   = '';
 
+// Delete month
+if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_month'])) {
+    try {
+        $conn      = get_db_connection();
+        $delMonth  = trim($_POST['delete_month']);
+        if (!preg_match('/^\d{4}-(0[1-9]|1[0-2])$/', $delMonth)) {
+            throw new InvalidArgumentException('Invalid month.');
+        }
+        $d = $conn->prepare("DELETE FROM performance_returns WHERE DATE_FORMAT(month_year,'%Y-%m') = ?");
+        $d->bind_param('s', $delMonth);
+        $d->execute();
+        $affected = $d->affected_rows;
+        $d->close();
+        $successMsg = "Deleted <strong>" . htmlspecialchars($delMonth, ENT_QUOTES) . "</strong> ($affected rows removed).";
+    } catch (Throwable $e) {
+        $errorMsg = 'Delete failed: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log('admin_performance delete error: ' . $e->getMessage());
+    }
+}
+
 if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_performance'])) {
     try {
         $conn = get_db_connection();
@@ -304,8 +324,12 @@ $editMonthVal = htmlspecialchars($editData['month_year'] ?? '', ENT_QUOTES);
         <tr>
           <td style="font-weight:600;"><?= htmlspecialchars($m['ml'], ENT_QUOTES) ?></td>
           <td style="color:var(--ash);">2 rows (Fusion + Benchmark)</td>
-          <td>
+          <td style="display:flex;gap:8px;">
             <a href="?edit=<?= urlencode($m['mv']) ?>" class="btn-ghost btn-sm">Edit</a>
+            <form method="POST" onsubmit="return confirm('Delete all data for <?= htmlspecialchars($m['ml'], ENT_QUOTES) ?>? This cannot be undone.')">
+              <input type="hidden" name="delete_month" value="<?= htmlspecialchars($m['mv'], ENT_QUOTES) ?>">
+              <button type="submit" class="btn-ghost btn-sm" style="color:var(--red);border-color:rgba(248,113,113,0.3);">Delete</button>
+            </form>
           </td>
         </tr>
         <?php endforeach; ?>
