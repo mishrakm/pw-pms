@@ -173,10 +173,18 @@ try {
     .filters a { background:#46526a; }
     .ok { color:#22c55e; margin-bottom:10px; }
     .err { color:#f87171; margin-bottom:10px; }
-    .table-wrap { overflow:auto; }
-    table { width:100%; border-collapse:collapse; min-width:1150px; }
+    .table-wrap { overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; }
+    table { width:100%; border-collapse:collapse; min-width:1250px; }
     th, td { padding:10px; border-bottom:1px solid rgba(255,255,255,0.08); font-size:13px; vertical-align:top; }
-    th { text-align:left; color:#b7c3d9; font-size:12px; background:#121a2a; position:sticky; top:0; }
+    th { text-align:left; color:#b7c3d9; font-size:12px; background:#121a2a; position:sticky; top:0; z-index:2; }
+    th:last-child,
+    td:last-child {
+      position: sticky;
+      right: 0;
+      background: #121a2a;
+      z-index: 3;
+      box-shadow: -8px 0 14px rgba(0,0,0,0.35);
+    }
     .badge { display:inline-block; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:700; text-transform:capitalize; }
     .new { background:rgba(59,130,246,0.2); color:#93c5fd; }
     .contacted { background:rgba(245,158,11,0.2); color:#fcd34d; }
