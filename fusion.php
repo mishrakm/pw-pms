@@ -121,7 +121,7 @@ try {
   <div class="inner">
     <div class="strategy-intro">
       <div>
-        <div class="s-eyebrow reveal">The Strategy - PlusWealth Fusion</div>
+        <div class="s-eyebrow reveal" style="font-size: 1rem;">The Strategy - PlusWealth Fusion</div>
         <h2 class="s-title reveal d1">Three engines.<br><em>One mission.</em></h2>
       </div>
       <div class="s-body reveal d2" style="margin: 0;">
