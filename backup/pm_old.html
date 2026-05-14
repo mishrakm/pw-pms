@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlusWealth PMS — Disciplined Wealth, Data-Driven Results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════════════
+   DESIGN DIRECTION: "Refined Institutional Dark"
+   — Think Bloomberg Terminal meets private banking.
+   — Deep charcoal/ink base with champagne gold accents.
+   — Cormorant Garamond for headlines (editorial gravitas)
+   — DM Sans for body (clean, readable, modern)
+   — DM Mono for numbers/data (credible, precise)
+   — Motion: Surgical. Purposeful. Never decorative.
+   ═══════════════════════════════════════════════════ */
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --ink:       #0C0E12;
+  --ink2:      #111318;
+  --ink3:      #181C23;
+  --panel:     #13161D;
+  --border:    rgba(255,255,255,0.06);
+  --border2:   rgba(255,255,255,0.1);
+  --gold:      #C9A96E;
+  --gold2:     #E8C98A;
+  --gold-dim:  rgba(201,169,110,0.12);
+  --teal:      #2DD4BF;
+  --teal-dim:  rgba(45,212,191,0.1);
+  --green:     #22C55E;
+  --green-dim: rgba(34,197,94,0.1);
+  --red:       #F87171;
+  --white:     #FFFFFF;
+  --cream:     #F5F0E8;
+  --ash:       #8A8F9E;
+  --slate:     #6B7280;
+  --f-display: 'Cormorant Garamond', Georgia, serif;
+  --f-body:    'DM Sans', system-ui, sans-serif;
+  --f-mono:    'DM Mono', monospace;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--f-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SCROLLBAR ─────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* ── UTILITIES ─────────────────────────── */
+.mono { font-family: var(--f-mono); }
+.gold  { color: var(--gold); }
+.teal  { color: var(--teal); }
+.green { color: var(--green); }
+.ash   { color: var(--ash); }
+
+.tag {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--gold);
+  padding: 5px 12px;
+  border: 1px solid rgba(201,169,110,0.3);
+  border-radius: 2px;
+}
+
+/* ── REVEAL ANIMATIONS ─────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(.16,1,.3,1), transform 0.75s cubic-bezier(.16,1,.3,1);
+}
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: 0.08s; }
+.reveal.d2 { transition-delay: 0.16s; }
+.reveal.d3 { transition-delay: 0.24s; }
+.reveal.d4 { transition-delay: 0.32s; }
+.reveal.d5 { transition-delay: 0.40s; }
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+   ══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 56px;
+  transition: background 0.4s, border-color 0.4s;
+  border-bottom: 1px solid transparent;
+}
+nav.scrolled {
+  background: rgba(12,14,18,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom-color: var(--border);
+}
+
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.logo-mark {
+  font-family: var(--f-display);
+  font-size: 26px; font-weight: 600;
+  color: var(--white); letter-spacing: -0.5px;
+}
+.logo-mark span { color: var(--gold); }
+.logo-sub {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--ash); padding-top: 2px;
+}
+
+.nav-right { display: flex; align-items: center; gap: 36px; }
+
+.nav-links {
+  display: flex; align-items: center; gap: 32px; list-style: none;
+}
+.nav-links a {
+  font-size: 13px; font-weight: 400; color: var(--ash);
+  text-decoration: none; letter-spacing: 0.2px;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+
+.nav-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 22px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--f-body); font-size: 13px; font-weight: 500;
+  text-decoration: none; letter-spacing: 0.3px;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-btn:hover { background: var(--gold); color: var(--ink); }
+
+/* ══════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  align-items: center;
+  gap: 0;
+  padding: 100px 56px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated diagonal line grid */
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(
+      -55deg,
+      transparent,
+      transparent 80px,
+      rgba(201,169,110,0.025) 80px,
+      rgba(201,169,110,0.025) 81px
+    );
+  pointer-events: none;
+}
+
+/* Gold glow orb */
+.hero-orb {
+  position: absolute;
+  right: -200px; top: 50%; transform: translateY(-50%);
+  width: 700px; height: 700px;
+  background: radial-gradient(circle at center,
+    rgba(201,169,110,0.07) 0%,
+    rgba(45,212,191,0.04) 40%,
+    transparent 70%);
+  pointer-events: none;
+  animation: orbPulse 8s ease-in-out infinite;
+}
+@keyframes orbPulse {
+  0%,100% { transform: translateY(-50%) scale(1); opacity: 1; }
+  50%      { transform: translateY(-50%) scale(1.08); opacity: 0.75; }
+}
+
+.hero-left { position: relative; z-index: 1; max-width: 700px; }
+
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 32px;
+  animation: fadeUp 0.8s ease both;
+}
+.hero-eyebrow-line {
+  width: 40px; height: 1px; background: var(--gold);
+}
+.hero-eyebrow-text {
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold);
+}
+
+.hero-h1 {
+  font-family: var(--f-display);
+  font-size: clamp(52px, 6.5vw, 90px);
+  font-weight: 600; line-height: 1.02;
+  letter-spacing: -1px;
+  margin-bottom: 28px;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero-h1 em {
+  font-style: italic; color: var(--gold);
+  display: block;
+}
+
+.hero-sub {
+  font-size: 17px; font-weight: 300; color: var(--ash);
+  line-height: 1.75; max-width: 520px; margin-bottom: 48px;
+  animation: fadeUp 0.8s 0.18s ease both;
+}
+
+.hero-actions {
+  display: flex; align-items: center; gap: 24px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s 0.26s ease both;
+}
+
+.btn-gold {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 32px;
+  background: var(--gold); color: var(--ink);
+  font-family: var(--f-body); font-size: 14px; font-weight: 600;
+  text-decoration: none; letter-spacing: 0.3px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.btn-gold:hover {
+  background: var(--gold2);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(201,169,110,0.3);
+}
+.btn-gold svg { transition: transform 0.2s; }
+.btn-gold:hover svg { transform: translateX(4px); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 400; color: var(--ash);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.btn-ghost:hover { color: var(--white); }
+
+.hero-signal {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 36px;
+  padding: 8px 16px;
+  border: 1px solid rgba(34,197,94,0.25);
+  background: var(--green-dim);
+  font-family: var(--f-mono); font-size: 11px; color: var(--green);
+  letter-spacing: 1px;
+  animation: fadeUp 0.8s 0.34s ease both;
+  width: fit-content;
+}
+.signal-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink {
+  0%,100% { opacity: 1; } 50% { opacity: 0.4; }
+}
+
+/* Hero right — live stat panel */
+.hero-panel {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; gap: 2px;
+  animation: fadeUp 0.8s 0.4s ease both;
+}
+
+.panel-header {
+  padding: 16px 20px;
+  background: var(--panel);
+  border: 1px solid var(--border2);
+  border-bottom: none;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.panel-header-title {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--ash);
+}
+.panel-header-date {
+  font-family: var(--f-mono); font-size: 9px;
+  color: var(--slate); letter-spacing: 0.5px;
+}
+
+.panel-kpi {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-top: none;
+  padding: 20px 20px 18px;
+  position: relative;
+  transition: border-color 0.2s, background 0.2s;
+  cursor: default;
+}
+.panel-kpi:first-of-type { border-top: 3px solid var(--gold); padding-top: 18px; }
+.panel-kpi:hover { border-color: var(--border2); background: rgba(25,29,38,0.8); }
+
+.panel-kpi-row {
+  display: flex; align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+}
+.panel-kpi-label {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--slate); margin-bottom: 8px;
+}
+.panel-kpi-val {
+  font-family: var(--f-display);
+  font-size: 38px; font-weight: 600; line-height: 1;
+}
+.panel-kpi-val.gld { color: var(--gold); }
+.panel-kpi-val.grn { color: var(--green); }
+.panel-kpi-val.tel { color: var(--teal); }
+.panel-kpi-val.wht { color: var(--white); }
+
+.panel-kpi-badge {
+  font-family: var(--f-mono); font-size: 9px;
+  padding: 4px 8px; border-radius: 2px; letter-spacing: 0.5px;
+  white-space: nowrap;
+  align-self: flex-end; margin-bottom: 4px;
+}
+.panel-kpi-badge.up {
+  background: var(--green-dim); color: var(--green);
+  border: 1px solid rgba(34,197,94,0.2);
+}
+.panel-kpi-badge.nt {
+  background: var(--teal-dim); color: var(--teal);
+  border: 1px solid rgba(45,212,191,0.2);
+}
+.panel-kpi-sub {
+  font-size: 11px; color: var(--slate); margin-top: 4px;
+}
+
+.panel-rank {
+  background: var(--panel);
+  border: 1px solid rgba(201,169,110,0.25);
+  border-top: none;
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.rank-label { font-family: var(--f-mono); font-size: 9px; color: var(--ash); letter-spacing: 1px; }
+.rank-val {
+  font-family: var(--f-display); font-size: 24px; font-weight: 700;
+  color: var(--gold);
+}
+.rank-sub { font-size: 10px; color: var(--slate); margin-top: 2px; }
+
+/* Scroll cue */
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 56px;
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--f-mono); font-size: 9px;
+  color: var(--slate); letter-spacing: 2px; text-transform: uppercase;
+  animation: fadeUp 1.2s 0.6s ease both;
+}
+.scroll-bar {
+  width: 36px; height: 1px; background: var(--slate);
+  position: relative; overflow: hidden;
+}
+.scroll-bar::after {
+  content: ''; position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
+  background: var(--gold);
+  animation: sweep 2.2s ease-in-out infinite;
+}
+@keyframes sweep { 0% { left: -100%; } 100% { left: 100%; } }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ══════════════════════════════════════════
+   TRUST STRIP
+   ══════════════════════════════════════════ */
+.trust-strip {
+  background: var(--ink2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0 56px;
+  display: flex; align-items: stretch;
+}
+.trust-item {
+  flex: 1; display: flex; align-items: center; gap: 14px;
+  padding: 22px 24px 22px 0;
+  border-right: 1px solid var(--border);
+}
+.trust-item:last-child { border-right: none; padding-right: 0; }
+.trust-item:first-child { padding-left: 0; }
+.trust-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--gold-dim); border-radius: 2px;
+  font-size: 16px;
+}
+.trust-text-main {
+  font-size: 13px; font-weight: 500; color: var(--white);
+  line-height: 1.3;
+}
+.trust-text-sub {
+  font-family: var(--f-mono); font-size: 10px;
+  color: var(--slate); margin-top: 2px; letter-spacing: 0.3px;
+}
+
+/* ══════════════════════════════════════════
+   SECTION SHARED
+   ══════════════════════════════════════════ */
+.section-wrap { padding: 110px 56px; }
+.section-wrap.alt { background: var(--ink2); }
+.inner { max-width: 1200px; margin: 0 auto; }
+
+.s-eyebrow {
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 14px;
+}
+.s-eyebrow::before {
+  content: ''; width: 28px; height: 1px; background: var(--gold);
+}
+
+.s-title {
+  font-family: var(--f-display);
+  font-size: clamp(36px, 4vw, 58px);
+  font-weight: 600; line-height: 1.08;
+  letter-spacing: -0.5px;
+}
+.s-title em { font-style: italic; color: var(--gold); }
+.s-body {
+  font-size: 16px; font-weight: 300;
+  color: var(--ash); line-height: 1.8; max-width: 560px;
+}
+
+/* ══════════════════════════════════════════
+   WHO WE ARE
+   ══════════════════════════════════════════ */
+.who-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+  margin-top: 0;
+}
+.who-left {}
+.who-left .s-body { margin-top: 24px; }
+
+.who-pillars {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 40px;
+}
+.pillar {
+  background: var(--ink2);
+  padding: 28px 26px;
+  transition: background 0.2s;
+}
+.pillar:hover { background: var(--panel); }
+.pillar-icon { font-size: 24px; margin-bottom: 14px; display: block; }
+.pillar-title {
+  font-size: 14px; font-weight: 600; color: var(--white);
+  margin-bottom: 8px;
+}
+.pillar-body { font-size: 12.5px; color: var(--ash); line-height: 1.6; }
+
+.who-right {}
+
+/* Stats stacked */
+.stat-stack { display: flex; flex-direction: column; gap: 1px; }
+.stat-row {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 24px 28px;
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: border-color 0.2s;
+}
+.stat-row:hover { border-color: var(--border2); }
+.stat-row-label {
+  font-size: 13px; color: var(--ash); font-weight: 300;
+  max-width: 240px; line-height: 1.4;
+}
+.stat-row-val {
+  font-family: var(--f-display);
+  font-size: 32px; font-weight: 600;
+  white-space: nowrap; text-align: right;
+}
+.stat-row-val.g { color: var(--green); }
+.stat-row-val.gold { color: var(--gold); }
+.stat-row-val.t { color: var(--teal); }
+.stat-row-val.w { color: var(--white); }
+
+/* ══════════════════════════════════════════
+   STRATEGY — 3 ENGINES
+   ══════════════════════════════════════════ */
+.strategy-intro {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: end;
+  margin-bottom: 56px;
+}
+
+.strategy-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+}
+.s-card {
+  background: var(--ink2);
+  padding: 36px 28px 32px;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+  cursor: default;
+}
+.s-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.35s cubic-bezier(.16,1,.3,1);
+}
+.s-card:hover { background: var(--panel); }
+.s-card:hover::before { transform: scaleX(1); }
+.s-card.c1::before { background: var(--teal); }
+.s-card.c2::before { background: var(--gold); }
+.s-card.c3::before { background: var(--green); }
+
+.s-card-num {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 2px; color: var(--slate);
+  margin-bottom: 24px;
+}
+.s-card-icon {
+  width: 46px; height: 46px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  margin-bottom: 18px;
+  border-radius: 2px;
+}
+.s-card-icon.t { background: var(--teal-dim); }
+.s-card-icon.g { background: var(--gold-dim); }
+.s-card-icon.gr { background: var(--green-dim); }
+
+.s-card h3 {
+  font-family: var(--f-display);
+  font-size: 22px; font-weight: 600;
+  line-height: 1.15; margin-bottom: 14px; color: var(--white);
+}
+.s-card p {
+  font-size: 13px; color: var(--ash);
+  line-height: 1.7; margin-bottom: 24px;
+}
+.s-card-proof {
+  padding: 10px 14px;
+  font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+  border-radius: 2px;
+}
+.s-card-proof.t { background: var(--teal-dim); color: var(--teal); }
+.s-card-proof.g { background: var(--gold-dim); color: var(--gold); }
+.s-card-proof.gr { background: var(--green-dim); color: var(--green); }
+
+/* ══════════════════════════════════════════
+   LIVE PERFORMANCE
+   ══════════════════════════════════════════ */
+.perf-header {
+  display: flex; align-items: flex-end;
+  justify-content: space-between; gap: 24px;
+  margin-bottom: 40px; flex-wrap: wrap;
+}
+.actual-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 16px;
+  border: 1px solid rgba(34,197,94,0.3);
+  background: var(--green-dim);
+  font-family: var(--f-mono); font-size: 10px;
+  color: var(--green); letter-spacing: 1.5px;
+}
+
+.perf-kpi-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 1px;
+}
+.kpi-tile {
+  background: var(--panel);
+  padding: 28px 24px 24px;
+  position: relative; overflow: hidden;
+  transition: background 0.2s;
+}
+.kpi-tile:hover { background: var(--ink3); }
+.kpi-tile-bar {
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.kpi-tile-lbl {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--slate); margin-bottom: 12px;
+}
+.kpi-tile-val {
+  font-family: var(--f-display); font-size: 42px;
+  font-weight: 600; line-height: 1; margin-bottom: 8px;
+}
+.kpi-tile-val.g { color: var(--green); }
+.kpi-tile-val.t { color: var(--teal); }
+.kpi-tile-val.go { color: var(--gold); }
+.kpi-tile-val.w { color: var(--white); }
+.kpi-tile-sub { font-size: 12px; color: var(--slate); }
+.kpi-vs {
+  display: inline-flex; align-items: center; gap: 5px;
+  margin-top: 10px; padding: 4px 8px;
+  font-family: var(--f-mono); font-size: 9px;
+  background: var(--green-dim); color: var(--green);
+  border: 1px solid rgba(34,197,94,0.15);
+  letter-spacing: 0.5px;
+}
+
+/* Monthly grid */
+.monthly-grid {
+  display: grid; grid-template-columns: repeat(5,1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 1px;
+}
+.m-cell {
+  background: var(--panel);
+  padding: 20px 18px;
+  transition: background 0.2s;
+}
+.m-cell:hover { background: var(--ink3); }
+.m-cell-mo {
+  font-family: var(--f-mono); font-size: 9px;
+  color: var(--slate); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.m-cell-ret {
+  font-family: var(--f-display); font-size: 28px;
+  font-weight: 600; line-height: 1; margin-bottom: 6px;
+}
+.m-cell-ret.pos { color: var(--green); }
+.m-cell-ret.neg { color: var(--red); }
+.m-cell-ret.flat { color: var(--ash); }
+.m-cell-bench {
+  font-family: var(--f-mono); font-size: 10px;
+  color: var(--slate); margin-bottom: 5px;
+}
+.m-cell-alpha {
+  display: inline-block;
+  font-family: var(--f-mono); font-size: 9px;
+  padding: 3px 7px;
+  border-radius: 2px;
+}
+.m-cell-alpha.pos { background: var(--green-dim); color: var(--green); }
+.m-cell-alpha.neg { background: rgba(248,113,113,0.1); color: var(--red); }
+
+.perf-note {
+  font-size: 11px; color: var(--slate);
+  margin-top: 14px; font-style: italic; line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════
+   RANKING PROOF
+   ══════════════════════════════════════════ */
+.rank-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 24px; margin-top: 52px;
+}
+.rank-card {
+  background: var(--ink3);
+  border: 1px solid var(--border);
+  padding: 36px 32px;
+  position: relative; overflow: hidden;
+  transition: border-color 0.25s;
+}
+.rank-card:hover { border-color: rgba(201,169,110,0.3); }
+.rank-card::after {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle at top right,
+    rgba(201,169,110,0.06), transparent 70%);
+  pointer-events: none;
+}
+.rank-card-month {
+  font-family: var(--f-mono); font-size: 10px;
+  color: var(--slate); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.rank-card-num {
+  font-family: var(--f-display); font-size: 80px;
+  font-weight: 700; line-height: 1;
+  color: var(--gold); margin-bottom: 4px;
+}
+.rank-card-of {
+  font-family: var(--f-mono); font-size: 13px;
+  color: var(--ash); margin-bottom: 20px;
+}
+.rank-card-ret {
+  font-family: var(--f-display); font-size: 28px;
+  font-weight: 600; color: var(--green);
+  margin-bottom: 4px;
+}
+.rank-card-context { font-size: 12px; color: var(--slate); }
+
+/* ══════════════════════════════════════════
+   SUITABILITY
+   ══════════════════════════════════════════ */
+.suit-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+}
+
+.suit-checks { margin-top: 36px; display: flex; flex-direction: column; gap: 12px; }
+.suit-row {
+  display: flex; align-items: flex-start; gap: 18px;
+  padding: 18px 20px;
+  background: var(--ink3);
+  border: 1px solid var(--border);
+  transition: border-color 0.2s, background 0.2s;
+}
+.suit-row:hover {
+  border-color: var(--border2);
+  background: var(--panel);
+}
+.suit-check {
+  width: 28px; height: 28px; flex-shrink: 0;
+  background: var(--green-dim);
+  border: 1px solid rgba(34,197,94,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--green);
+}
+.suit-text h5 { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+.suit-text p  { font-size: 12px; color: var(--ash); line-height: 1.5; }
+
+/* Invest card */
+.invest-card {
+  background: var(--ink3);
+  border: 1px solid var(--border);
+  padding: 36px; position: relative; overflow: hidden;
+  margin-bottom: 16px;
+}
+.invest-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--teal));
+}
+.invest-amount {
+  font-family: var(--f-display); font-size: 56px;
+  font-weight: 600; color: var(--gold); line-height: 1;
+  margin-bottom: 6px;
+}
+.invest-amount-sub { font-size: 13px; color: var(--ash); margin-bottom: 24px; }
+.invest-detail {
+  font-size: 13px; color: var(--ash); line-height: 1.7;
+}
+
+.fee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fee-tile {
+  background: var(--ink3);
+  border: 1px solid var(--border);
+  padding: 22px 20px;
+  transition: border-color 0.2s;
+}
+.fee-tile:hover { border-color: rgba(201,169,110,0.25); }
+.fee-tile-lbl {
+  font-family: var(--f-mono); font-size: 9px;
+  color: var(--slate); letter-spacing: 1.5px; margin-bottom: 8px;
+}
+.fee-tile-val {
+  font-family: var(--f-display); font-size: 26px;
+  font-weight: 600; color: var(--white); margin-bottom: 4px;
+}
+.fee-tile-sub { font-size: 11px; color: var(--slate); line-height: 1.5; }
+
+/* ══════════════════════════════════════════
+   PROCESS
+   ══════════════════════════════════════════ */
+.process-track {
+  display: grid; grid-template-columns: repeat(5,1fr);
+  gap: 0; margin-top: 64px;
+  position: relative;
+}
+.process-track::before {
+  content: ''; position: absolute;
+  top: 30px; left: 60px; right: 60px; height: 1px;
+  background: linear-gradient(90deg,
+    transparent, var(--gold), var(--teal), var(--green), transparent);
+  opacity: 0.3;
+}
+.p-step {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; padding: 0 16px;
+}
+.p-circle {
+  width: 60px; height: 60px;
+  background: var(--panel);
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-display); font-size: 22px;
+  font-weight: 600; color: var(--gold);
+  margin-bottom: 24px; position: relative; z-index: 1;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
+}
+.p-step:hover .p-circle {
+  background: var(--gold-dim);
+  border-color: rgba(201,169,110,0.4);
+  transform: scale(1.08);
+}
+.p-step h4 { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 10px; }
+.p-step p  { font-size: 11.5px; color: var(--slate); line-height: 1.6; }
+
+/* ══════════════════════════════════════════
+   TEAM
+   ══════════════════════════════════════════ */
+.team-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 56px;
+}
+.t-card {
+  background: var(--ink2);
+  padding: 36px 28px;
+  transition: background 0.25s;
+}
+.t-card:hover { background: var(--panel); }
+
+.t-avatar {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-dim), var(--teal-dim));
+  border: 1px solid rgba(201,169,110,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-display); font-size: 22px;
+  font-weight: 600; color: var(--gold);
+  margin-bottom: 20px;
+}
+.t-name {
+  font-family: var(--f-display); font-size: 24px;
+  font-weight: 600; color: var(--white); margin-bottom: 4px;
+}
+.t-role {
+  font-family: var(--f-mono); font-size: 10px;
+  color: var(--teal); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.t-exp {
+  display: inline-flex;
+  font-family: var(--f-mono); font-size: 10px;
+  color: var(--gold); padding: 3px 8px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,169,110,0.2);
+  letter-spacing: 0.5px; margin-bottom: 24px;
+}
+.t-divider {
+  height: 1px; background: var(--border); margin-bottom: 20px;
+}
+.t-skills { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.t-skills li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 12.5px; color: var(--ash); line-height: 1.4;
+}
+.t-skills li::before {
+  content: '–'; color: var(--gold); flex-shrink: 0;
+}
+.t-creds {
+  font-family: var(--f-mono); font-size: 9px;
+  color: var(--slate); line-height: 1.8; letter-spacing: 0.3px;
+}
+
+/* ══════════════════════════════════════════
+   FAQ
+   ══════════════════════════════════════════ */
+.faq-wrap { max-width: 820px; margin: 56px auto 0; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.faq-q {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 0; cursor: pointer; gap: 20px;
+  font-size: 16px; font-weight: 400;
+  color: var(--ash); transition: color 0.2s;
+  user-select: none;
+}
+.faq-q:hover { color: var(--white); }
+.faq-item.open .faq-q { color: var(--white); }
+.faq-toggle {
+  width: 30px; height: 30px; flex-shrink: 0;
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: var(--ash); font-weight: 300;
+  transition: transform 0.35s, border-color 0.2s, color 0.2s;
+  line-height: 1;
+}
+.faq-item.open .faq-toggle {
+  transform: rotate(45deg);
+  border-color: var(--gold); color: var(--gold);
+}
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(.16,1,.3,1);
+}
+.faq-item.open .faq-a { max-height: 300px; }
+.faq-a p {
+  font-size: 14px; font-weight: 300; color: var(--ash);
+  line-height: 1.8; padding-bottom: 24px;
+}
+
+/* ══════════════════════════════════════════
+   CTA BAND
+   ══════════════════════════════════════════ */
+.cta-band {
+  padding: 100px 56px;
+  background: var(--ink2);
+  border-top: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.cta-band::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: linear-gradient(180deg, var(--gold), var(--teal));
+}
+.cta-band-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 64px; align-items: center;
+}
+.cta-band-title {
+  font-family: var(--f-display); font-size: clamp(36px,4vw,56px);
+  font-weight: 600; line-height: 1.08;
+  margin-bottom: 16px;
+}
+.cta-band-sub { font-size: 15px; color: var(--ash); font-weight: 300; line-height: 1.7; }
+.cta-band-right {
+  display: flex; flex-direction: column;
+  align-items: flex-end; gap: 20px; min-width: 260px;
+}
+.cta-contact {
+  font-family: var(--f-mono); font-size: 11px;
+  color: var(--slate); text-align: right; line-height: 2.1;
+}
+.cta-contact a { color: var(--teal); text-decoration: none; }
+.cta-contact a:hover { color: var(--white); }
+
+/* ══════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════ */
+footer {
+  background: var(--ink);
+  border-top: 1px solid var(--border);
+  padding: 56px 56px 36px;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr;
+  gap: 48px; padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+.footer-brand p {
+  font-size: 12px; color: var(--slate);
+  line-height: 1.8; max-width: 260px; margin-top: 16px;
+}
+.footer-col h5 {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--ash); margin-bottom: 18px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-col a {
+  font-size: 13px; color: var(--slate);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--gold); }
+.footer-bottom {
+  max-width: 1200px; margin: 28px auto 0;
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 24px; flex-wrap: wrap;
+}
+.footer-legal {
+  font-size: 11px; color: var(--slate); line-height: 1.8;
+  max-width: 640px;
+}
+.footer-sebi {
+  font-family: var(--f-mono); font-size: 9px;
+  color: var(--slate); letter-spacing: 0.5px;
+  text-align: right; line-height: 1.9; white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════ */
+@media (max-width: 1080px) {
+  nav { padding: 0 28px; }
+  .hero { grid-template-columns: 1fr; padding: 100px 28px 60px; }
+  .hero-panel { display: none; }
+  .section-wrap { padding: 80px 28px; }
+  .trust-strip { flex-wrap: wrap; padding: 0 28px; }
+  .trust-item { flex: 0 0 calc(50% - 14px); border-right: none; padding: 18px 0; border-bottom: 1px solid var(--border); }
+  .who-grid, .strategy-intro, .suit-grid { grid-template-columns: 1fr; gap: 48px; }
+  .strategy-cards { grid-template-columns: 1fr; }
+  .perf-kpi-row { grid-template-columns: 1fr 1fr; }
+  .monthly-grid { grid-template-columns: 1fr 1fr; }
+  .rank-grid, .fee-grid { grid-template-columns: 1fr; }
+  .process-track { grid-template-columns: 1fr 1fr; }
+  .process-track::before { display: none; }
+  .team-grid { grid-template-columns: 1fr; }
+  .cta-band-inner { grid-template-columns: 1fr; }
+  .cta-band-right { align-items: flex-start; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .footer-bottom { flex-direction: column; }
+  .footer-sebi { white-space: normal; text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════ -->
+<nav id="nav">
+  <a href="#" class="logo">
+    <div>
+      <div class="logo-mark">Plus<span>Wealth</span></div>
+      <div class="logo-sub">Portfolio Management</div>
+    </div>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#strategy">Strategy</a></li>
+      <li><a href="#performance">Performance</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#contact" class="nav-btn">
+      Connect
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-orb"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <div class="hero-eyebrow-text">SEBI-Registered PMS · INP000009144</div>
+    </div>
+
+    <h1 class="hero-h1">
+      Discipline is the<br>
+      <em>only edge that lasts.</em>
+    </h1>
+
+    <p class="hero-sub">
+      PlusWealth Fusion PMS combines multi-asset allocation, factor-based equity, and an adaptive hedge overlay — compounding your wealth with lower drawdowns and zero emotional bias.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#contact" class="btn-gold">
+        Schedule a Conversation
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#performance" class="btn-ghost">
+        View live performance →
+      </a>
+    </div>
+
+    <div class="hero-signal">
+      <div class="signal-dot"></div>
+      LIVE SINCE OCT 2025 · +6.95% RETURN · #1 MULTI-ASSET PMS DEC 2025
+    </div>
+  </div>
+
+  <!-- Live Stats Panel -->
+  <div class="hero-panel">
+    <div class="panel-header">
+      <div class="panel-header-title">Live Performance</div>
+      <div class="panel-header-date">As of 24 Feb 2026</div>
+    </div>
+
+    <div class="panel-kpi">
+      <div class="panel-kpi-label">Total Return — Since Inception</div>
+      <div class="panel-kpi-row">
+        <div>
+          <div class="panel-kpi-val grn">+6.95%</div>
+          <div class="panel-kpi-sub">Inception: 9 Oct 2025</div>
+        </div>
+        <div class="panel-kpi-badge up">Nifty: +0.96%</div>
+      </div>
+    </div>
+
+    <div class="panel-kpi">
+      <div class="panel-kpi-label">Alpha Generated</div>
+      <div class="panel-kpi-row">
+        <div>
+          <div class="panel-kpi-val tel">+5.98%</div>
+          <div class="panel-kpi-sub">vs Nifty 50</div>
+        </div>
+        <div class="panel-kpi-badge nt">4/5 months</div>
+      </div>
+    </div>
+
+    <div class="panel-kpi">
+      <div class="panel-kpi-label">Max Drawdown</div>
+      <div class="panel-kpi-row">
+        <div>
+          <div class="panel-kpi-val wht">−5.07%</div>
+          <div class="panel-kpi-sub">Nifty: −5.71%</div>
+        </div>
+        <div class="panel-kpi-badge up">Contained</div>
+      </div>
+    </div>
+
+    <div class="panel-kpi">
+      <div class="panel-kpi-label">Sharpe Ratio</div>
+      <div class="panel-kpi-row">
+        <div>
+          <div class="panel-kpi-val gld">0.62</div>
+          <div class="panel-kpi-sub">Nifty: −0.33</div>
+        </div>
+        <div class="panel-kpi-badge up">2× better</div>
+      </div>
+    </div>
+
+    <div class="panel-rank">
+      <div>
+        <div class="rank-label">CATEGORY RANK</div>
+        <div class="rank-sub">Multi Asset PMS · Dec 2025</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="rank-val">#1 / 13</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-bar"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     TRUST STRIP
+═══════════════════════════════════════════ -->
+<div class="trust-strip">
+  <div class="trust-item">
+    <div class="trust-icon">🛡️</div>
+    <div>
+      <div class="trust-text-main">SEBI Registered</div>
+      <div class="trust-text-sub">Portfolio Manager · INP000009144</div>
+    </div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">🏦</div>
+    <div>
+      <div class="trust-text-main">Nuvama Asset Services</div>
+      <div class="trust-text-sub">Regulated custodian, assets held in your demat</div>
+    </div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">📅</div>
+    <div>
+      <div class="trust-text-main">Founded 2008</div>
+      <div class="trust-text-sub">16+ years quantitative investing expertise</div>
+    </div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">💼</div>
+    <div>
+      <div class="trust-text-main">₹100 Cr+ AIF AUM</div>
+      <div class="trust-text-sub">CAT-III Long Short AIF since 2021</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     WHO WE ARE
+═══════════════════════════════════════════ -->
+<div class="section-wrap" id="about">
+  <div class="inner">
+    <div class="who-grid">
+      <div>
+        <div class="s-eyebrow reveal">Who We Are</div>
+        <h2 class="s-title reveal d1">Built for investors who<br><em>think in decades.</em></h2>
+        <p class="s-body reveal d2" style="margin-top:24px;">
+          PlusWealth is a SEBI-registered PMS designed for high-net-worth investors who want a disciplined, research-backed approach — not market speculation, not emotion-driven calls. Every decision is codified, backtested, and executed by algorithm.
+        </p>
+
+        <div class="who-pillars reveal d3">
+          <div class="pillar">
+            <span class="pillar-icon">📐</span>
+            <div class="pillar-title">Evidence-Based</div>
+            <div class="pillar-body">Every strategy is derived from quantitative research and validated through rigorous historical testing.</div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-icon">🛡️</span>
+            <div class="pillar-title">Capital Preservation</div>
+            <div class="pillar-body">Regime detection and tactical hedges activate before drawdowns compound into wealth destruction.</div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-icon">🔁</span>
+            <div class="pillar-title">Consistent Process</div>
+            <div class="pillar-body">Rules remove bias. Codified decisions can be measured, improved, and replicated across market cycles.</div>
+          </div>
+          <div class="pillar">
+            <span class="pillar-icon">🔭</span>
+            <div class="pillar-title">Long-Horizon Compounding</div>
+            <div class="pillar-body">Protecting the compounding curve matters more than chasing short-term alpha. We minimise deep drawdowns.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="stat-stack reveal d2">
+          <div class="stat-row">
+            <div class="stat-row-label">Annualised return (live, since inception)</div>
+            <div class="stat-row-val g">+6.95%</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-row-label">Alpha vs Nifty 50 benchmark</div>
+            <div class="stat-row-val t">+5.98%</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-row-label">Category rank — Multi Asset PMS</div>
+            <div class="stat-row-val gold">#1 / 13</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-row-label">Max drawdown (vs Nifty −5.71%)</div>
+            <div class="stat-row-val w">−5.07%</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-row-label">Simulated CAGR (Sep'22–Nov'25)</div>
+            <div class="stat-row-val gold">33.8%</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-row-label">Simulated Calmar ratio (vs 0.74 benchmark)</div>
+            <div class="stat-row-val t">5.84</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--slate);margin-top:12px;font-style:italic;line-height:1.6;">
+          Live data as of 24 Feb 2026. Simulated/backtested results are before fees. Past performance is not indicative of future results.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     STRATEGY — 3 ENGINES
+═══════════════════════════════════════════ -->
+<div class="section-wrap alt" id="strategy">
+  <div class="inner">
+    <div class="strategy-intro">
+      <div>
+        <div class="s-eyebrow reveal">The Strategy</div>
+        <h2 class="s-title reveal d1">Three engines.<br><em>One mission.</em></h2>
+      </div>
+      <div class="s-body reveal d2" style="margin: 0;">
+        PlusWealth Fusion combines three independent alpha sources working in concert — multi-asset allocation, factor rotation, and an adaptive hedge overlay — to deliver smoother, superior compounding across all market regimes.
+      </div>
+    </div>
+
+    <div class="strategy-cards reveal d1">
+      <div class="s-card c1">
+        <div class="s-card-num">01 / ALLOCATION</div>
+        <div class="s-card-icon t">🔄</div>
+        <h3>Multi-Asset<br>Allocation</h3>
+        <p>Dynamically rotate between equity, debt, and gold based on quantitative macro signals — not hunches. Capital shifts to safety before markets punish those who wait.</p>
+        <div class="s-card-proof t">Drawdown 70% smaller vs pure equity</div>
+      </div>
+      <div class="s-card c2">
+        <div class="s-card-num">02 / EQUITY</div>
+        <div class="s-card-icon g">⚡</div>
+        <h3>Factor-Based<br>Equity Exposure</h3>
+        <p>Rotate between Value, Quality, and Momentum factors as market leadership shifts. Our signals identify the winning factor monthly — and tilt sharply toward it.</p>
+        <div class="s-card-proof g">66% monthly outperformance rate (backtest)</div>
+      </div>
+      <div class="s-card c3">
+        <div class="s-card-num">03 / PROTECTION</div>
+        <div class="s-card-icon gr">🛡️</div>
+        <h3>Protective Hedge<br>Overlay</h3>
+        <p>Adaptive NIFTY put options — fully funded, zero leverage. Activated at elevated valuations. In Sep 2022, when NIFTY fell 6.7%, our put position gained +127%, limiting portfolio loss to −0.76%.</p>
+        <div class="s-card-proof gr">+127% put gain in Sep 2022 correction</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     LIVE PERFORMANCE
+═══════════════════════════════════════════ -->
+<div class="section-wrap" id="performance">
+  <div class="inner">
+    <div class="perf-header">
+      <div>
+        <div class="s-eyebrow reveal">Actual Performance</div>
+        <h2 class="s-title reveal d1">Actual results.<br><em>Not simulated.</em></h2>
+      </div>
+      <div class="actual-badge reveal d2">
+        <div class="signal-dot"></div>
+        LIVE DATA · UPDATED 24 FEB 2026
+      </div>
+    </div>
+
+    <div class="perf-kpi-row reveal d1">
+      <div class="kpi-tile">
+        <div class="kpi-tile-bar" style="background:var(--green)"></div>
+        <div class="kpi-tile-lbl">Total Return</div>
+        <div class="kpi-tile-val g">+6.95%</div>
+        <div class="kpi-tile-sub">Since inception · Oct 2025</div>
+        <div class="kpi-vs">↑ Nifty returned only +0.96%</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-tile-bar" style="background:var(--teal)"></div>
+        <div class="kpi-tile-lbl">Alpha Generated</div>
+        <div class="kpi-tile-val t">+5.98%</div>
+        <div class="kpi-tile-sub">Outperformance vs Nifty 50</div>
+        <div class="kpi-vs">↑ 4 of 5 months ahead</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-tile-bar" style="background:var(--gold)"></div>
+        <div class="kpi-tile-lbl">Max Drawdown</div>
+        <div class="kpi-tile-val go">−5.07%</div>
+        <div class="kpi-tile-sub">Peak-to-trough, contained</div>
+        <div class="kpi-vs">↑ Nifty fell −5.71%</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-tile-bar" style="background:var(--ash)"></div>
+        <div class="kpi-tile-lbl">Sharpe Ratio</div>
+        <div class="kpi-tile-val w">0.62</div>
+        <div class="kpi-tile-sub">6.5% risk-free rate assumed</div>
+        <div class="kpi-vs">↑ Nifty Sharpe: −0.33</div>
+      </div>
+    </div>
+
+    <div class="monthly-grid reveal d2">
+      <div class="m-cell">
+        <div class="m-cell-mo">Oct 2025</div>
+        <div class="m-cell-ret pos">+4.30%</div>
+        <div class="m-cell-bench">Nifty: +2.15%</div>
+        <div class="m-cell-alpha pos">α +2.15%</div>
+      </div>
+      <div class="m-cell">
+        <div class="m-cell-mo">Nov 2025</div>
+        <div class="m-cell-ret flat">+0.00%</div>
+        <div class="m-cell-bench">Nifty: +1.71%</div>
+        <div class="m-cell-alpha neg">α −1.71%</div>
+      </div>
+      <div class="m-cell">
+        <div class="m-cell-mo">Dec 2025</div>
+        <div class="m-cell-ret pos">+1.40%</div>
+        <div class="m-cell-bench">Nifty: −0.18%</div>
+        <div class="m-cell-alpha pos">α +1.58%</div>
+      </div>
+      <div class="m-cell">
+        <div class="m-cell-mo">Jan 2026</div>
+        <div class="m-cell-ret neg">−2.61%</div>
+        <div class="m-cell-bench">Nifty: −3.16%</div>
+        <div class="m-cell-alpha pos">α +0.55%</div>
+      </div>
+      <div class="m-cell">
+        <div class="m-cell-mo">Feb 2026*</div>
+        <div class="m-cell-ret pos">+3.60%</div>
+        <div class="m-cell-bench">Nifty: +2.41%</div>
+        <div class="m-cell-alpha pos">α +1.18%</div>
+      </div>
+    </div>
+    <div class="perf-note reveal d3">
+      *Feb 2026 data through 24th Feb. Returns computed from SEBI-registered custodian records. Past performance is not indicative of future results.
+    </div>
+
+    <!-- Category rankings -->
+    <div style="margin-top:56px;">
+      <div class="s-eyebrow reveal" style="margin-bottom:0;">Independent Ranking Verification</div>
+      <div class="rank-grid">
+        <div class="rank-card reveal d1">
+          <div class="rank-card-month">October 2025</div>
+          <div class="rank-card-num">#1</div>
+          <div class="rank-card-of">of 12 Multi Asset PMS funds</div>
+          <div class="rank-card-ret">+4.29%</div>
+          <div class="rank-card-context">Category rank in our very first full month of operation. Verified on PMS Bazaar.</div>
+        </div>
+        <div class="rank-card reveal d2">
+          <div class="rank-card-month">December 2025</div>
+          <div class="rank-card-num">#1</div>
+          <div class="rank-card-of">of 13 Multi Asset PMS funds</div>
+          <div class="rank-card-ret">+5.55% since inception</div>
+          <div class="rank-card-context">Maintained #1 rank 2 months later. AUM grew to ₹10.14 Cr within 60 days of launch.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SUITABILITY + INVEST
+═══════════════════════════════════════════ -->
+<div class="section-wrap alt" id="invest">
+  <div class="inner">
+    <div class="suit-grid">
+      <div>
+        <div class="s-eyebrow reveal">Who Should Invest</div>
+        <h2 class="s-title reveal d1">Is Fusion PMS<br><em>right for you?</em></h2>
+        <div class="suit-checks">
+          <div class="suit-row reveal d1">
+            <div class="suit-check">✓</div>
+            <div class="suit-text">
+              <h5>Long-horizon wealth builders</h5>
+              <p>You're comfortable committing for 2+ years and want compounding to do the heavy lifting.</p>
+            </div>
+          </div>
+          <div class="suit-row reveal d2">
+            <div class="suit-check">✓</div>
+            <div class="suit-text">
+              <h5>Drawdown-conscious investors</h5>
+              <p>You've lived through 2020 or 2022 and want smoother NAV curves — not 30% swings.</p>
+            </div>
+          </div>
+          <div class="suit-row reveal d3">
+            <div class="suit-check">✓</div>
+            <div class="suit-text">
+              <h5>Process-driven thinkers</h5>
+              <p>You value transparent, rules-based decision-making over discretionary fund manager calls.</p>
+            </div>
+          </div>
+          <div class="suit-row reveal d4">
+            <div class="suit-check">✓</div>
+            <div class="suit-text">
+              <h5>HNIs graduating from mutual funds</h5>
+              <p>You want personalised, tax-efficient portfolios held in your own demat — not pooled units.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal d2">
+        <div class="invest-card">
+          <div class="invest-amount">₹50 Lakh</div>
+          <div class="invest-amount-sub">Minimum investment · SEBI mandated</div>
+          <div class="invest-detail">
+            Your portfolio is held directly in your own DEMAT account — not a pooled fund. You retain full ownership and visibility at all times. Assets custodied with Nuvama Asset Services.
+          </div>
+        </div>
+
+        <div class="fee-grid" style="margin-bottom:14px;">
+          <div class="fee-tile">
+            <div class="fee-tile-lbl">Option A · Fixed Only</div>
+            <div class="fee-tile-val">1.80%</div>
+            <div class="fee-tile-sub">p.a. management fee<br>No performance fee</div>
+          </div>
+          <div class="fee-tile" style="border-color:rgba(201,169,110,0.25);">
+            <div class="fee-tile-lbl">Option B · Fixed + Perf</div>
+            <div class="fee-tile-val">1.80%</div>
+            <div class="fee-tile-sub">+ 15% above 10% p.a. hurdle<br>Interests aligned</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--slate);line-height:1.7;">
+          All fees are exclusive of applicable taxes. SEBI Registration: INP000009144. Custodian: Nuvama Asset Services.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     INVESTMENT PROCESS
+═══════════════════════════════════════════ -->
+<div class="section-wrap" id="process">
+  <div class="inner">
+    <div style="text-align:center; max-width:640px; margin: 0 auto 0;">
+      <div class="s-eyebrow reveal" style="justify-content:center;">How We Invest</div>
+      <h2 class="s-title reveal d1">A repeatable, <em>rules-driven</em> process</h2>
+      <p class="s-body reveal d2" style="margin: 16px auto 0; text-align:center;">
+        Five disciplined steps — executed algorithmically, monitored continuously. No emotion. No discretion.
+      </p>
+    </div>
+    <div class="process-track">
+      <div class="p-step reveal d1">
+        <div class="p-circle">1</div>
+        <h4>Model Formation</h4>
+        <p>Investment hypotheses derived from macro data, historical patterns, and economic frameworks</p>
+      </div>
+      <div class="p-step reveal d2">
+        <div class="p-circle">2</div>
+        <h4>Validation & Testing</h4>
+        <p>Backtesting, scenario analysis, and bias checks before any capital is deployed</p>
+      </div>
+      <div class="p-step reveal d3">
+        <div class="p-circle">3</div>
+        <h4>Signal Generation</h4>
+        <p>Model outputs translated to buy/sell/rotate signals across asset classes and factors</p>
+      </div>
+      <div class="p-step reveal d4">
+        <div class="p-circle">4</div>
+        <h4>Allocation & Execution</h4>
+        <p>Capital deployed against risk limits, portfolio constraints, and optimisation rules</p>
+      </div>
+      <div class="p-step reveal d5">
+        <div class="p-circle">5</div>
+        <h4>Monitor & Rebalance</h4>
+        <p>Continuous position monitoring; disciplined rebalancing when thresholds are breached</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TEAM
+═══════════════════════════════════════════ -->
+<div class="section-wrap alt" id="team">
+  <div class="inner">
+    <div class="s-eyebrow reveal">The Team</div>
+    <h2 class="s-title reveal d1">Experienced. Credentialled.<br><em>Fully aligned with you.</em></h2>
+    <div class="team-grid">
+      <div class="t-card reveal d1">
+        <div class="t-avatar">GC</div>
+        <div class="t-name">Gaurav Chhabra</div>
+        <div class="t-role">Designated Partner</div>
+        <div class="t-exp">20+ Years</div>
+        <div class="t-divider"></div>
+        <ul class="t-skills">
+          <li>Multi-asset systematic trading strategies</li>
+          <li>Market microstructure & statistical modelling</li>
+          <li>Risk management & regulatory compliance</li>
+        </ul>
+        <div class="t-creds">
+          B.Com, Delhi University (2001)<br>
+          NISM: Equity & Currency Derivatives<br>
+          NISM: Mutual Funds · Securities Compliance
+        </div>
+      </div>
+
+      <div class="t-card reveal d2">
+        <div class="t-avatar" style="background:linear-gradient(135deg,rgba(201,169,110,0.2),rgba(249,115,22,0.15));border-color:rgba(249,115,22,0.25);color:var(--gold2);">PS</div>
+        <div class="t-name">Parmeet Singh Chadha</div>
+        <div class="t-role">Designated Partner</div>
+        <div class="t-exp">25+ Years</div>
+        <div class="t-divider"></div>
+        <ul class="t-skills">
+          <li>Quantitative model development</li>
+          <li>Advanced options strategies & derivatives</li>
+          <li>Correlation modelling, systematic portfolio construction</li>
+        </ul>
+        <div class="t-creds">
+          B.Com(H), Hindu College DU (1995)<br>
+          MBA, FORE School of Management (1998)<br>
+          NISM: Derivatives (2019)
+        </div>
+      </div>
+
+      <div class="t-card reveal d3">
+        <div class="t-avatar" style="background:linear-gradient(135deg,rgba(45,212,191,0.15),rgba(34,197,94,0.15));border-color:rgba(45,212,191,0.25);color:var(--teal);">PV</div>
+        <div class="t-name">Pavit Singh</div>
+        <div class="t-role">Strategy & Relations</div>
+        <div class="t-exp">CFA All 3 Levels</div>
+        <div class="t-divider"></div>
+        <ul class="t-skills">
+          <li>Investment research & portfolio evaluation</li>
+          <li>Credit risk analytics across sectors</li>
+          <li>Business analytics (ex-Groww)</li>
+        </ul>
+        <div class="t-creds">
+          B.Com(H), Shri Ram College of Commerce<br>
+          CFA Program — All 3 levels cleared
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FAQ
+═══════════════════════════════════════════ -->
+<div class="section-wrap" id="faq" style="padding-bottom: 80px;">
+  <div class="inner" style="text-align:center; max-width:640px; margin:0 auto 0;">
+    <div class="s-eyebrow reveal" style="justify-content:center;">Common Questions</div>
+    <h2 class="s-title reveal d1">Everything you need<br><em>to decide.</em></h2>
+  </div>
+  <div class="faq-wrap reveal d2">
+    <div class="faq-item open">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What is the minimum investment?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a"><p>₹50 Lakhs as prescribed by SEBI for all Portfolio Management Services. This can be a combination of cash and/or securities transferred in-kind to your dedicated PMS DEMAT account. Your assets are never pooled with other investors.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Is there a lock-in period or exit load?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a"><p>Lock-in periods and exit loads are defined in your PMS agreement. Short-term redemptions may incur an exit fee. We strongly recommend a minimum 2-year horizon to allow the strategy's compounding effect to meaningfully express itself.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        How is risk managed in the portfolio?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a"><p>Risk is managed through continuous monitoring against predefined limits, stress-testing scenarios, market regime identification (bull/bear/volatile), and tactical hedges (NIFTY put options) that activate when valuation or volatility thresholds are breached. No leverage is ever used.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Do I get access to dashboards and performance reports?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a"><p>Yes — clients receive periodic reports and live dashboards showing holdings, performance attribution, and risk metrics via our custodian Nuvama Asset Services. Full transparency is a core commitment of the service.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        How are taxes handled?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a"><p>Since you directly own the securities in your DEMAT account, tax treatment can be optimised through timing of realisations. Consolidated tax reports are provided annually. We recommend consulting a tax advisor for your specific situation.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        PMS vs mutual fund — what's the key difference?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-a"><p>In PMS, you directly own specific securities in your own DEMAT account — unlike mutual funds where you hold units of a pooled vehicle. PMS offers greater customisation, full transparency, and better tax control. The trade-off is a higher minimum (₹50L) and greater concentration. PMS suits HNIs seeking tailored, actively managed portfolios with full visibility.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     CTA BAND
+═══════════════════════════════════════════ -->
+<div class="cta-band" id="contact">
+  <div class="cta-band-inner">
+    <div class="reveal">
+      <div style="font-family:var(--f-mono);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:14px;"><span style="width:28px;height:1px;background:var(--gold);display:inline-block;"></span>Get Started</div>
+      <div class="cta-band-title">Ready to invest<br>with <em style="font-style:italic;color:var(--gold);">discipline?</em></div>
+      <p class="cta-band-sub" style="margin-top:16px;">
+        Schedule a conversation with our team. We'll discuss your investment objectives, time horizon, and how Fusion PMS fits your broader portfolio.
+      </p>
+    </div>
+    <div class="cta-band-right reveal d2">
+      <a href="mailto:pmscompliance@pluswealth.com" class="btn-gold" style="font-size:15px;padding:16px 36px;">
+        Connect with Us
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="cta-contact">
+        <div><a href="tel:+918527820944">+91 85278 20944</a></div>
+        <div><a href="mailto:pmscompliance@pluswealth.com">pmscompliance@pluswealth.com</a></div>
+        <div style="color:var(--slate);margin-top:6px;">
+          Office No. 6A, Max Towers<br>
+          Sector-16B, Noida — 201301
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-mark">Plus<span>Wealth</span></div>
+        <div class="logo-sub" style="margin-top:4px;">Portfolio Management</div>
+      </div>
+      <p>A SEBI-registered Portfolio Management Service committed to disciplined, evidence-based, rules-driven wealth creation for long-term investors.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Strategies</h5>
+      <ul>
+        <li><a href="#">Fusion PMS</a></li>
+        <li><a href="#">Investment Process</a></li>
+        <li><a href="#">Risk Framework</a></li>
+        <li><a href="#">Performance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">About PlusWealth</a></li>
+        <li><a href="#">Team</a></li>
+        <li><a href="#">Downloads</a></li>
+        <li><a href="#">Compliance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="#">SEBI Disclosures</a></li>
+        <li><a href="#">Grievance Redressal</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      © 2026 PlusWealth Capital Management LLP. All rights reserved.<br>
+      Investment in securities is subject to market risk. Please read all related documents carefully before investing. Past performance (simulated or actual) is not indicative of future results. This website is for informational purposes only and does not constitute an offer or solicitation to invest.
+    </div>
+    <div class="footer-sebi">
+      SEBI PM Reg: INP000009144<br>
+      SEBI Reg: INZ000163752<br>
+      Gift City, Gandhinagar · Noida
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════ -->
+<script>
+// Sticky nav
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); revObs.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => revObs.observe(el));
+
+// FAQ
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// Animate numbers on entry
+function animateCounter(el, target, decimals, prefix, suffix, duration) {
+  let start = null;
+  const step = (ts) => {
+    if (!start) start = ts;
+    const p = Math.min((ts - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    const val = (target * ease).toFixed(decimals);
+    el.textContent = prefix + val + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// Trigger counters when KPI row enters view
+const kpiRow = document.querySelector('.perf-kpi-row');
+if (kpiRow) {
+  const cObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !e.target.dataset.counted) {
+        e.target.dataset.counted = '1';
+        const vals = e.target.querySelectorAll('.kpi-tile-val');
+        const configs = [
+          { el: vals[0], target: 6.95, d: 2, pre: '+', suf: '%', dur: 1200 },
+          { el: vals[1], target: 5.98, d: 2, pre: '+', suf: '%', dur: 1200 },
+          { el: vals[2], target: 5.07, d: 2, pre: '−', suf: '%', dur: 1000 },
+          { el: vals[3], target: 0.62, d: 2, pre: '', suf: '', dur: 1000 },
+        ];
+        configs.forEach(c => animateCounter(c.el, c.target, c.d, c.pre, c.suf, c.dur));
+      }
+    });
+  }, { threshold: 0.3 });
+  cObs.observe(kpiRow);
+}
+
+// Mobile nav toggle (basic)
+document.addEventListener('click', (e) => {
+  if (e.target.closest('a[href^="#"]')) {
+    e.preventDefault();
+    const id = e.target.closest('a').getAttribute('href');
+    const el = document.querySelector(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+</script>
+</body>
+</html>

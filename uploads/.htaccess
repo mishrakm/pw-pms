@@ -1,0 +1,13 @@
+# Secure uploads directory
+# Prevent direct access to files - force through download_file.php handler
+
+# Deny all direct access
+Order Deny,Allow
+Deny from all
+
+# Allow only specific file types to be uploaded (optional)
+<FilesMatch "\.(pdf|doc|docx|xls|xlsx|ppt|pptx|jpg|jpeg|png)$">
+    # Still deny direct access, but files can be served via PHP
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>

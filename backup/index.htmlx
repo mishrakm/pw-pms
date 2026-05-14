@@ -1,0 +1,679 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Pluswealth PMS</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+        <!-- Place favicon.png in the root directory -->
+
+		<!-- ========================= CSS here ========================= -->
+		<link rel="stylesheet" href="assets/css/bootstrap-5.0.0-alpha-1.min.css">
+        <link rel="stylesheet" href="assets/css/LineIcons.2.0.css">
+		<link rel="stylesheet" href="assets/css/animate.css">
+		<link rel="stylesheet" href="assets/css/main.css">
+    </head>
+    <body>
+        <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+        <!-- ========================= preloader start ========================= -->
+            <div class="preloader d-none">
+                <div class="loader">
+                    <div class="ytp-spinner">
+                        <div class="ytp-spinner-container">
+                            <div class="ytp-spinner-rotator">
+                                <div class="ytp-spinner-left">
+                                    <div class="ytp-spinner-circle"></div>
+                                </div>
+                                <div class="ytp-spinner-right">
+                                    <div class="ytp-spinner-circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- preloader end -->
+
+        <!-- ========================= header start ========================= -->
+        <header class="header navbar-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav class="navbar navbar-expand-lg">
+                            <a class="navbar-brand" href="index.html">
+                                <img src="assets/img/logo.png" alt="Logo">
+                            </a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                <ul id="nav" class="navbar-nav ml-auto">
+                                    <li class="nav-item">
+                                        <a class="page-scroll active" href="#home">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="#pluswealth">About</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="page-scroll dropdown-toggle" href="#" id="strategiesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Strategies</a>
+                                        <div class="dropdown-menu" aria-labelledby="strategiesDropdown">
+                                            <a class="dropdown-item page-scroll" href="#about">Strategy A</a>
+                                            <a class="dropdown-item page-scroll" href="#feature">Strategy B</a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="#service">Fusion</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="#team">Team</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="page-scroll" href="#contact">Contact</a>
+                                    </li>
+                                </ul>
+                            </div> <!-- navbar collapse -->
+                        </nav> <!-- navbar -->
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->
+        
+        </header>
+        <!-- ========================= header end ========================= -->
+
+        <!-- ========================= hero-section start ========================= -->
+        <section id="home" class="hero-section">
+            <div class="shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-7 col-lg-7">
+                        <div class="hero-content-wrapper">
+                            <h1 class="text-white wow fadeInDown" data-wow-delay=".2s">Portfolio management for consistent long-term compounding.  </h1>
+                            <p class="text-white wow fadeInLeft"  data-wow-delay=".4s">A rule-based PMS that blends market signals, risk controls, and dynamic asset allocation to help investors grow wealth steadily across market cycles.</p>
+                            <a href="#" class="theme-btn wow fadeInUp"  data-wow-delay=".6s">Connect with Us</a>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-5">
+                        <div class="hero-img">
+                            <img src="assets/img/hero-1.png" alt="" class="wow fadeInRight"  data-wow-delay=".5s">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========================= hero-section end ========================= -->
+
+        <!--========================= feature-section start========================= -->
+        <section id="feature" class="feature-section pt-150">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-7 col-lg-8 mx-auto">
+                        <div class="section-title text-center mb-55">
+                            <h2 class="mb-20 wow fadeInUp" data-wow-delay=".2s">Our Specialities</h2>
+                            <p class="wow fadeInUp" data-wow-delay=".4s">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed dianonumy eirmod tempor invidunt ut labore .</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="features-wrapper">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="single-feature text-center mb-30 wow fadeInUp" data-wow-delay=".2s">
+                                <div class="feature-img mb-20">
+                                    <img src="assets/img/feature-1.svg" alt="">
+                                </div>
+                                <div class="feature-content">
+                                    <h5>Rs. 2000Cr.</h5>
+                                    <p>Assets Under Management</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="single-feature text-center mb-30 wow fadeInUp" data-wow-delay=".4s">
+                                <div class="feature-img mb-25">
+                                    <img src="assets/img/feature-2.svg" alt="">
+                                </div>
+                                <div class="feature-content">
+                                    <h5>1500+</h5>
+                                    <p>CLients</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="single-feature text-center mb-30 wow fadeInUp" data-wow-delay=".6s">
+                                <div class="feature-img mb-20">
+                                    <img src="assets/img/feature-3.svg" alt="">
+                                </div>
+                                <div class="feature-content">
+                                    <h5>Rs. 108L</h5>
+                                    <p>Median Client AUM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--========================= feature-section end========================= -->
+
+        <!-- ========================= Pluswealth PMS (moved) start ========================= -->
+        <section id="pluswealth" class="pt-60 pb-60">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 col-lg-10 mx-auto">
+                        <div class="section-title text-center mb-55">
+                            <h2 class="mb-20 wow fadeInUp" data-wow-delay=".2s">Pluswealth PMS</h2>
+                            <p class="wow fadeInUp" data-wow-delay=".4s">Discover PlusWealth PMS: our philosophy, risk management approach, suitability and practical details.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 1: What is PlusWealth PMS -->
+                <div class="row align-items-center mb-60">
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
+                        <div class="overview-img text-center">
+                            <img src="assets/img/feature-2.svg" alt="What is PlusWealth PMS" style="max-width:360px">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay=".4s">
+                        <h3>What is PlusWealth PMS</h3>
+                        <p>PlusWealth PMS is a rule-based portfolio management service that combines systematic signals, disciplined risk controls, and dynamic asset allocation to pursue steady compounding over market cycles.</p>
+                    </div>
+                </div>
+
+                <!-- Row 2: Investment philosophy (image right) -->
+                <div class="row align-items-center mb-60">
+                    <div class="col-lg-6 order-lg-2 wow fadeInRight" data-wow-delay=".2s">
+                        <div class="overview-img text-center">
+                            <img src="assets/img/feature-3.svg" alt="Investment philosophy" style="max-width:360px">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-lg-1 wow fadeInLeft" data-wow-delay=".4s">
+                        <h3>Our investment philosophy</h3>
+                        <p>We favor evidence-based, repeatable rules over discretion. Diversification across assets and factors, combined with regime-aware risk controls, helps us target consistent returns while limiting downside.</p>
+                    </div>
+                </div>
+
+                <!-- Row 3: How we manage risk (image left) -->
+                <div class="row align-items-center mb-60">
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
+                        <div class="overview-img text-center">
+                            <img src="assets/img/about-img.svg" alt="How we manage risk" style="max-width:360px">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay=".4s">
+                        <h3>How we manage risk</h3>
+                        <p>Risk is managed via regime detection, position sizing limits, stop/overlay rules, and continuous stress-testing. Tactical hedges and liquidity buffers are used when downside risk rises.</p>
+                    </div>
+                </div>
+
+                <!-- Row 4: Why rule-based investing (image right) -->
+                <div class="row align-items-center mb-60">
+                    <div class="col-lg-6 order-lg-2 wow fadeInRight" data-wow-delay=".2s">
+                        <div class="overview-img text-center">
+                            <img src="assets/img/feature-1.svg" alt="Why rule-based investing" style="max-width:360px">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-lg-1 wow fadeInLeft" data-wow-delay=".4s">
+                        <h3>Why rule-based investing</h3>
+                        <p>Rules reduce behavioral biases and improve consistency. By codifying decisions we can backtest, measure, and improve strategies while ensuring disciplined execution.</p>
+                    </div>
+                </div>
+
+                <!-- Row 5: Who this PMS is suitable for & practicals -->
+                <div class="row align-items-center mb-60">
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
+                        <h3>Who this PMS is suitable for</h3>
+                        <ul>
+                            <li>Investors seeking long-term capital growth with downside protection</li>
+                            <li>Those comfortable with a multi-year horizon</li>
+                            <li>Clients who prefer transparent, rule-based processes</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay=".4s">
+                        <h3>Minimum investment & regulatory details</h3>
+                        <p>Minimum investment and regulatory specifics vary by product and jurisdiction. Typically, minimums start at INR 10,00,000; assets are held with regulated custodians and the PMS operates under applicable regulatory frameworks. Contact us for the definitive product brochure and compliance documents.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========================= PMS Overview (moved) end ========================= -->
+
+        <!-- ========================= about-section start ========================= -->
+        <section id="about" class="about-section pt-150 pb-20">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="about-img mb-30">
+                            <img src="assets/img/about-img.svg" alt="image" class=" wow fadeInLeft" data-wow-delay=".4s">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="about-content mb-30">
+                            <div class="section-title mb-40">
+                                <h2 class="wow fadeInUp" data-wow-delay=".2s">About Us</h2>
+                            </div>
+                            <p class="mb-15 wow fadeInUp" data-wow-delay=".4s">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed dianonumy eirmod tempor invidunt ut labore. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed dianonumy eirmod tempor invidunt ut labore. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed dianonumy eirmod tempor invidunt ut labore.</p>
+                            <p class="mb-35 wow fadeInUp" data-wow-delay=".6s">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed dianonumy eirmod tempor invidunt ut labore. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed dianonumy eirmod tempor invidunt ut labore.</p>
+                            <a href="#" class="theme-btn theme-btn-2 wow fadeInRight" data-wow-delay=".8s">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========================= about-section end ========================= -->
+
+        <!-- ========================= service-section start ========================= -->
+        <section id="service" class="service-section pt-120 pb-120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 col-lg-10 mx-auto">
+                        <div class="section-title text-center mb-55">
+                            <h2 class="mb-20 wow fadeInUp" data-wow-delay=".2s">Strategy: Fusion</h2>
+                            <p class="wow fadeInUp" data-wow-delay=".4s">Fusion is a signal-driven multi-asset Portfolio Management Strategy (PMS) designed to deliver stable, risk-managed compounding across market cycles. Below we outline the strategy overview, key features, returns, and frequently asked questions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4.1 Fusion – Overview -->
+                <div class="row align-items-center mb-40">
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
+                        <div class="fusion-img text-center">
+                            <img src="assets/img/feature-2.svg" alt="Fusion overview" style="max-width:360px">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay=".4s">
+                        <h3 class="mb-15">4.1 Fusion – Overview</h3>
+                        <p><strong>What Fusion is</strong> — A signal-driven multi-asset PMS that blends valuation, regime detection and momentum signals to allocate across equities, quality factors, and defensive assets.</p>
+                        <p><strong>Objective</strong> — Stable compounding with risk-managed exposure: target attractive long-term growth while limiting large drawdowns through active risk management.</p>
+                        <p><strong>Philosophy</strong> — Discipline, diversification and evidence-based rules. Fusion favors systematic, transparent rules over discretionary bets and emphasizes structural robustness.</p>
+                        <p><strong>Key components</strong> — Valuation bands to gauge cheap/expensive markets; regime detection to identify bull/bear/backdrop; asset rotation across asset classes; tactical overlays for drawdown protection.</p>
+                        <p><strong>Suitable investor profile</strong> — Investors seeking long-term capital growth with an emphasis on downside protection, a multi-year investment horizon, and a tolerance for moderate short-term volatility.</p>
+                    </div>
+                </div>
+
+                <!-- 4.2 Fusion – Features -->
+                <div class="row align-items-center mb-40">
+                    <div class="col-lg-6 order-lg-2 wow fadeInRight" data-wow-delay=".2s">
+                        <div class="fusion-img text-center">
+                            <img src="assets/img/feature-3.svg" alt="Fusion features" style="max-width:360px">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-lg-1 wow fadeInLeft" data-wow-delay=".4s">
+                        <h3 class="mb-15">4.2 Fusion – Features</h3>
+                        <ul>
+                            <li><strong>Rule-based decision engine</strong> — Deterministic rules convert market signals into portfolio decisions, ensuring repeatability and auditability.</li>
+                            <li><strong>Regime-aware risk model</strong> — Adjusts allocations and risk budgets based on detected market regimes to reduce exposure in adverse environments.</li>
+                            <li><strong>Dynamic asset allocation</strong> — Rotates capital across Quality, Momentum, and defensive assets (Gold/Debt) depending on signal strength.</li>
+                            <li><strong>Drawdown protection overlays</strong> — Tactical overlays (options, hedges or cash buffers) are applied when downside risk is elevated.</li>
+                            <li><strong>Low churn + disciplined execution</strong> — Minimizes transaction costs by only trading when signals cross thresholds; execution follows strict slippage controls.</li>
+                            <li><strong>Investment universe</strong> — A diversified universe including large-cap equities, factor buckets (e.g., quality/momentum), sovereign bonds, and gold.</li>
+                            <li><strong>Transparent and auditable process</strong> — All rules and signals are versioned, backtests and trade logs are maintained for auditability.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 4.3 Fusion – Returns -->
+                <div class="row align-items-center mb-40">
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay=".2s">
+                        <div class="fusion-img text-center">
+                            <img src="assets/img/about-img.svg" alt="Fusion returns" style="max-width:360px">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay=".4s">
+                        <h3 class="mb-15">4.3 Fusion – Returns</h3>
+                        <p>Latest performance snapshot (placeholder). Below is a sample annual/calendar table and a benchmark comparison. Replace with live data to reflect accurate performance.</p>
+                        <div class="table-responsive mb-30">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Fusion Return</th>
+                                        <th>Benchmark Return</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2025 (YTD)</td>
+                                        <td>+8.5%</td>
+                                        <td>+7.2%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024</td>
+                                        <td>+12.3%</td>
+                                        <td>+10.1%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2023</td>
+                                        <td>-3.2%</td>
+                                        <td>-6.9%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p><strong>Benchmark comparison</strong> — Fusion aims to outperform a blended benchmark (equities + bonds / risk parity proxy) on a risk-adjusted basis, with lower drawdown during adverse regimes.</p>
+                    </div>
+                </div>
+
+                <!-- 4.4 Fusion – FAQs -->
+                <div class="row mb-80">
+                    <div class="col-lg-8 mx-auto">
+                        <h3 class="mb-15">4.4 Fusion – FAQs</h3>
+                        <div class="faq-list" id="fusionFaq">
+                            <div class="faq-item mb-3">
+                                <button class="faq-toggle btn btn-link d-flex align-items-center" data-toggle="collapse" data-target="#faq1" aria-expanded="false" aria-controls="faq1">
+                                    <span class="faq-icon mr-3">+</span>
+                                    <strong>Minimum investment</strong>
+                                </button>
+                                <div id="faq1" class="collapse" data-parent="#fusionFaq">
+                                    <div class="card card-body">Typically depends on the product variant; contact us for current minimums. (Placeholder: INR 10,00,000)</div>
+                                </div>
+                            </div>
+
+                            <div class="faq-item mb-3">
+                                <button class="faq-toggle btn btn-link d-flex align-items-center" data-toggle="collapse" data-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                                    <span class="faq-icon mr-3">+</span>
+                                    <strong>Lock-in / exit load</strong>
+                                </button>
+                                <div id="faq2" class="collapse" data-parent="#fusionFaq">
+                                    <div class="card card-body">Lock-in periods and exit loads vary by product; exits are processed per PMS agreement. Short-term redemptions may incur an exit fee.</div>
+                                </div>
+                            </div>
+
+                            <div class="faq-item mb-3">
+                                <button class="faq-toggle btn btn-link d-flex align-items-center" data-toggle="collapse" data-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                                    <span class="faq-icon mr-3">+</span>
+                                    <strong>Risk management process</strong>
+                                </button>
+                                <div id="faq3" class="collapse" data-parent="#fusionFaq">
+                                    <div class="card card-body">Continuous monitoring: risk limits, stress-tests, regime identification and tactical hedges are applied when thresholds are breached.</div>
+                                </div>
+                            </div>
+
+                            <div class="faq-item mb-3">
+                                <button class="faq-toggle btn btn-link d-flex align-items-center" data-toggle="collapse" data-target="#faq4" aria-expanded="false" aria-controls="faq4">
+                                    <span class="faq-icon mr-3">+</span>
+                                    <strong>Whether client gets live dashboards</strong>
+                                </button>
+                                <div id="faq4" class="collapse" data-parent="#fusionFaq">
+                                    <div class="card card-body">Yes — Clients have access to periodic reports and dashboards showing holdings, performance, and risk metrics. Live dashboards are available for eligible clients.</div>
+                                </div>
+                            </div>
+
+                            <div class="faq-item mb-3">
+                                <button class="faq-toggle btn btn-link d-flex align-items-center" data-toggle="collapse" data-target="#faq5" aria-expanded="false" aria-controls="faq5">
+                                    <span class="faq-icon mr-3">+</span>
+                                    <strong>Tax considerations</strong>
+                                </button>
+                                <div id="faq5" class="collapse" data-parent="#fusionFaq">
+                                    <div class="card card-body">Tax treatment depends on jurisdiction and investor status. We recommend consulting a tax advisor; consolidated tax reports are provided annually.</div>
+                                </div>
+                            </div>
+
+                            <div class="faq-item mb-3">
+                                <button class="faq-toggle btn btn-link d-flex align-items-center" data-toggle="collapse" data-target="#faq6" aria-expanded="false" aria-controls="faq6">
+                                    <span class="faq-icon mr-3">+</span>
+                                    <strong>Custody & regulatory compliance</strong>
+                                </button>
+                                <div id="faq6" class="collapse" data-parent="#fusionFaq">
+                                    <div class="card card-body">Assets are held with regulated custodians; the PMS operates under applicable regulatory frameworks and maintains compliance and audit trails.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========================= service-section end ========================= -->
+
+        <!-- ========================= roadmap-section start ========================= -->
+        <section id="roadmap" class="roadmap-section pt-100 pb-70 img-bg">
+
+        </section>
+        <!-- ========================= roadmap-section end ========================= -->
+
+        <!-- ========================= grows-section start ========================= -->
+        <section class="grows-section pt-150">
+
+        </section>
+        <!-- ========================= grows-section end ========================= -->
+
+        <!-- ========================= team-section start ========================= -->
+        <section id="team" class="team-section pt-120 pb-120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-8 col-lg-8 mx-auto">
+                        <div class="section-title text-center mb-55">
+                            <h2 class="mb-20 wow fadeInUp" data-wow-delay=".2s">Meet the Team</h2>
+                            <p class="wow fadeInUp" data-wow-delay=".4s">A small, dedicated team focused on research, portfolio construction and risk management. Below are our portfolio managers and analysts who build and monitor our strategies.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="single-team text-center mb-30 wow fadeInUp" data-wow-delay=".2s">
+                            <div class="team-thumb mb-20">
+                                <img src="assets/img/hero-1.png" alt="Team member" style="max-width:180px;border-radius:50%;">
+                            </div>
+                            <div class="team-content">
+                                <h5>Alex Morgan</h5>
+                                <p class="text-muted">Portfolio Manager</p>
+                                <p class="mb-0">Leads strategy research and oversees portfolio allocation with a focus on risk-adjusted returns.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="single-team text-center mb-30 wow fadeInUp" data-wow-delay=".4s">
+                            <div class="team-thumb mb-20">
+                                <img src="assets/img/about-img.svg" alt="Team member" style="max-width:180px;border-radius:50%;">
+                            </div>
+                            <div class="team-content">
+                                <h5>Priya Sharma</h5>
+                                <p class="text-muted">Quant Analyst</p>
+                                <p class="mb-0">Builds and validates signals, backtests investment rules and ensures model robustness.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="single-team text-center mb-30 wow fadeInUp" data-wow-delay=".6s">
+                            <div class="team-thumb mb-20">
+                                <img src="assets/img/feature-1.svg" alt="Team member" style="max-width:180px;border-radius:50%;">
+                            </div>
+                            <div class="team-content">
+                                <h5>Daniel Lee</h5>
+                                <p class="text-muted">Risk Manager</p>
+                                <p class="mb-0">Manages exposures and implements risk controls to protect client capital through market cycles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========================= team-section end ========================= -->
+
+        <!-- ========================= countdown-section start ========================= -->
+        <section class="countdown-section pt-70 pb-70 img-bg" style="background-image: url(assets/img/common-bg.jpg)">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="countdown-img">
+                            <img src="assets/img/countdown-img.svg" alt="" class=" wow fadeInLeft" data-wow-delay=".4s">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="countdown-content-wrapper">
+                            <div class="countdown">
+                                <ul id="countdown-example">
+                                    <li><span class="days">89</span>
+                                        <p class="days_text">DAYS</p>
+                                    </li>
+                                    <li><span class="hours">53</span>
+                                        <p class="hours_text">HOUR</p>
+                                    </li>
+                                    <li><span class="minutes">34</span>
+                                        <p class="minutes_text">MINS</p>
+                                    </li>
+                                    <li><span class="seconds">08</span>
+                                        <p class="seconds_text">SECS</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="countdown-content">
+                                <h2 class="text-white mb-35  wow fadeInUp" data-wow-delay=".2s">Smart and Secure Way
+                                to Invest in Crypto</h2>
+                                <p class="text-white mb-30 wow fadeInUp" data-wow-delay=".4s">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed dianonumy eirmod tempor invidunt. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed dianonumy eirmod tempor invidunt ut labore.</p>
+                                <a href="#" class="theme-btn wow fadeInUp" data-wow-delay=".6s">Buy Token Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ========================= countdown-section end ========================= -->
+
+        <!-- ========================= contact-section start ========================= -->
+        <section id="contact" class="contact-section pt-120 pb-105">
+            <div class="container">
+                <div class="row align-items-end">
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="contact-wrapper mb-30">
+                            <h2 class="mb-20 wow fadeInDown" data-wow-delay=".2s">Connect With Us</h2>
+                            <p class="mb-55 wow fadeInUp" data-wow-delay=".4s">Schedule a Call with the Portfolio Manager</p>
+                            <form action="assets/mail.php" method="POST" id="contact-form" class="contact-form">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <input type="text" id="name" name="name" placeholder="Name">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <input type="email" id="email" name="email" placeholder="Email">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <input type="text" id="phone" name="phone" placeholder="Phone">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <input type="text" id="subject" name="subject" placeholder="City">
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <input type="text" id="subject" name="ticket_size" placeholder="Ticket Size">
+                                    </div>
+                                </div>                                
+                                <button type="submit" class="theme-btn theme-btn-2">SEND MESSAGE</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+        <!-- ========================= contact-section end ========================= -->
+
+        <!-- ========================= footer start ========================= -->
+        <footer class="footer pt-100 img-bg" style="background-image: url(assets/img/common-bg.jpg)">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="footer-widget mb-60 wow fadeInLeft" data-wow-delay=".2s">
+                            <a href="index.html" class="logo mb-40"><img src="assets/img/logo.svg" alt=""></a>
+                            <p class="mb-30">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed dianonumy eirmod tempor invidunt ut labore.</p>
+                            <div class="footer-social-links">
+                                <ul>
+                                    <li><a href="#"><i class="lni lni-facebook-filled"></i></a></li>
+                                    <li><a href="#"><i class="lni lni-twitter-filled"></i></a></li>
+                                    <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                                    <li><a href="#"><i class="lni lni-instagram-original"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-6">
+                        <div class="footer-widget mb-60 wow fadeInUp" data-wow-delay=".4s">
+                            <h4>Company</h4>
+                            <ul class="footer-links">
+                                <li>
+                                    <a href="javascript:void(0)">Home</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">About</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">Service</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">Team</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6">
+                        <div class="footer-widget mb-60 wow fadeInUp" data-wow-delay=".6s">
+                            <h4>Resource</h4>
+                            <ul class="footer-links">
+                                <li>
+                                    <a href="javascript:void(0)">Documentation</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">IOS & Android Apps</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">Privacy Policy</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">Support Forum</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">Terms Conditions</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6">
+                        <div class="footer-widget mb-60 wow fadeInRight" data-wow-delay=".8s">
+                            <h4>Resource</h4>
+                            <ul>
+                                <li class="mb-30">
+                                    <p>Company No: C5B345 <br>
+                                        CSINE GROUP LTD.</p>
+                                </li>
+                                <li>
+                                    <p>Address: M-321 Volunt Ave, <br> Staten Islandm, NY 201526</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright-area">
+                    <p class="mb-0 text-white text-center">Template By <a href="https://uideck.com" rel="nofollow" target="_blank">UIdeck</a></p>
+                </div>
+            </div>
+        </footer>
+        <!-- ========================= footer end ========================= -->
+
+
+        <!-- ========================= scroll-top ========================= -->
+        <a href="#" class="scroll-top">
+            <i class="lni lni-chevron-up"></i>
+        </a>
+        
+		<!-- ========================= JS here ========================= -->
+		<script src="assets/js/bootstrap.bundle-5.0.0.alpha-1-min.js"></script>
+        <script src="assets/js/contact-form.js"></script>
+        <script src="assets/js/wow.min.js"></script>
+		<script src="assets/js/main.js"></script>
+    </body>
+</html>
