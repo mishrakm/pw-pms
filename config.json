@@ -7,7 +7,7 @@
     "host": "ftp.pluswealth.com",
     "user": "pluswoir_pms+pms.pluswealth.com",
     "password": "Pm$plusW3alth",
-    "root": "/new"
+    "root": "/"
   },
 
   "delete_remote": true,
