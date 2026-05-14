@@ -104,6 +104,11 @@ foreach ($annualTrend as $r) {
 
 <div class="section-wrap" id="compliance">
   <div class="inner">
+    <div style="margin-bottom:48px;">
+      <div class="s-eyebrow reveal">Compliance</div>
+      <h2 class="s-title reveal d1">Complaint Handling</h2>
+    </div>
+
     <h3 style="font-family:var(--f-body);font-size:15px;font-weight:600;color:var(--white);margin:56px 0 6px;letter-spacing:0.5px;">Data for the month ending <?= cesc((string)($meta['month_ending'] ?? '')) ?></h3>
 
     <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:20px;">
