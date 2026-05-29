@@ -4,11 +4,12 @@ include 'header.php';
 
 require_once __DIR__ . '/includes/db_config.php';
 
-$annualizedReturn = '+5.9%';
-$niftyReturn = '+0.0%';
-$latestDataDate = 'Not updated';
-$maxDrawdown = '-5.8%';
-$benchmarkDrawdown = '-15.2%';
+
+// $annualizedReturn = '+5.9%';
+// $niftyReturn = '+0.0%';
+// $latestDataDate = 'Not updated';
+// $maxDrawdown = '-5.8%';
+// $benchmarkDrawdown = '-15.2%';
 
 try {
   $conn = get_db_connection();
@@ -25,21 +26,21 @@ try {
       $value = htmlspecialchars(trim($metric['metric_value'] ?? ''), ENT_QUOTES);
       $benchmark = htmlspecialchars(trim($metric['benchmark_value'] ?? ''), ENT_QUOTES);
 
-      if ($key === 'annualized_return' && $value !== '') {
-        $annualizedReturn = $value;
-      }
-      if ($key === 'nifty_return' && $value !== '') {
-        $niftyReturn = $value;
-      }
-      if ($key === 'max_drawdown' && $value !== '') {
-        $maxDrawdown = $value;
-      }
-      if ($key === 'max_drawdown' && $benchmark !== '') {
-        $benchmarkDrawdown = $benchmark;
-      }
-      if ($key === 'latest_data_date' && $value !== '') {
-        $latestDataDate = $value;
-      }
+      // if ($key === 'annualized_return' && $value !== '') {
+      //   $annualizedReturn = $value;
+      // }
+      // if ($key === 'nifty_return' && $value !== '') {
+      //   $niftyReturn = $value;
+      // }
+      // if ($key === 'max_drawdown' && $value !== '') {
+      //   $maxDrawdown = $value;
+      // }
+      // if ($key === 'max_drawdown' && $benchmark !== '') {
+      //   $benchmarkDrawdown = $benchmark;
+      // }
+      // if ($key === 'latest_data_date' && $value !== '') {
+      //   $latestDataDate = $value;
+      // }
     }
   }
 } catch (Throwable $e) {
@@ -83,6 +84,7 @@ try {
       </div>
 
       <div style="padding-top:210px;">
+        <!--
         <div class="stat-stack reveal d2">
           <div class="stat-row">
             <div class="stat-row-label">Annualised return</div>
@@ -93,9 +95,11 @@ try {
             <div class="stat-row-val w"><?= $maxDrawdown ?></div>
           </div>
         </div>
+        
         <div style="font-size:11px;color:var(--slate);margin-top:12px;font-style:italic;line-height:1.6;">
           Live data as of <?= $latestDataDate ?>. Past performance is not indicative of future results.
         </div>
+        -->
       </div>
     </div>
   </div>
