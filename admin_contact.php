@@ -100,6 +100,46 @@ try {
     $successMsg = 'Lead updated successfully.';
   }
 
+  // ── CSV export for selected leads ─────────────────────────────────────────
+  if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['export_csv'])) {
+    $rawIds = explode(',', (string)($_POST['export_ids'] ?? ''));
+    $ids = array_values(array_filter(array_map('intval', $rawIds)));
+    if (!empty($ids)) {
+      $placeholders = implode(',', array_fill(0, count($ids), '?'));
+      $types = str_repeat('i', count($ids));
+      $expStmt = $conn->prepare(
+        "SELECT id, submitted_at, name, email, phone, city, ticket_size, status, notes
+         FROM contact_submissions WHERE id IN ($placeholders) ORDER BY submitted_at DESC"
+      );
+      $expStmt->bind_param($types, ...$ids);
+      $expStmt->execute();
+      $expResult = $expStmt->get_result();
+
+      header('Content-Type: text/csv; charset=UTF-8');
+      header('Content-Disposition: attachment; filename="leads_' . date('Y-m-d') . '.csv"');
+      header('Cache-Control: no-cache, no-store, must-revalidate');
+      $out = fopen('php://output', 'w');
+      // UTF-8 BOM so Excel opens it correctly
+      fwrite($out, "\xEF\xBB\xBF");
+      fputcsv($out, ['ID', 'Date', 'Name', 'Email', 'Phone', 'City', 'Ticket Size', 'Status', 'Notes']);
+      while ($r = $expResult->fetch_assoc()) {
+        fputcsv($out, [
+          $r['id'],
+          $r['submitted_at'],
+          $r['name'],
+          $r['email'],
+          $r['phone'],
+          $r['city'] ?? '',
+          $r['ticket_size'] ?? '',
+          $r['status'],
+          $r['notes'] ?? '',
+        ]);
+      }
+      fclose($out);
+      exit;
+    }
+  }
+
   $statsSql = "SELECT
       COUNT(*) AS total,
       SUM(CASE WHEN status = 'new' THEN 1 ELSE 0 END) AS new_count,
@@ -194,6 +234,13 @@ try {
     textarea { min-height:58px; resize:vertical; }
     .btn-update { margin-top:6px; width:100%; background:#0d78ff; border:none; border-radius:8px; color:#fff; padding:8px; cursor:pointer; font-size:12px; }
     .muted { color:#b7c3d9; font-size:12px; }
+    .cb-col { width:36px; text-align:center; }
+    input[type="checkbox"] { width:15px; height:15px; cursor:pointer; accent-color:#0d78ff; }
+    .toolbar { display:flex; gap:10px; align-items:center; margin-bottom:10px; flex-wrap:wrap; }
+    .btn-dl { background:#16a34a; color:#fff; border:none; border-radius:8px; padding:9px 14px; cursor:pointer; font-size:13px; font-weight:600; }
+    .btn-dl:disabled { opacity:0.4; cursor:not-allowed; }
+    .sel-count { color:#b7c3d9; font-size:13px; }
+    tr.selected-row { background: rgba(13,120,255,0.08); }
     @media (max-width: 980px) { .stats { grid-template-columns:repeat(2,minmax(0,1fr)); } }
   </style>
 </head>
@@ -231,9 +278,22 @@ try {
 
     <div class="panel table-wrap">
       <?php if ($result instanceof mysqli_result && $result->num_rows > 0): ?>
+      <!-- Export form (hidden) -->
+      <form id="export-form" method="post">
+        <input type="hidden" name="export_csv" value="1">
+        <input type="hidden" name="export_ids" id="export-ids-input">
+      </form>
+      <div class="toolbar">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+          <input type="checkbox" id="cb-all"> Select all
+        </label>
+        <span class="sel-count" id="sel-count">0 selected</span>
+        <button class="btn-dl" id="btn-download" disabled onclick="submitExport()">⬇ Download Excel</button>
+      </div>
       <table>
         <thead>
           <tr>
+            <th class="cb-col"></th>
             <th>ID</th>
             <th>Date</th>
             <th>Name</th>
@@ -249,6 +309,7 @@ try {
           <?php while ($row = $result->fetch_assoc()): ?>
             <?php $status = (string)($row['status'] ?? 'new'); ?>
             <tr>
+              <td class="cb-col"><input type="checkbox" class="lead-cb" value="<?= (int)$row['id'] ?>"></td>
               <td><?= (int)$row['id'] ?></td>
               <td><?= htmlspecialchars(date('M d, Y H:i', strtotime((string)$row['submitted_at'])), ENT_QUOTES) ?></td>
               <td><?= htmlspecialchars((string)($row['name'] ?? ''), ENT_QUOTES) ?></td>
@@ -279,5 +340,38 @@ try {
       <?php endif; ?>
     </div>
   </div>
+<script>
+  const cbAll = document.getElementById('cb-all');
+  const btnDl = document.getElementById('btn-download');
+  const selCount = document.getElementById('sel-count');
+
+  function updateToolbar() {
+    const cbs = document.querySelectorAll('.lead-cb');
+    const checked = document.querySelectorAll('.lead-cb:checked');
+    cbAll.indeterminate = checked.length > 0 && checked.length < cbs.length;
+    cbAll.checked = cbs.length > 0 && checked.length === cbs.length;
+    btnDl.disabled = checked.length === 0;
+    selCount.textContent = checked.length + ' selected';
+    document.querySelectorAll('tr').forEach(tr => {
+      const cb = tr.querySelector('.lead-cb');
+      if (cb) tr.classList.toggle('selected-row', cb.checked);
+    });
+  }
+
+  cbAll && cbAll.addEventListener('change', () => {
+    document.querySelectorAll('.lead-cb').forEach(cb => cb.checked = cbAll.checked);
+    updateToolbar();
+  });
+
+  document.addEventListener('change', e => {
+    if (e.target.classList.contains('lead-cb')) updateToolbar();
+  });
+
+  function submitExport() {
+    const ids = [...document.querySelectorAll('.lead-cb:checked')].map(cb => cb.value).join(',');
+    document.getElementById('export-ids-input').value = ids;
+    document.getElementById('export-form').submit();
+  }
+</script>
 </body>
 </html>
