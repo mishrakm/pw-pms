@@ -1,29 +1,27 @@
 <?php
-define('ADMIN_PASSWORD', 'PwAdmin2026!');
-
 require_once __DIR__ . '/includes/db_config.php';
+$appConfig = require __DIR__ . '/includes/app_config.php';
 
 session_start();
 
+$portalPassword = (string)($appConfig['leads_portal']['password'] ?? 'LeadsTeam2026!');
 $authError = '';
 $errorMsg = '';
-$successMsg = '';
 
-$authed = !empty($_SESSION['admin_authenticated']) || !empty($_SESSION['pw_admin_auth']);
+$authed = !empty($_SESSION['leads_team_authenticated']);
 
 if (isset($_GET['logout']) && $_GET['logout'] === '1') {
-  unset($_SESSION['admin_authenticated'], $_SESSION['pw_admin_auth'], $_SESSION['admin_time']);
+  unset($_SESSION['leads_team_authenticated'], $_SESSION['leads_team_auth_time']);
   session_destroy();
-  header('Location: admin_contact.php');
+  header('Location: leads_team.php');
   exit;
 }
 
-if (!$authed && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_login'])) {
-  $entered = (string)($_POST['admin_password'] ?? '');
-  if ($entered === ADMIN_PASSWORD) {
-    $_SESSION['admin_authenticated'] = true;
-    $_SESSION['pw_admin_auth'] = true;
-    $_SESSION['admin_time'] = time();
+if (!$authed && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['team_login'])) {
+  $entered = (string)($_POST['team_password'] ?? '');
+  if ($entered === $portalPassword) {
+    $_SESSION['leads_team_authenticated'] = true;
+    $_SESSION['leads_team_auth_time'] = time();
     $authed = true;
   } else {
     $authError = 'Incorrect password.';
@@ -37,7 +35,7 @@ if (!$authed) {
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Contact Leads</title>
+    <title>Leads Team Access</title>
     <style>
       body { font-family: "Segoe UI", Arial, sans-serif; background:#0a0f1a; margin:0; color:#fff; }
       .wrap { min-height:100vh; display:grid; place-items:center; padding:20px; }
@@ -53,12 +51,12 @@ if (!$authed) {
   <body>
     <div class="wrap">
       <form class="card" method="post">
-        <h1>Contact Leads</h1>
-        <p>CMS access required.</p>
+        <h1>Leads Team</h1>
+        <p>View and export leads without CMS access.</p>
         <?php if ($authError): ?><div class="err"><?= htmlspecialchars($authError, ENT_QUOTES) ?></div><?php endif; ?>
-        <label for="admin_password">Admin Password</label>
-        <input type="password" id="admin_password" name="admin_password" required autofocus>
-        <button type="submit" name="admin_login" value="1">Login</button>
+        <label for="team_password">Access Password</label>
+        <input type="password" id="team_password" name="team_password" required autofocus>
+        <button type="submit" name="team_login" value="1">Login</button>
       </form>
     </div>
   </body>
@@ -67,8 +65,8 @@ if (!$authed) {
   exit;
 }
 
-$statusFilter = (string)($_GET['status'] ?? 'all');
 $search = trim((string)($_GET['search'] ?? ''));
+$statusFilter = (string)($_GET['status'] ?? 'all');
 $allowedStatuses = ['new', 'contacted', 'converted', 'closed'];
 if ($statusFilter !== 'all' && !in_array($statusFilter, $allowedStatuses, true)) {
   $statusFilter = 'all';
@@ -77,51 +75,35 @@ if ($statusFilter !== 'all' && !in_array($statusFilter, $allowedStatuses, true))
 try {
   $conn = get_db_connection();
 
-  if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
-    $id = (int)($_POST['id'] ?? 0);
-    $status = (string)($_POST['status'] ?? 'new');
-    $notes = trim((string)($_POST['notes'] ?? ''));
-
-    if ($id <= 0 || !in_array($status, $allowedStatuses, true)) {
-      throw new InvalidArgumentException('Invalid status update request.');
-    }
-
-    $u = $conn->prepare('UPDATE contact_submissions SET status = ?, notes = ? WHERE id = ?');
-    if (!$u) {
-      throw new Exception('Failed to prepare status update statement.');
-    }
-    $u->bind_param('ssi', $status, $notes, $id);
-    if (!$u->execute()) {
-      $err = $u->error;
-      $u->close();
-      throw new Exception('Update failed: ' . $err);
-    }
-    $u->close();
-    $successMsg = 'Lead updated successfully.';
-  }
-
-  // ── CSV export for selected leads ─────────────────────────────────────────
   if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['export_csv'])) {
     $rawIds = explode(',', (string)($_POST['export_ids'] ?? ''));
     $ids = array_values(array_filter(array_map('intval', $rawIds)));
+
     if (!empty($ids)) {
       $placeholders = implode(',', array_fill(0, count($ids), '?'));
       $types = str_repeat('i', count($ids));
       $expStmt = $conn->prepare(
         "SELECT id, submitted_at, name, email, phone, city, ticket_size, status, notes
-         FROM contact_submissions WHERE id IN ($placeholders) ORDER BY submitted_at DESC"
+         FROM contact_submissions
+         WHERE id IN ($placeholders)
+         ORDER BY submitted_at DESC"
       );
+      if (!$expStmt) {
+        throw new Exception('Failed to prepare export statement.');
+      }
+
       $expStmt->bind_param($types, ...$ids);
       $expStmt->execute();
       $expResult = $expStmt->get_result();
 
       header('Content-Type: text/csv; charset=UTF-8');
-      header('Content-Disposition: attachment; filename="leads_' . date('Y-m-d') . '.csv"');
+      header('Content-Disposition: attachment; filename="leads_team_' . date('Y-m-d') . '.csv"');
       header('Cache-Control: no-cache, no-store, must-revalidate');
+
       $out = fopen('php://output', 'w');
-      // UTF-8 BOM so Excel opens it correctly
       fwrite($out, "\xEF\xBB\xBF");
       fputcsv($out, ['ID', 'Date', 'Name', 'Email', 'Phone', 'City', 'Ticket Size', 'Status', 'Notes']);
+
       while ($r = $expResult->fetch_assoc()) {
         fputcsv($out, [
           $r['id'],
@@ -131,26 +113,19 @@ try {
           $r['phone'],
           $r['city'] ?? '',
           $r['ticket_size'] ?? '',
-          $r['status'],
+          $r['status'] ?? 'new',
           $r['notes'] ?? '',
         ]);
       }
+
       fclose($out);
       exit;
     }
   }
 
-  $statsSql = "SELECT
-      COUNT(*) AS total,
-      SUM(CASE WHEN status = 'new' THEN 1 ELSE 0 END) AS new_count,
-      SUM(CASE WHEN status = 'contacted' THEN 1 ELSE 0 END) AS contacted_count,
-      SUM(CASE WHEN status = 'converted' THEN 1 ELSE 0 END) AS converted_count,
-      SUM(CASE WHEN DATE(submitted_at) = CURDATE() THEN 1 ELSE 0 END) AS today_count
-    FROM contact_submissions";
-  $stats = $conn->query($statsSql);
-  $statsRow = $stats ? $stats->fetch_assoc() : ['total' => 0, 'new_count' => 0, 'contacted_count' => 0, 'converted_count' => 0, 'today_count' => 0];
-
-  $sql = "SELECT id, submitted_at, name, email, phone, city, ticket_size, status, notes FROM contact_submissions WHERE 1=1";
+  $sql = "SELECT id, submitted_at, name, email, phone, city, ticket_size, status, notes
+          FROM contact_submissions
+          WHERE 1=1";
   $params = [];
   $types = '';
 
@@ -163,10 +138,7 @@ try {
   if ($search !== '') {
     $sql .= " AND (name LIKE ? OR email LIKE ? OR phone LIKE ? OR city LIKE ?)";
     $like = '%' . $search . '%';
-    $params[] = $like;
-    $params[] = $like;
-    $params[] = $like;
-    $params[] = $like;
+    $params = array_merge($params, [$like, $like, $like, $like]);
     $types .= 'ssss';
   }
 
@@ -185,7 +157,6 @@ try {
   }
 } catch (Throwable $e) {
   $errorMsg = $e->getMessage();
-  $statsRow = ['total' => 0, 'new_count' => 0, 'contacted_count' => 0, 'converted_count' => 0, 'today_count' => 0];
   $result = false;
 }
 ?>
@@ -194,46 +165,29 @@ try {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Contact Leads</title>
+  <title>Leads Team - Contact Leads</title>
   <style>
     body { font-family: "Segoe UI", Arial, sans-serif; background:#0b1220; margin:0; color:#fff; }
     .wrap { max-width:1320px; margin:0 auto; padding:24px; }
     .header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px; }
     .title { margin:0; font-size:26px; }
     .logout { color:#b7c3d9; text-decoration:none; border:1px solid rgba(255,255,255,0.2); border-radius:8px; padding:8px 10px; font-size:13px; }
-    .stats { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin-bottom:16px; }
-    .stat { background:#121a2a; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px; }
-    .stat p { margin:0; color:#b7c3d9; font-size:12px; }
-    .stat h3 { margin:5px 0 0; font-size:24px; }
     .panel { background:#121a2a; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:14px; margin-bottom:14px; }
     .filters { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     .filters select, .filters input { background:#0d1628; border:1px solid rgba(255,255,255,0.14); color:#fff; border-radius:8px; padding:9px 10px; }
     .filters input[type="text"] { min-width:240px; }
     .filters button, .filters a { background:#0d78ff; color:#fff; text-decoration:none; border:none; border-radius:8px; padding:9px 12px; cursor:pointer; font-size:13px; }
     .filters a { background:#46526a; }
-    .ok { color:#22c55e; margin-bottom:10px; }
     .err { color:#f87171; margin-bottom:10px; }
     .table-wrap { overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; }
-    table { width:100%; border-collapse:collapse; min-width:1250px; }
+    table { width:100%; border-collapse:collapse; min-width:1100px; }
     th, td { padding:10px; border-bottom:1px solid rgba(255,255,255,0.08); font-size:13px; vertical-align:top; }
     th { text-align:left; color:#b7c3d9; font-size:12px; background:#121a2a; position:sticky; top:0; z-index:2; }
-    th:last-child,
-    td:last-child {
-      position: sticky;
-      right: 0;
-      background: #121a2a;
-      z-index: 3;
-      box-shadow: -8px 0 14px rgba(0,0,0,0.35);
-    }
     .badge { display:inline-block; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:700; text-transform:capitalize; }
     .new { background:rgba(59,130,246,0.2); color:#93c5fd; }
     .contacted { background:rgba(245,158,11,0.2); color:#fcd34d; }
     .converted { background:rgba(34,197,94,0.2); color:#86efac; }
     .closed { background:rgba(156,163,175,0.22); color:#d1d5db; }
-    textarea, select { width:100%; background:#0d1628; border:1px solid rgba(255,255,255,0.14); color:#fff; border-radius:8px; padding:8px; font-size:12px; box-sizing:border-box; }
-    textarea { min-height:58px; resize:vertical; }
-    .btn-update { margin-top:6px; width:100%; background:#0d78ff; border:none; border-radius:8px; color:#fff; padding:8px; cursor:pointer; font-size:12px; }
-    .muted { color:#b7c3d9; font-size:12px; }
     .cb-col { width:36px; text-align:center; }
     input[type="checkbox"] { width:15px; height:15px; cursor:pointer; accent-color:#0d78ff; }
     .toolbar { display:flex; gap:10px; align-items:center; margin-bottom:10px; flex-wrap:wrap; }
@@ -241,26 +195,17 @@ try {
     .btn-dl:disabled { opacity:0.4; cursor:not-allowed; }
     .sel-count { color:#b7c3d9; font-size:13px; }
     tr.selected-row { background: rgba(13,120,255,0.08); }
-    @media (max-width: 980px) { .stats { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    .muted { color:#b7c3d9; font-size:12px; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="header">
-      <h1 class="title">Contact Us Leads</h1>
-      <a class="logout" href="admin_contact.php?logout=1">Logout</a>
-    </div>
-
-    <div class="stats">
-      <div class="stat"><p>Total</p><h3><?= (int)($statsRow['total'] ?? 0) ?></h3></div>
-      <div class="stat"><p>Today</p><h3><?= (int)($statsRow['today_count'] ?? 0) ?></h3></div>
-      <div class="stat"><p>New</p><h3><?= (int)($statsRow['new_count'] ?? 0) ?></h3></div>
-      <div class="stat"><p>Contacted</p><h3><?= (int)($statsRow['contacted_count'] ?? 0) ?></h3></div>
-      <div class="stat"><p>Converted</p><h3><?= (int)($statsRow['converted_count'] ?? 0) ?></h3></div>
+      <h1 class="title">Leads Team Dashboard</h1>
+      <a class="logout" href="leads_team.php?logout=1">Logout</a>
     </div>
 
     <div class="panel">
-      <?php if ($successMsg): ?><div class="ok"><?= htmlspecialchars($successMsg, ENT_QUOTES) ?></div><?php endif; ?>
       <?php if ($errorMsg): ?><div class="err"><?= htmlspecialchars($errorMsg, ENT_QUOTES) ?></div><?php endif; ?>
       <form class="filters" method="get">
         <select name="status">
@@ -272,17 +217,17 @@ try {
         </select>
         <input type="text" name="search" value="<?= htmlspecialchars($search, ENT_QUOTES) ?>" placeholder="Search name, email, phone, city">
         <button type="submit">Apply</button>
-        <a href="admin_contact.php">Reset</a>
+        <a href="leads_team.php">Reset</a>
       </form>
     </div>
 
     <div class="panel table-wrap">
       <?php if ($result instanceof mysqli_result && $result->num_rows > 0): ?>
-      <!-- Export form (hidden) -->
       <form id="export-form" method="post">
         <input type="hidden" name="export_csv" value="1">
         <input type="hidden" name="export_ids" id="export-ids-input">
       </form>
+
       <div class="toolbar">
         <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
           <input type="checkbox" id="cb-all"> Select all
@@ -290,6 +235,7 @@ try {
         <span class="sel-count" id="sel-count">0 selected</span>
         <button class="btn-dl" id="btn-download" type="button" disabled onclick="submitExport()">Download Excel</button>
       </div>
+
       <table>
         <thead>
           <tr>
@@ -302,7 +248,7 @@ try {
             <th>City</th>
             <th>Ticket Size</th>
             <th>Status</th>
-            <th style="min-width:260px;">Action</th>
+            <th>Notes</th>
           </tr>
         </thead>
         <tbody>
@@ -318,19 +264,7 @@ try {
               <td><?= htmlspecialchars((string)($row['city'] ?? ''), ENT_QUOTES) ?></td>
               <td><?= htmlspecialchars((string)($row['ticket_size'] ?? ''), ENT_QUOTES) ?></td>
               <td><span class="badge <?= htmlspecialchars($status, ENT_QUOTES) ?>"><?= htmlspecialchars($status, ENT_QUOTES) ?></span></td>
-              <td>
-                <form method="post">
-                  <input type="hidden" name="id" value="<?= (int)$row['id'] ?>">
-                  <select name="status">
-                    <option value="new" <?= $status === 'new' ? 'selected' : '' ?>>New</option>
-                    <option value="contacted" <?= $status === 'contacted' ? 'selected' : '' ?>>Contacted</option>
-                    <option value="converted" <?= $status === 'converted' ? 'selected' : '' ?>>Converted</option>
-                    <option value="closed" <?= $status === 'closed' ? 'selected' : '' ?>>Closed</option>
-                  </select>
-                  <textarea name="notes" placeholder="Notes"><?= htmlspecialchars((string)($row['notes'] ?? ''), ENT_QUOTES) ?></textarea>
-                  <button class="btn-update" type="submit" name="update_status" value="1">Save</button>
-                </form>
-              </td>
+              <td><?= nl2br(htmlspecialchars((string)($row['notes'] ?? ''), ENT_QUOTES)) ?></td>
             </tr>
           <?php endwhile; ?>
         </tbody>
@@ -340,38 +274,47 @@ try {
       <?php endif; ?>
     </div>
   </div>
-<script>
-  const cbAll = document.getElementById('cb-all');
-  const btnDl = document.getElementById('btn-download');
-  const selCount = document.getElementById('sel-count');
 
-  function updateToolbar() {
-    const cbs = document.querySelectorAll('.lead-cb');
-    const checked = document.querySelectorAll('.lead-cb:checked');
-    cbAll.indeterminate = checked.length > 0 && checked.length < cbs.length;
-    cbAll.checked = cbs.length > 0 && checked.length === cbs.length;
-    btnDl.disabled = checked.length === 0;
-    selCount.textContent = checked.length + ' selected';
-    document.querySelectorAll('tr').forEach(tr => {
-      const cb = tr.querySelector('.lead-cb');
-      if (cb) tr.classList.toggle('selected-row', cb.checked);
+  <script>
+    const cbAll = document.getElementById('cb-all');
+    const btnDl = document.getElementById('btn-download');
+    const selCount = document.getElementById('sel-count');
+
+    function updateToolbar() {
+      const cbs = document.querySelectorAll('.lead-cb');
+      const checked = document.querySelectorAll('.lead-cb:checked');
+      if (cbAll) {
+        cbAll.indeterminate = checked.length > 0 && checked.length < cbs.length;
+        cbAll.checked = cbs.length > 0 && checked.length === cbs.length;
+      }
+      if (btnDl) btnDl.disabled = checked.length === 0;
+      if (selCount) selCount.textContent = checked.length + ' selected';
+      document.querySelectorAll('tr').forEach(tr => {
+        const cb = tr.querySelector('.lead-cb');
+        if (cb) tr.classList.toggle('selected-row', cb.checked);
+      });
+    }
+
+    if (cbAll) {
+      cbAll.addEventListener('change', () => {
+        document.querySelectorAll('.lead-cb').forEach(cb => {
+          cb.checked = cbAll.checked;
+        });
+        updateToolbar();
+      });
+    }
+
+    document.addEventListener('change', e => {
+      if (e.target.classList.contains('lead-cb')) {
+        updateToolbar();
+      }
     });
-  }
 
-  cbAll && cbAll.addEventListener('change', () => {
-    document.querySelectorAll('.lead-cb').forEach(cb => cb.checked = cbAll.checked);
-    updateToolbar();
-  });
-
-  document.addEventListener('change', e => {
-    if (e.target.classList.contains('lead-cb')) updateToolbar();
-  });
-
-  function submitExport() {
-    const ids = [...document.querySelectorAll('.lead-cb:checked')].map(cb => cb.value).join(',');
-    document.getElementById('export-ids-input').value = ids;
-    document.getElementById('export-form').submit();
-  }
-</script>
+    function submitExport() {
+      const ids = Array.from(document.querySelectorAll('.lead-cb:checked')).map(cb => cb.value).join(',');
+      document.getElementById('export-ids-input').value = ids;
+      document.getElementById('export-form').submit();
+    }
+  </script>
 </body>
 </html>

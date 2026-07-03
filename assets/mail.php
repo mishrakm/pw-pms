@@ -17,6 +17,8 @@ require_once __DIR__ . '/../PHPMailer/src/PHPMailer.php';
 require_once __DIR__ . '/../PHPMailer/src/SMTP.php';
 require_once __DIR__ . '/../PHPMailer/src/Exception.php';
 require_once __DIR__ . '/../includes/db_config.php';
+$appConfig = require __DIR__ . '/../includes/app_config.php';
+$mailConfig = $appConfig['mail'] ?? [];
 
 
 header('Content-Type: application/json');
@@ -120,10 +122,10 @@ try {
 
 // Email configuration
 
-$to_emails = [
-    'amit.mishra@pluswealth.net',
-    'pavit.singh@pluswealth.com'
-];
+$to_emails = $mailConfig['to_emails'] ?? [];
+if (!is_array($to_emails) || empty($to_emails)) {
+    $to_emails = ['amit.mishra@pluswealth.net'];
+}
 
 
 // Build email message body
@@ -137,13 +139,16 @@ try {
     $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->SMTPDebug = 0;
-    $mail->Host = "smtp.gmail.com";
-    $mail->Port = 587;
-    $mail->SMTPSecure = 'tls';
-    $mail->SMTPAuth = true;
-    $mail->Username = "no-reply@pluswealth.com";
-    $mail->Password = "qrgdaodurjmhajry";
-    $mail->setFrom("no-reply@pluswealth.com", "PlusWealth PMS Contact Form");
+    $mail->Host = (string)($mailConfig['smtp_host'] ?? 'smtp.gmail.com');
+    $mail->Port = (int)($mailConfig['smtp_port'] ?? 587);
+    $mail->SMTPSecure = (string)($mailConfig['smtp_secure'] ?? 'tls');
+    $mail->SMTPAuth = (bool)($mailConfig['smtp_auth'] ?? true);
+    $mail->Username = (string)($mailConfig['smtp_username'] ?? 'no-reply@pluswealth.com');
+    $mail->Password = (string)($mailConfig['smtp_password'] ?? '');
+    $mail->setFrom(
+        (string)($mailConfig['from_email'] ?? 'no-reply@pluswealth.com'),
+        (string)($mailConfig['from_name_admin'] ?? 'PlusWealth PMS Contact Form')
+    );
     $mail->addReplyTo($email, $name);
     
     // Add multiple recipients
@@ -160,13 +165,16 @@ try {
     $user_mail = new PHPMailer(true);
     $user_mail->isSMTP();
     $user_mail->SMTPDebug = 0;
-    $user_mail->Host = "smtp.gmail.com";
-    $user_mail->Port = 587;
-    $user_mail->SMTPSecure = 'tls';
-    $user_mail->SMTPAuth = true;
-    $user_mail->Username = "no-reply@pluswealth.com";
-    $user_mail->Password = "qrgdaodurjmhajry";
-    $user_mail->setFrom("no-reply@pluswealth.com", "PlusWealth Capital Management");
+    $user_mail->Host = (string)($mailConfig['smtp_host'] ?? 'smtp.gmail.com');
+    $user_mail->Port = (int)($mailConfig['smtp_port'] ?? 587);
+    $user_mail->SMTPSecure = (string)($mailConfig['smtp_secure'] ?? 'tls');
+    $user_mail->SMTPAuth = (bool)($mailConfig['smtp_auth'] ?? true);
+    $user_mail->Username = (string)($mailConfig['smtp_username'] ?? 'no-reply@pluswealth.com');
+    $user_mail->Password = (string)($mailConfig['smtp_password'] ?? '');
+    $user_mail->setFrom(
+        (string)($mailConfig['from_email'] ?? 'no-reply@pluswealth.com'),
+        (string)($mailConfig['from_name_user'] ?? 'PlusWealth Capital Management')
+    );
     $user_mail->addAddress($email, $name);
     
     $user_body = "\nDear " . $name . ",\n\nThank you for reaching out to PlusWealth Capital Management LLP.\n\nWe have received your inquiry and will get back to you within 24 business hours.\n\nDetails of your submission:\n---------------------------\nName: " . $name . "\nEmail: " . $email . "\nPhone: " . $phone . "\n\nIf you have any questions in the meantime, feel free to visit our website or call us directly.\n\nBest regards,\nPlusWealth Capital Management LLP\nSEBI Registration No: INZ000163752\nPortfolio Manager Registration No: INP000009144\n\n---\nThis is an automated message. Please do not reply to this email.\n";
