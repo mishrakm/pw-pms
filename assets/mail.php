@@ -137,12 +137,12 @@ try {
     $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->SMTPDebug = 0;
-    $mail->Host = "smtp.office365.com";
+    $mail->Host = "smtp.gmail.com";
     $mail->Port = 587;
     $mail->SMTPSecure = 'tls';
     $mail->SMTPAuth = true;
     $mail->Username = "no-reply@pluswealth.com";
-    $mail->Password = "Y#816125957005os";
+    $mail->Password = "qrgdaodurjmhajry";
     $mail->setFrom("no-reply@pluswealth.com", "PlusWealth PMS Contact Form");
     $mail->addReplyTo($email, $name);
     
@@ -160,13 +160,13 @@ try {
     $user_mail = new PHPMailer(true);
     $user_mail->isSMTP();
     $user_mail->SMTPDebug = 0;
-    $user_mail->Host = "smtp.office365.com";
+    $user_mail->Host = "smtp.gmail.com";
     $user_mail->Port = 587;
     $user_mail->SMTPSecure = 'tls';
     $user_mail->SMTPAuth = true;
-    $user_mail->Username = "noreply@egitpro.com";
-    $user_mail->Password = "Jad04108";
-    $user_mail->setFrom("noreply@egitpro.com", "PlusWealth Capital Management");
+    $user_mail->Username = "no-reply@pluswealth.com";
+    $user_mail->Password = "qrgdaodurjmhajry";
+    $user_mail->setFrom("no-reply@pluswealth.com", "PlusWealth Capital Management");
     $user_mail->addAddress($email, $name);
     
     $user_body = "\nDear " . $name . ",\n\nThank you for reaching out to PlusWealth Capital Management LLP.\n\nWe have received your inquiry and will get back to you within 24 business hours.\n\nDetails of your submission:\n---------------------------\nName: " . $name . "\nEmail: " . $email . "\nPhone: " . $phone . "\n\nIf you have any questions in the meantime, feel free to visit our website or call us directly.\n\nBest regards,\nPlusWealth Capital Management LLP\nSEBI Registration No: INZ000163752\nPortfolio Manager Registration No: INP000009144\n\n---\nThis is an automated message. Please do not reply to this email.\n";
