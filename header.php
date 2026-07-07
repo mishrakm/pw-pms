@@ -23,6 +23,8 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
 
 <body>
 
+<?php $current_strategy = isset($current_strategy) ? $current_strategy : ''; ?>
+
 <!-- DEBUG: Loader + Error overlay -->
 <div id="site-loader" aria-hidden="true">
   <div class="loader-inner">Loading…</div>
@@ -48,7 +50,21 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
 
   <div class="nav-right">
     <ul class="nav-links">
-      <li><a href="fusion.php">Strategy</a></li>
+      <li class="dropdown">
+        <button
+          class="drop-toggle<?php echo $current_strategy !== '' ? ' active' : ''; ?>"
+          type="button"
+          aria-expanded="false"
+          aria-controls="strategy-menu"
+        >
+          Strategy
+          <span class="drop-caret" aria-hidden="true">&#9662;</span>
+        </button>
+        <ul class="drop-links" id="strategy-menu">
+          <li><a href="fusion.php"<?php echo $current_strategy === 'fusion' ? ' class="active"' : ''; ?>>Fusion</a></li>
+          <li><a href="catalyst.php"<?php echo $current_strategy === 'catalyst' ? ' class="active"' : ''; ?>>Catalyst</a></li>
+        </ul>
+      </li>
       <li><a href="knowledge.php">Knowledge Center</a></li>
       <li><a href="team.php">Team</a></li>
       <li><a href="faq.php">FAQ</a></li>

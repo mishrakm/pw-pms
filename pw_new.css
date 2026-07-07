@@ -159,6 +159,42 @@ nav.at-top .nav-btn:hover {
 
 .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
 
+.nav-links > li {
+  position: relative;
+}
+
+.nav-links a,
+.drop-toggle {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: 0.2px;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.drop-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.drop-caret {
+  font-size: 10px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.dropdown.open .drop-caret,
+.dropdown:hover .drop-caret {
+  transform: rotate(180deg);
+}
+
 /* mobile hamburger */
 .nav-toggle { display: none; font-size: 24px; background: none; border: none; cursor: pointer; color: var(--brand); }
 
@@ -167,55 +203,68 @@ nav.at-top .nav-btn:hover {
   .nav-right { display: none; position: absolute; top: 100%; right: 0; background: rgba(221,221,221,0.9); /* light grey with slight transparency */ flex-direction: column; width: 240px; padding: 16px; }
   .nav-right.open { display: flex; }
   .nav-links { flex-direction: column; gap: 16px; }
-  .nav-links a { color: #000 !important; } /* dark text on white panel */
+  .nav-links > li { width: 100%; }
+  .nav-links a,
+  .drop-toggle { color: #000 !important; } /* dark text on white panel */
+  .drop-toggle { width: 100%; justify-content: space-between; }
   /* override scrolled state for mobile panel */
-  nav.scrolled .nav-right .nav-links a { color: #000 !important; }
+  nav.scrolled .nav-right .nav-links a,
+  nav.scrolled .nav-right .drop-toggle { color: #000 !important; }
   nav.scrolled .nav-right { background: rgba(221,221,221,0.9); }
   .nav-links .dropdown:hover .drop-links { position: static; box-shadow: none; }
-  .nav-links .drop-links { position: static; background: transparent; box-shadow: none; }
-}
-.nav-links a {
-  font-size: 13px; font-weight: 400; color: var(--white); /* white for desktop dark nav */
-  text-decoration: none; letter-spacing: 0.2px;
-  transition: color 0.2s;
+  .nav-links .drop-links {
+    position: static;
+    min-width: 100%;
+    margin-top: 8px;
+    background: rgba(255,255,255,0.35);
+    box-shadow: none;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
 }
 
 /* dropdown container */
-.nav-links .dropdown { position: relative; }
 .nav-links .drop-links {
   display: none;
   position: absolute;
-  top: 100%; left: 0;
+  top: calc(100% + 14px);
+  left: -16px;
   background: rgba(221,221,221,0.95); /* slightly less transparent grey */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  padding: 4px 0;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.28);
+  padding: 8px 0;
   min-width: 180px;
+  border: 1px solid rgba(255,255,255,0.12);
   z-index: 1000;
 }
 .nav-links .drop-links li { white-space: nowrap; }
 .nav-links .drop-links a {
   display: block;
-  padding: 8px 16px;
+  padding: 10px 16px;
   color: #000;
   font-size: 13px;
-  /* ensure text stands out on grey */
 }
 
 /* when nav dark, dropdown bg should be near-black for legibility */
 nav.scrolled .drop-links { background: rgba(0,0,0,0.6); }
 nav.scrolled .drop-links a { color: var(--white); }
+.nav-links .drop-links a.active,
 .nav-links .drop-links a:hover { background: var(--ink); color: var(--white) !important; }
 
 /* show dropdown on hover */
 .nav-links .dropdown:hover .drop-links { display: block; }
+.nav-links .dropdown.open .drop-links { display: block; }
 
 /* adapt dropdown links when nav dark */
 nav.scrolled .drop-links a { color: var(--white); }
 nav.scrolled .drop-links a:hover { background: var(--brand); }
+nav.scrolled .drop-toggle,
+nav.scrolled .drop-toggle.active { color: var(--white); }
 
 /* final override for submenu hover color */
 .nav-links .drop-links a:hover { color: var(--white) !important; }
-.nav-links a:hover { color: var(--brand); /* return to brand blue on hover */ }
+.nav-links a.active,
+.drop-toggle.active,
+.nav-links a:hover,
+.drop-toggle:hover { color: var(--brand); /* return to brand blue on hover */ }
 
 /* adjust contact button so it stands out against darker links */
 .nav-btn {
@@ -228,7 +277,6 @@ nav.scrolled .drop-links a:hover { background: var(--brand); }
   transition: background 0.2s, color 0.2s;
 }
 .nav-btn:hover { background: var(--brand); color: var(--white); }
-.nav-links a:hover { color: var(--white); }
 
 .nav-btn {
   display: inline-flex; align-items: center; gap: 8px;

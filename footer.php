@@ -61,6 +61,39 @@ if (navToggle && navRight) {
   });
 }
 
+// Strategy dropdown toggle
+const dropdownToggles = document.querySelectorAll('.drop-toggle');
+dropdownToggles.forEach((toggle) => {
+  const parent = toggle.closest('.dropdown');
+  if (!parent) return;
+
+  toggle.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const isOpen = parent.classList.contains('open');
+
+    dropdownToggles.forEach((otherToggle) => {
+      const otherParent = otherToggle.closest('.dropdown');
+      if (!otherParent) return;
+      otherParent.classList.remove('open');
+      otherToggle.setAttribute('aria-expanded', 'false');
+    });
+
+    parent.classList.toggle('open', !isOpen);
+    toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+  });
+});
+
+document.addEventListener('click', (event) => {
+  if (event.target.closest('.dropdown')) return;
+
+  dropdownToggles.forEach((toggle) => {
+    const parent = toggle.closest('.dropdown');
+    if (!parent) return;
+    parent.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
 // Scroll reveal
 const revealEls = document.querySelectorAll('.reveal');
 const revObs = new IntersectionObserver((entries) => {

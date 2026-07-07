@@ -1,5 +1,6 @@
 <?php
 $page_title = 'The strategy - Pluswealth Fusion';
+$current_strategy = 'fusion';
 include 'header.php';
 
 $performanceRows = [
