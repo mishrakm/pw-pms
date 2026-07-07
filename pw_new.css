@@ -163,6 +163,15 @@ nav.at-top .nav-btn:hover {
   position: relative;
 }
 
+.nav-links .dropdown::after {
+  content: '';
+  position: absolute;
+  left: -16px;
+  right: -16px;
+  top: 100%;
+  height: 14px;
+}
+
 .nav-links a,
 .drop-toggle {
   font-size: 13px;
@@ -251,6 +260,7 @@ nav.scrolled .drop-links a { color: var(--white); }
 
 /* show dropdown on hover */
 .nav-links .dropdown:hover .drop-links { display: block; }
+.nav-links .dropdown:focus-within .drop-links { display: block; }
 .nav-links .dropdown.open .drop-links { display: block; }
 
 /* adapt dropdown links when nav dark */
