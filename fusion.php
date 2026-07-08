@@ -55,7 +55,7 @@ try {
   $monthsResult = $conn->query(
     "SELECT DATE_FORMAT(month_year, '%Y-%m') AS month_value, DATE_FORMAT(month_year, '%b %Y') AS month_label
      FROM performance_returns
-     WHERE is_active = 1 AND month_year IS NOT NULL
+     WHERE is_active = 1 AND strategy_key = 'fusion' AND month_year IS NOT NULL
      GROUP BY DATE_FORMAT(month_year, '%Y-%m'), DATE_FORMAT(month_year, '%b %Y')
      ORDER BY month_year DESC"
   );
@@ -82,7 +82,7 @@ try {
   $stmt = $conn->prepare(
     "SELECT strategy, one_month, three_month, six_month, one_year, two_year, three_year, four_year, five_year, since_inception
      FROM performance_returns
-     WHERE is_active = 1 AND DATE_FORMAT(month_year, '%Y-%m') = ?
+     WHERE is_active = 1 AND strategy_key = 'fusion' AND DATE_FORMAT(month_year, '%Y-%m') = ?
      ORDER BY display_order ASC, id ASC"
   );
 
@@ -269,7 +269,7 @@ try {
   $r = $conn->query(
     "SELECT DATE_FORMAT(LAST_DAY(MAX(month_year)), '%d %b %Y') AS latest
      FROM performance_returns
-     WHERE is_active = 1"
+     WHERE is_active = 1 AND strategy_key = 'fusion'"
   );
   if ($r instanceof mysqli_result && $r->num_rows > 0) {
     $row = $r->fetch_assoc();

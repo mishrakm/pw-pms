@@ -13,6 +13,7 @@ function runSetup(): array
     $createTableSql = "
         CREATE TABLE IF NOT EXISTS performance_returns (
             id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+            strategy_key VARCHAR(32) NOT NULL DEFAULT 'fusion',
             month_year DATE NOT NULL,
             strategy VARCHAR(500) NOT NULL,
             one_month VARCHAR(32) DEFAULT NULL,
@@ -29,7 +30,7 @@ function runSetup(): array
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
-            KEY idx_active_month_order (is_active, month_year, display_order)
+            KEY idx_active_strategy_month_order (is_active, strategy_key, month_year, display_order)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
     ";
 
@@ -38,6 +39,34 @@ function runSetup(): array
     }
 
     $messages[] = 'Table performance_returns is ready.';
+
+    $strategyKeyColumnCheckSql = "
+        SELECT COUNT(*) AS total_columns
+        FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA = DATABASE()
+          AND TABLE_NAME = 'performance_returns'
+          AND COLUMN_NAME = 'strategy_key'
+    ";
+    $strategyKeyColumnCheckResult = $conn->query($strategyKeyColumnCheckSql);
+    if (!$strategyKeyColumnCheckResult) {
+        throw new RuntimeException('Unable to validate strategy_key column: ' . $conn->error);
+    }
+
+    $strategyKeyColumnRow = $strategyKeyColumnCheckResult->fetch_assoc();
+    $hasStrategyKeyColumn = ((int)($strategyKeyColumnRow['total_columns'] ?? 0)) > 0;
+
+    if (!$hasStrategyKeyColumn) {
+        $alterSql = "
+            ALTER TABLE performance_returns
+            ADD COLUMN strategy_key VARCHAR(32) NOT NULL DEFAULT 'fusion' AFTER id
+        ";
+
+        if (!$conn->query($alterSql)) {
+            throw new RuntimeException('Failed to add strategy_key column: ' . $conn->error);
+        }
+
+        $messages[] = 'Added strategy_key column for strategy-specific performance.';
+    }
 
     $columnCheckSql = "
         SELECT COUNT(*) AS total_columns
@@ -72,7 +101,7 @@ function runSetup(): array
         FROM information_schema.STATISTICS
         WHERE TABLE_SCHEMA = DATABASE()
           AND TABLE_NAME = 'performance_returns'
-          AND INDEX_NAME = 'idx_active_month_order'
+          AND INDEX_NAME = 'idx_active_strategy_month_order'
     ";
     $indexCheckResult = $conn->query($indexCheckSql);
     if (!$indexCheckResult) {
@@ -83,11 +112,11 @@ function runSetup(): array
     $hasMonthIndex = ((int)($indexRow['total_indexes'] ?? 0)) > 0;
 
     if (!$hasMonthIndex) {
-        if (!$conn->query('CREATE INDEX idx_active_month_order ON performance_returns (is_active, month_year, display_order)')) {
-            throw new RuntimeException('Failed to create month index: ' . $conn->error);
+        if (!$conn->query('CREATE INDEX idx_active_strategy_month_order ON performance_returns (is_active, strategy_key, month_year, display_order)')) {
+            throw new RuntimeException('Failed to create strategy month index: ' . $conn->error);
         }
 
-        $messages[] = 'Added index idx_active_month_order.';
+        $messages[] = 'Added index idx_active_strategy_month_order.';
     }
 
     $countResult = $conn->query('SELECT COUNT(*) AS total_rows FROM performance_returns');
@@ -102,6 +131,7 @@ function runSetup(): array
         $insertSql = "
             INSERT INTO performance_returns (
                 month_year,
+                strategy_key,
                 strategy,
                 one_month,
                 three_month,
@@ -117,6 +147,7 @@ function runSetup(): array
             ) VALUES
             (
                 '2026-01-01',
+                'fusion',
                 'PlusWealth Fusion',
                 '4.77',
                 '3.5',
@@ -132,6 +163,7 @@ function runSetup(): array
             ),
             (
                 '2026-01-01',
+                'fusion',
                 'Benchmark: NSE Multi Asset Index 2\n(50% NIFTY 500, 20% NIFTY Medium Duration, 20% NIFTY Arbitrage, 10% INVIT/REIT)',
                 '0.65',
                 '-0.76',

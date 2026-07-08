@@ -65,14 +65,28 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_perfo
 
         $rows = [
             [
+                'strategy_key'  => 'fusion',
                 'strategy'      => 'PlusWealth Fusion',
                 'display_order' => 1,
                 'fields'        => 'fusion',
             ],
             [
+                'strategy_key'  => 'fusion',
                 'strategy'      => "Benchmark: NSE Multi Asset Index 2\n(50% NIFTY 500, 20% NIFTY Medium Duration, 20% NIFTY Arbitrage, 10% INVIT/REIT)",
                 'display_order' => 2,
                 'fields'        => 'bench',
+            ],
+            [
+                'strategy_key'  => 'catalyst',
+                'strategy'      => 'PlusWealth Catalyst',
+                'display_order' => 1,
+                'fields'        => 'catalyst',
+            ],
+            [
+                'strategy_key'  => 'catalyst',
+                'strategy'      => 'Benchmark: NIFTY 500 TRI',
+                'display_order' => 2,
+                'fields'        => 'catalyst_bench',
             ],
         ];
 
@@ -85,10 +99,10 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_perfo
         $del->close();
 
         $sql = "INSERT INTO performance_returns
-                    (month_year, strategy, one_month, three_month, six_month,
+                    (month_year, strategy_key, strategy, one_month, three_month, six_month,
                      one_year, two_year, three_year, four_year, five_year,
                      since_inception, is_active, display_order)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)";
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)";
 
         $stmt = $conn->prepare($sql);
 
@@ -101,8 +115,9 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_perfo
             }
 
             $stmt->bind_param(
-                'sssssssssssi',
+                'ssssssssssssi',
                 $monthDate,
+                $row['strategy_key'],
                 $row['strategy'],
                 $vals[0], $vals[1], $vals[2],
                 $vals[3], $vals[4], $vals[5],
@@ -152,7 +167,12 @@ if ($authed) {
                 $s->execute();
                 $res = $s->get_result();
                 while ($row = $res->fetch_assoc()) {
-                    $key = ($row['display_order'] == 1) ? 'fusion' : 'bench';
+                    $strategyKey = $row['strategy_key'] ?? 'fusion';
+                    if ($strategyKey === 'catalyst') {
+                        $key = ((int)$row['display_order'] === 1) ? 'catalyst' : 'catalyst_bench';
+                    } else {
+                        $key = ((int)$row['display_order'] === 1) ? 'fusion' : 'bench';
+                    }
                     $editData[$key]               = $row;
                     $editData['month_year']       = $editMonth;
                 }
@@ -326,7 +346,7 @@ $editMonthVal = htmlspecialchars($editData['month_year'] ?? '', ENT_QUOTES);
         <?php foreach ($existingMonths as $m): ?>
         <tr>
           <td style="font-weight:600;"><?= htmlspecialchars($m['ml'], ENT_QUOTES) ?></td>
-          <td style="color:var(--ash);">2 rows (Fusion + Benchmark)</td>
+          <td style="color:var(--ash);">Fusion + Catalyst rows</td>
           <td style="display:flex;gap:8px;">
             <a href="?edit=<?= urlencode($m['mv']) ?>" class="btn-ghost btn-sm">Edit</a>
             <form method="POST" onsubmit="return confirm('Delete all data for <?= htmlspecialchars($m['ml'], ENT_QUOTES) ?>? This cannot be undone.')">
@@ -388,6 +408,40 @@ $editMonthVal = htmlspecialchars($editData['month_year'] ?? '', ENT_QUOTES);
             <label><?= $periodLabels[$i] ?></label>
             <input type="text" name="bench_<?= $p ?>"
                    value="<?= ev($editData, 'bench', $p) ?>"
+                   placeholder="e.g. 0.65 or -6.2 or -">
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <div class="strategy-section">
+        <div class="strategy-label">
+          <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--brand-soft);margin-right:8px;vertical-align:middle;"></span>
+          PlusWealth Catalyst
+        </div>
+        <div class="period-grid">
+          <?php foreach ($periods as $i => $p): ?>
+          <div class="field-group">
+            <label><?= $periodLabels[$i] ?></label>
+            <input type="text" name="catalyst_<?= $p ?>"
+                   value="<?= ev($editData, 'catalyst', $p) ?>"
+                   placeholder="e.g. 4.77 or -2.6 or -">
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <div class="strategy-section">
+        <div class="strategy-label">
+          <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--ash);opacity:0.5;margin-right:8px;vertical-align:middle;"></span>
+          Catalyst Benchmark: NIFTY 500 TRI
+        </div>
+        <div class="period-grid">
+          <?php foreach ($periods as $i => $p): ?>
+          <div class="field-group">
+            <label><?= $periodLabels[$i] ?></label>
+            <input type="text" name="catalyst_bench_<?= $p ?>"
+                   value="<?= ev($editData, 'catalyst_bench', $p) ?>"
                    placeholder="e.g. 0.65 or -6.2 or -">
           </div>
           <?php endforeach; ?>

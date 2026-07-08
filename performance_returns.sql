@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS performance_returns (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  strategy_key VARCHAR(32) NOT NULL DEFAULT 'fusion',
   month_year DATE NOT NULL,
   strategy VARCHAR(500) NOT NULL,
   one_month VARCHAR(32) DEFAULT NULL,
@@ -16,13 +17,14 @@ CREATE TABLE IF NOT EXISTS performance_returns (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  KEY idx_active_month_order (is_active, month_year, display_order)
+  KEY idx_active_strategy_month_order (is_active, strategy_key, month_year, display_order)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DELETE FROM performance_returns;
 
 INSERT INTO performance_returns (
   month_year,
+  strategy_key,
   strategy,
   one_month,
   three_month,
@@ -38,6 +40,7 @@ INSERT INTO performance_returns (
 ) VALUES
 (
   '2026-01-01',
+  'fusion',
   'PlusWealth Fusion',
   '4.77',
   '3.5',
@@ -53,6 +56,7 @@ INSERT INTO performance_returns (
 ),
 (
   '2026-01-01',
+  'fusion',
   'Benchmark: NSE Multi Asset Index 2\n(50% NIFTY 500, 20% NIFTY Medium Duration, 20% NIFTY Arbitrage, 10% INVIT/REIT)',
   '0.65',
   '-0.76',
