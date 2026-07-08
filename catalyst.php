@@ -128,6 +128,52 @@ try {
 }
 ?>
 
+<style>
+.catalyst-stat-row {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.catalyst-stat {
+  background: var(--panel);
+  padding: 28px 24px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.catalyst-stat-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+.catalyst-stat-value {
+  font-family: var(--f-display);
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.catalyst-stat-value.g { color: var(--green); }
+.catalyst-stat-value.go { color: var(--brand-soft); }
+.catalyst-stat-value.t { color: var(--brand-soft2); }
+.catalyst-stat-value.w { color: var(--white); }
+.catalyst-stat-label {
+  font-size: 12px;
+  color: var(--slate);
+  line-height: 1.45;
+}
+@media (max-width: 900px) {
+  .catalyst-stat-row { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .catalyst-stat-row { grid-template-columns: 1fr; }
+}
+</style>
+
 <div class="section-wrap alt" id="strategy">
   <div class="inner">
     <div class="strategy-intro">
@@ -161,26 +207,26 @@ try {
       </div>
     </div>
 
-    <div class="perf-kpi-row reveal d2" style="margin-top:48px;">
-      <div class="kpi-tile">
-        <div class="kpi-tile-bar" style="background:var(--green);"></div>
-        <div class="kpi-tile-val g">40%+</div>
-        <div class="kpi-tile-sub">Cumulative return, Dec 2025&ndash;May 2026</div>
+    <div class="catalyst-stat-row reveal d2">
+      <div class="catalyst-stat">
+        <div class="catalyst-stat-bar" style="background:var(--green);"></div>
+        <div class="catalyst-stat-value g">40%+</div>
+        <div class="catalyst-stat-label">Cumulative return, Dec 2025&ndash;May 2026</div>
       </div>
-      <div class="kpi-tile">
-        <div class="kpi-tile-bar" style="background:var(--brand-soft);"></div>
-        <div class="kpi-tile-val go">&#8377;50L</div>
-        <div class="kpi-tile-sub">Minimum investment</div>
+      <div class="catalyst-stat">
+        <div class="catalyst-stat-bar" style="background:var(--brand-soft);"></div>
+        <div class="catalyst-stat-value go">&#8377;50L</div>
+        <div class="catalyst-stat-label">Minimum investment</div>
       </div>
-      <div class="kpi-tile">
-        <div class="kpi-tile-bar" style="background:var(--brand-soft2);"></div>
-        <div class="kpi-tile-val t">26.56%</div>
-        <div class="kpi-tile-sub">Annualised volatility</div>
+      <div class="catalyst-stat">
+        <div class="catalyst-stat-bar" style="background:var(--brand-soft2);"></div>
+        <div class="catalyst-stat-value t">26.56%</div>
+        <div class="catalyst-stat-label">Annualised volatility</div>
       </div>
-      <div class="kpi-tile">
-        <div class="kpi-tile-bar" style="background:var(--white);"></div>
-        <div class="kpi-tile-val w">3+ Yrs</div>
-        <div class="kpi-tile-sub">Recommended horizon</div>
+      <div class="catalyst-stat">
+        <div class="catalyst-stat-bar" style="background:var(--white);"></div>
+        <div class="catalyst-stat-value w">3+ Yrs</div>
+        <div class="catalyst-stat-label">Recommended horizon</div>
       </div>
     </div>
   </div>
