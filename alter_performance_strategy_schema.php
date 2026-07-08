@@ -82,6 +82,7 @@ function runPerformanceStrategyMigration(): array
         "UPDATE performance_returns
          SET strategy_key = 'catalyst'
          WHERE strategy = 'PlusWealth Catalyst'
+            OR strategy = 'Benchmark: NSE Multi Asset Index 2'
             OR strategy = 'Benchmark: NIFTY 500 TRI'",
     ];
 
@@ -136,4 +137,3 @@ try {
     header('Content-Type: text/plain; charset=UTF-8');
     echo '[ERROR] ' . $e->getMessage() . "\n";
 }
-

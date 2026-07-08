@@ -19,7 +19,7 @@ $performanceRows = [
   ],
   [
     'month_year' => '2026-03',
-    'strategy' => 'Benchmark: NIFTY 500 TRI',
+    'strategy' => 'Benchmark: NSE Multi Asset Index 2',
     'one_month' => '-',
     'three_month' => '-',
     'six_month' => '-',
@@ -128,52 +128,6 @@ try {
 }
 ?>
 
-<style>
-.catalyst-stat-row {
-  margin-top: 48px;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-}
-.catalyst-stat {
-  background: var(--panel);
-  padding: 28px 24px 24px;
-  position: relative;
-  overflow: hidden;
-}
-.catalyst-stat-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-}
-.catalyst-stat-value {
-  font-family: var(--f-display);
-  font-size: 42px;
-  font-weight: 600;
-  line-height: 1;
-  margin-bottom: 8px;
-}
-.catalyst-stat-value.g { color: var(--green); }
-.catalyst-stat-value.go { color: var(--brand-soft); }
-.catalyst-stat-value.t { color: var(--brand-soft2); }
-.catalyst-stat-value.w { color: var(--white); }
-.catalyst-stat-label {
-  font-size: 12px;
-  color: var(--slate);
-  line-height: 1.45;
-}
-@media (max-width: 900px) {
-  .catalyst-stat-row { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 560px) {
-  .catalyst-stat-row { grid-template-columns: 1fr; }
-}
-</style>
-
 <div class="section-wrap alt" id="strategy">
   <div class="inner">
     <div class="strategy-intro">
@@ -207,28 +161,6 @@ try {
       </div>
     </div>
 
-    <div class="catalyst-stat-row reveal d2">
-      <div class="catalyst-stat">
-        <div class="catalyst-stat-bar" style="background:var(--green);"></div>
-        <div class="catalyst-stat-value g">40%+</div>
-        <div class="catalyst-stat-label">Cumulative return</div>
-      </div>
-      <div class="catalyst-stat">
-        <div class="catalyst-stat-bar" style="background:var(--brand-soft);"></div>
-        <div class="catalyst-stat-value go">&#8377;50L</div>
-        <div class="catalyst-stat-label">Minimum investment</div>
-      </div>
-      <div class="catalyst-stat">
-        <div class="catalyst-stat-bar" style="background:var(--brand-soft2);"></div>
-        <div class="catalyst-stat-value t">26.56%</div>
-        <div class="catalyst-stat-label">Annualised volatility</div>
-      </div>
-      <div class="catalyst-stat">
-        <div class="catalyst-stat-bar" style="background:var(--white);"></div>
-        <div class="catalyst-stat-value w">3+ Yrs</div>
-        <div class="catalyst-stat-label">Recommended horizon</div>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -277,7 +209,7 @@ try {
     <div class="perf-header">
       <div>
         <div class="s-eyebrow reveal">Actual Performance</div>
-        <h2 class="s-title reveal d1">Catalyst results.<br><em>Tracked separately.</em></h2>
+        <h2 class="s-title reveal d1">Catalyst results.<br><em></em></h2>
       </div>
       <div class="actual-badge reveal d2">
         <div class="signal-dot"></div>
@@ -313,7 +245,7 @@ try {
             {
               label: 'PlusWealth Catalyst',
               data: catalyst,
-              backgroundColor: catalyst.map(v => v === null ? 'transparent' : v >= 0 ? 'rgba(69,179,227,0.82)' : 'rgba(248,113,113,0.82)'),
+              backgroundColor: catalyst.map(v => v === null ? 'transparent' : v >= 0 ? 'rgba(34,197,94,0.82)' : 'rgba(248,113,113,0.82)'),
               borderRadius: 4,
               borderSkipped: false,
               skipNull: true,
@@ -413,7 +345,7 @@ try {
     </div>
 
     <div class="perf-note reveal d3" style="margin-top:10px;">
-      *Benchmark: NIFTY 500 TRI
+      *Benchmark: NSE Multi Asset Index 2
       <br><br>
       Six months live. Monthly return breakdowns and independent category-ranking verification aren't yet available for Catalyst &mdash; shown here only once a custodian statement or PMS Bazaar listing publishes verified figures. Past performance is not indicative of future results.
     </div>

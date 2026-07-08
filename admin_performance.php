@@ -84,7 +84,7 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_perfo
             ],
             [
                 'strategy_key'  => 'catalyst',
-                'strategy'      => 'Benchmark: NIFTY 500 TRI',
+                'strategy'      => 'Benchmark: NSE Multi Asset Index 2',
                 'display_order' => 2,
                 'fields'        => 'catalyst_bench',
             ],
@@ -434,7 +434,7 @@ $editMonthVal = htmlspecialchars($editData['month_year'] ?? '', ENT_QUOTES);
       <div class="strategy-section">
         <div class="strategy-label">
           <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--ash);opacity:0.5;margin-right:8px;vertical-align:middle;"></span>
-          Catalyst Benchmark: NIFTY 500 TRI
+          Catalyst Benchmark: NSE Multi Asset Index 2
         </div>
         <div class="period-grid">
           <?php foreach ($periods as $i => $p): ?>
