@@ -849,6 +849,7 @@ nav.scrolled .drop-toggle.active { color: var(--white); }
 .pms-tab {
   min-height: 46px;
   border: 0;
+  border-bottom: 3px solid transparent;
   background: transparent;
   color: var(--ash);
   font-family: var(--f-mono);
@@ -864,7 +865,16 @@ nav.scrolled .drop-toggle.active { color: var(--white); }
   background: var(--panel);
   color: var(--white);
 }
+.pms-tab.active {
+  border-bottom-color: var(--brand-soft);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
 .pms-tab-panel[hidden] { display: none; }
+.pms-know-more {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
 
 .suit-checks { margin-top: 36px; display: flex; flex-direction: column; gap: 12px; }
 .suit-row {

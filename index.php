@@ -177,6 +177,10 @@ include 'header.php';
             </div>
           </div>
         </div>
+
+        <div class="pms-know-more reveal d3">
+          <a href="fusion.php" class="nav-btn" data-pms-link>Know more about Fusion</a>
+        </div>
       </div>
 
     </div>
@@ -203,6 +207,13 @@ include 'header.php';
         panel.classList.toggle('active', isActive);
         panel.hidden = !isActive;
       });
+
+      const link = document.querySelector('[data-pms-link]');
+      if (link) {
+        const label = target === 'catalyst' ? 'Catalyst' : 'Fusion';
+        link.href = target + '.php';
+        link.textContent = 'Know more about ' + label;
+      }
     });
   });
 })();
