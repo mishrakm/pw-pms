@@ -160,6 +160,29 @@ try {
         <p>Watchlist becomes a focused position once thesis is confirmed by chart data — sized by conviction and liquidity, with ongoing thesis monitoring. 8–12 holdings only, no dilution.</p>
       </div>
     </div>
+
+    <div class="perf-kpi-row reveal d2" style="margin-top:48px;">
+      <div class="kpi-tile">
+        <div class="kpi-tile-bar" style="background:var(--green);"></div>
+        <div class="kpi-tile-val g">40%+</div>
+        <div class="kpi-tile-sub">Cumulative return, Dec 2025&ndash;May 2026</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-tile-bar" style="background:var(--brand-soft);"></div>
+        <div class="kpi-tile-val go">&#8377;50L</div>
+        <div class="kpi-tile-sub">Minimum investment</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-tile-bar" style="background:var(--brand-soft2);"></div>
+        <div class="kpi-tile-val t">26.56%</div>
+        <div class="kpi-tile-sub">Annualised volatility</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-tile-bar" style="background:var(--white);"></div>
+        <div class="kpi-tile-val w">3+ Yrs</div>
+        <div class="kpi-tile-sub">Recommended horizon</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -345,6 +368,8 @@ try {
 
     <div class="perf-note reveal d3" style="margin-top:10px;">
       *Benchmark: NIFTY 500 TRI
+      <br><br>
+      Six months live (Dec 2025&ndash;May 2026). Monthly return breakdowns and independent category-ranking verification aren't yet available for Catalyst &mdash; shown here only once a custodian statement or PMS Bazaar listing publishes verified figures. Past performance is not indicative of future results.
     </div>
   </div>
 </div>
