@@ -211,7 +211,7 @@ try {
       <div class="catalyst-stat">
         <div class="catalyst-stat-bar" style="background:var(--green);"></div>
         <div class="catalyst-stat-value g">40%+</div>
-        <div class="catalyst-stat-label">Cumulative return, Dec 2025&ndash;May 2026</div>
+        <div class="catalyst-stat-label">Cumulative return</div>
       </div>
       <div class="catalyst-stat">
         <div class="catalyst-stat-bar" style="background:var(--brand-soft);"></div>
@@ -415,7 +415,7 @@ try {
     <div class="perf-note reveal d3" style="margin-top:10px;">
       *Benchmark: NIFTY 500 TRI
       <br><br>
-      Six months live (Dec 2025&ndash;May 2026). Monthly return breakdowns and independent category-ranking verification aren't yet available for Catalyst &mdash; shown here only once a custodian statement or PMS Bazaar listing publishes verified figures. Past performance is not indicative of future results.
+      Six months live. Monthly return breakdowns and independent category-ranking verification aren't yet available for Catalyst &mdash; shown here only once a custodian statement or PMS Bazaar listing publishes verified figures. Past performance is not indicative of future results.
     </div>
   </div>
 </div>
