@@ -1,5 +1,5 @@
 <?php
-$page_title = 'PlusWealth PMS — Disciplined Wealth, Data-Driven Results';
+$page_title = 'PlusWealth PMS - Disciplined Wealth, Data-Driven Results';
 include 'header.php';
 ?>
 
@@ -11,7 +11,7 @@ include 'header.php';
   <div class="hero-left">
     <div class="hero-eyebrow">
       <div class="hero-eyebrow-line"></div>
-      <div class="hero-eyebrow-text">SEBI-Registered PMS · INP000009144</div>
+      <div class="hero-eyebrow-text">SEBI-Registered PMS - INP000009144</div>
     </div>
 
     <h1 class="hero-h1">
@@ -47,7 +47,7 @@ include 'header.php';
             <span class="why-icon why-icon-bad">&#x2715;</span>
             <div>
               <strong>Emotional Bias</strong>
-              <p>Fear and greed drive panic selling and chasing performance—destroying returns.</p>
+              <p>Fear and greed drive panic selling and chasing performance - destroying returns.</p>
             </div>
           </li>
           <li class="why-item why-bad">
@@ -105,34 +105,75 @@ include 'header.php';
     <div class="suit-grid" style="grid-template-columns:1fr;justify-items:center;">
       <div style="max-width:900px;width:100%;">
         <div class="s-eyebrow reveal" style="justify-content:center;">Who Should Invest</div>
-        <h2 class="s-title reveal d1" style="text-align:center;">Is Fusion PMS<br><em>right for you?</em></h2>
-        <div class="suit-checks">
-          <div class="suit-row reveal d1">
-            <div class="suit-check">✓</div>
-            <div class="suit-text">
-              <h5>Long-horizon wealth builders</h5>
-              <p>You're comfortable committing for 2+ years and want compounding to do the heavy lifting.</p>
+        <h2 class="s-title reveal d1" style="text-align:center;">Which PMS<br><em>is right for you?</em></h2>
+
+        <div class="pms-tabs reveal d2" role="tablist" aria-label="PMS suitability">
+          <button class="pms-tab active" type="button" role="tab" aria-selected="true" aria-controls="fusion-suitability" id="fusion-tab" data-pms-tab="fusion">Fusion</button>
+          <button class="pms-tab" type="button" role="tab" aria-selected="false" aria-controls="catalyst-suitability" id="catalyst-tab" data-pms-tab="catalyst">Catalyst</button>
+        </div>
+
+        <div class="pms-tab-panel active" id="fusion-suitability" role="tabpanel" aria-labelledby="fusion-tab" data-pms-panel="fusion">
+          <div class="suit-checks">
+            <div class="suit-row reveal d1">
+              <div class="suit-check">&#x2713;</div>
+              <div class="suit-text">
+                <h5>Long-horizon wealth builders</h5>
+                <p>You're comfortable committing for 2+ years and want compounding to do the heavy lifting.</p>
+              </div>
+            </div>
+            <div class="suit-row reveal d2">
+              <div class="suit-check">&#x2713;</div>
+              <div class="suit-text">
+                <h5>Drawdown-conscious investors</h5>
+                <p>You've lived through 2020 or 2022 and want smoother NAV curves - not 30% swings.</p>
+              </div>
+            </div>
+            <div class="suit-row reveal d3">
+              <div class="suit-check">&#x2713;</div>
+              <div class="suit-text">
+                <h5>Process-driven thinkers</h5>
+                <p>You value transparent, rules-based decision-making over discretionary fund manager calls.</p>
+              </div>
+            </div>
+            <div class="suit-row reveal d4">
+              <div class="suit-check">&#x2713;</div>
+              <div class="suit-text">
+                <h5>HNIs graduating from mutual funds</h5>
+                <p>You want personalised, tax-efficient portfolios held in your own demat - not pooled units.</p>
+              </div>
             </div>
           </div>
-          <div class="suit-row reveal d2">
-            <div class="suit-check">✓</div>
-            <div class="suit-text">
-              <h5>Drawdown-conscious investors</h5>
-              <p>You've lived through 2020 or 2022 and want smoother NAV curves - not 30% swings.</p>
+        </div>
+
+        <div class="pms-tab-panel" id="catalyst-suitability" role="tabpanel" aria-labelledby="catalyst-tab" data-pms-panel="catalyst" hidden>
+          <div class="suit-checks">
+            <div class="suit-row">
+              <div class="suit-check">&#x2713;</div>
+              <div class="suit-text">
+                <h5>Long-horizon wealth builders</h5>
+                <p>You're comfortable committing for 2+ years and want compounding to do the heavy lifting.</p>
+              </div>
             </div>
-          </div>
-          <div class="suit-row reveal d3">
-            <div class="suit-check">✓</div>
-            <div class="suit-text">
-              <h5>Process-driven thinkers</h5>
-              <p>You value transparent, rules-based decision-making over discretionary fund manager calls.</p>
+            <div class="suit-row">
+              <div class="suit-check">&#x2713;</div>
+              <div class="suit-text">
+                <h5>Drawdown-conscious investors</h5>
+                <p>You've lived through 2020 or 2022 and want smoother NAV curves - not 30% swings.</p>
+              </div>
             </div>
-          </div>
-          <div class="suit-row reveal d4">
-            <div class="suit-check">✓</div>
-            <div class="suit-text">
-              <h5>HNIs graduating from mutual funds</h5>
-              <p>You want personalised, tax-efficient portfolios held in your own demat - not pooled units.</p>
+            <div class="suit-row">
+              <div class="suit-check">&#x2713;</div>
+              <div class="suit-text">
+                <h5>Process-driven thinkers</h5>
+                <p>You value transparent, rules-based decision-making over discretionary fund manager calls.</p>
+              </div>
+            </div>
+            <div class="suit-row">
+              <div class="suit-check">&#x2713;</div>
+              <div class="suit-text">
+                <h5>HNIs graduating from mutual funds</h5>
+                <p>You want personalised, tax-efficient portfolios held in your own demat - not pooled units.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -141,5 +182,30 @@ include 'header.php';
     </div>
   </div>
 </div>
+
+<script>
+(function () {
+  const tabs = document.querySelectorAll('[data-pms-tab]');
+  const panels = document.querySelectorAll('[data-pms-panel]');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.getAttribute('data-pms-tab');
+
+      tabs.forEach((item) => {
+        const isActive = item === tab;
+        item.classList.toggle('active', isActive);
+        item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      panels.forEach((panel) => {
+        const isActive = panel.getAttribute('data-pms-panel') === target;
+        panel.classList.toggle('active', isActive);
+        panel.hidden = !isActive;
+      });
+    });
+  });
+})();
+</script>
 
 <?php include 'footer.php'; ?>

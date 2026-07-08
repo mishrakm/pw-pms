@@ -838,6 +838,34 @@ nav.scrolled .drop-toggle.active { color: var(--white); }
    ══════════════════════════════════════════ */
 .suit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
 
+.pms-tabs {
+  margin: 32px auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 420px;
+  border: 1px solid var(--border);
+  background: var(--ink3);
+}
+.pms-tab {
+  min-height: 46px;
+  border: 0;
+  background: transparent;
+  color: var(--ash);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.pms-tab + .pms-tab { border-left: 1px solid var(--border); }
+.pms-tab:hover,
+.pms-tab.active {
+  background: var(--panel);
+  color: var(--white);
+}
+.pms-tab-panel[hidden] { display: none; }
+
 .suit-checks { margin-top: 36px; display: flex; flex-direction: column; gap: 12px; }
 .suit-row {
   display: flex; align-items: flex-start; gap: 18px;
