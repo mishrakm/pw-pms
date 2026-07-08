@@ -150,29 +150,29 @@ include 'header.php';
             <div class="suit-row">
               <div class="suit-check">&#x2713;</div>
               <div class="suit-text">
-                <h5>Long-horizon wealth builders</h5>
-                <p>You're comfortable committing for 2+ years and want compounding to do the heavy lifting.</p>
+                <h5>Sophisticated, risk-comfortable investors</h5>
+                <p>Short-term paper losses of 20-30% are a standard part of the small-cap journey, not a signal something's wrong.</p>
               </div>
             </div>
             <div class="suit-row">
               <div class="suit-check">&#x2713;</div>
               <div class="suit-text">
-                <h5>Drawdown-conscious investors</h5>
-                <p>You've lived through 2020 or 2022 and want smoother NAV curves - not 30% swings.</p>
+                <h5>3+ year horizon thinkers</h5>
+                <p>The full compounding advantage takes years to show up. Early exits capture the volatility and miss the return.</p>
               </div>
             </div>
             <div class="suit-row">
               <div class="suit-check">&#x2713;</div>
               <div class="suit-text">
-                <h5>Process-driven thinkers</h5>
-                <p>You value transparent, rules-based decision-making over discretionary fund manager calls.</p>
+                <h5>Asymmetric-upside seekers</h5>
+                <p>Early conviction in the right small-cap can compound 3x-5x over a cycle - a materially larger opportunity than large or mid caps.</p>
               </div>
             </div>
             <div class="suit-row">
               <div class="suit-check">&#x2713;</div>
               <div class="suit-text">
-                <h5>HNIs graduating from mutual funds</h5>
-                <p>You want personalised, tax-efficient portfolios held in your own demat - not pooled units.</p>
+                <h5>Comfortable with concentration</h5>
+                <p>8-12 holdings only. This is conviction investing, not diversification - size your allocation to Catalyst accordingly.</p>
               </div>
             </div>
           </div>
