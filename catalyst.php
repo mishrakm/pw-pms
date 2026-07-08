@@ -166,33 +166,38 @@ try {
 <div class="section-wrap" id="framework">
   <div class="inner">
     <div style="max-width:680px;margin:0 0 48px;">
-      <div class="s-eyebrow reveal" style="justify-content:flex-start;">Investment Framework</div>
-      <h2 class="s-title reveal d1">Built for decisive participation,<br><em>not passive drift</em></h2>
+      <div class="s-eyebrow reveal" style="justify-content:flex-start;">How We Invest</div>
+      <h2 class="s-title reveal d1">Systematic,<br><em>repeatable conviction</em></h2>
       <p class="s-body reveal d2" style="margin:16px 0 0;">
-        Catalyst sits alongside Fusion as a separate strategy path for investors who want a more focused equity expression while still staying inside a rules-driven process.
+        Five disciplined steps for every position — no shortcuts, no overrides based on tips or market noise.
       </p>
     </div>
 
     <div class="process-track">
       <div class="p-step reveal d1">
         <div class="p-circle">1</div>
-        <h4>Universe Filter</h4>
-        <p>Liquidity, governance, and sector screens reduce the investable list to names that can support concentrated allocation.</p>
+        <h4>Universe Screening</h4>
+        <p>Quantitative filters across 250+ small caps: earnings growth, ROE, debt, promoter holding, liquidity thresholds.</p>
       </div>
       <div class="p-step reveal d2">
         <div class="p-circle">2</div>
-        <h4>Signal Stack</h4>
-        <p>Trend, relative strength, earnings quality, and valuation checks work together before a stock is admitted into the portfolio.</p>
+        <h4>Fundamental Deep Dive</h4>
+        <p>Bottoms-up analysis of business model, competitive positioning, management quality, earnings trajectory.</p>
       </div>
       <div class="p-step reveal d3">
         <div class="p-circle">3</div>
-        <h4>Risk Budgeting</h4>
-        <p>Every position is sized against concentration limits, sector overlap, and downside tolerance before execution.</p>
+        <h4>Governance Check</h4>
+        <p>Promoter pledging, related-party transactions, media signals, and SEBI actions screened out.</p>
       </div>
       <div class="p-step reveal d4">
         <div class="p-circle">4</div>
-        <h4>Review Cycle</h4>
-        <p>Holdings are reviewed continuously and rebalanced only when the signal set or risk budget materially changes.</p>
+        <h4>Technical Entry</h4>
+        <p>Chart analysis identifies the optimal entry window — entry discipline is non-negotiable.</p>
+      </div>
+      <div class="p-step reveal d5">
+        <div class="p-circle">5</div>
+        <h4>Position Sizing</h4>
+        <p>Sized by conviction, liquidity, and portfolio risk limits — no single name exceeds concentration limits.</p>
       </div>
     </div>
   </div>
