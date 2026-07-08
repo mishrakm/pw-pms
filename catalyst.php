@@ -136,28 +136,28 @@ try {
         <h2 class="s-title reveal d1">Focused trends.<br><em>Fast discipline.</em></h2>
       </div>
       <div class="s-body reveal d2" style="margin: 0;">
-        PlusWealth Catalyst is designed for sharper participation in equity leadership cycles, combining concentrated idea selection with regime filters and strict risk controls.
+        PlusWealth Catalyst runs 8–12 concentrated small cap positions, selected through a dual fundamental-and-technical framework — built for investors with a 3+ year horizon who want outsized, asymmetric compounding.
       </div>
     </div>
 
     <div class="strategy-cards reveal d1">
       <div class="s-card c1">
-        <div class="s-card-num">01 / SELECTION</div>
+        <div class="s-card-num">01 / SCREENING</div>
         <div class="s-card-icon t">C</div>
-        <h3>Leadership-First<br>Stock Basket</h3>
-        <p>A tighter portfolio built around companies showing the strongest earnings, quality, and price leadership within their sectors.</p>
+        <h3>Leadership-First<br>Fundamental Screening</h3>
+        <p>Business quality, earnings trajectory, management integrity, competitive moats, and balance sheet strength — filtered across 250+ small caps before any name reaches the watchlist.</p>
       </div>
       <div class="s-card c2">
         <div class="s-card-num">02 / TIMING</div>
         <div class="s-card-icon g">T</div>
-        <h3>Regime-Based<br>Exposure Control</h3>
-        <p>Gross exposure increases when market breadth and trend confirmation align, and scales back when signals deteriorate.</p>
+        <h3>Regime-Based<br>Technical Validation</h3>
+        <p>Price action, volume patterns, momentum signals, entry timing, and exit discipline. A great business at the wrong price is still the wrong trade.</p>
       </div>
       <div class="s-card c3">
-        <div class="s-card-num">03 / RISK</div>
+        <div class="s-card-num">03 / CONVICTION</div>
         <div class="s-card-icon gr">R</div>
-        <h3>Drawdown-Aware<br>Position Sizing</h3>
-        <p>Position caps, liquidity filters, and disciplined exits are embedded into the portfolio construction framework from day one.</p>
+        <h3>Conviction Position</h3>
+        <p>Watchlist becomes a focused position once thesis is confirmed by chart data — sized by conviction and liquidity, with ongoing thesis monitoring. 8–12 holdings only, no dilution.</p>
       </div>
     </div>
   </div>
