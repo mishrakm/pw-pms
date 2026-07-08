@@ -875,6 +875,12 @@ nav.scrolled .drop-toggle.active { color: var(--white); }
   display: flex;
   justify-content: center;
 }
+.pms-know-more .nav-btn:hover,
+.pms-know-more .nav-btn:focus-visible {
+  background: var(--brand);
+  color: var(--white) !important;
+  border-color: var(--brand);
+}
 
 .suit-checks { margin-top: 36px; display: flex; flex-direction: column; gap: 12px; }
 .suit-row {
