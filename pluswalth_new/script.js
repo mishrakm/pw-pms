@@ -39,6 +39,32 @@
       clock.textContent = value;
       clock.setAttribute('datetime', new Date().toISOString());
     });
+
+    document.querySelectorAll('[data-clock-zone]').forEach((clockFace) => {
+      const zone = clockFace.getAttribute('data-clock-zone');
+      const parts = new Intl.DateTimeFormat('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: false,
+        timeZone: zone
+      }).formatToParts(new Date());
+      const time = parts.reduce((result, part) => {
+        if (part.type !== 'literal') result[part.type] = Number(part.value);
+        return result;
+      }, {});
+
+      const hours = time.hour % 12;
+      const minutes = time.minute || 0;
+      const seconds = time.second || 0;
+      const hourDeg = (hours * 30) + (minutes * 0.5);
+      const minuteDeg = (minutes * 6) + (seconds * 0.1);
+      const secondDeg = seconds * 6;
+
+      clockFace.querySelector('.hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+      clockFace.querySelector('.minute-hand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+      clockFace.querySelector('.second-hand').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+    });
   }
 
   updateClocks();

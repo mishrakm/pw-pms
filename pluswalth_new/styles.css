@@ -129,11 +129,9 @@ button:focus-visible {
 
 .hero {
   position: relative;
-  min-height: 520px;
+  min-height: 650px;
   color: #fff;
-  background:
-    linear-gradient(90deg, rgba(7, 53, 116, 0.94), rgba(18, 120, 193, 0.88)),
-    url("assets/plus-wealth-mark.png") right 12% center / 390px auto no-repeat;
+  background: linear-gradient(90deg, #073574, #1278c1);
   overflow: hidden;
 }
 
@@ -141,7 +139,7 @@ button:focus-visible {
   content: "";
   position: absolute;
   inset: auto 0 0;
-  height: 105px;
+  height: 120px;
   background: linear-gradient(180deg, rgba(255,255,255,0), #fff);
 }
 
@@ -149,12 +147,18 @@ button:focus-visible {
   position: relative;
   z-index: 1;
   width: min(1180px, calc(100% - 40px));
-  min-height: 520px;
+  min-height: 650px;
   margin: 0 auto;
-  padding: 96px 0 125px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 76px 0 110px;
+  display: grid;
+  grid-template-columns: 0.88fr 1.12fr;
+  align-items: center;
+  gap: 54px;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
 }
 
 h1,
@@ -178,6 +182,14 @@ h2 {
   font-family: var(--font-nav);
   font-size: clamp(18px, 2.1vw, 27px);
   line-height: 1.45;
+}
+
+.hero img {
+  width: 100%;
+  min-height: 430px;
+  object-fit: cover;
+  border: 8px solid rgba(255,255,255,0.18);
+  box-shadow: 0 30px 70px rgba(0, 18, 50, 0.32);
 }
 
 .hero-links {
@@ -218,20 +230,6 @@ h2 {
   background: var(--blue-deep);
   border-color: var(--blue-deep);
   color: #fff;
-}
-
-.office-image {
-  width: min(1180px, calc(100% - 40px));
-  margin: -62px auto 0;
-  position: relative;
-  z-index: 2;
-  box-shadow: var(--shadow);
-}
-
-.office-image img {
-  width: 100%;
-  min-height: 360px;
-  object-fit: cover;
 }
 
 .section-shell {
@@ -365,10 +363,102 @@ h2 {
 }
 
 .clock-grid article {
-  min-height: 118px;
+  min-height: 260px;
   padding: 24px;
   background: #fff;
   text-align: center;
+}
+
+.clock-face {
+  position: relative;
+  width: 138px;
+  height: 138px;
+  margin: 0 auto 18px;
+  border: 8px solid var(--blue);
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #fff 0 63%, #eef8ff 64% 100%);
+  box-shadow: inset 0 0 0 2px rgba(6,63,145,0.12), 0 12px 28px rgba(13,83,151,0.14);
+}
+
+.clock-face::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(6,63,145,0.16);
+  border-radius: 50%;
+}
+
+.mark {
+  position: absolute;
+  color: var(--ink);
+  font-family: var(--font-nav);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.mark-12 {
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.mark-3 {
+  top: 50%;
+  right: 13px;
+  transform: translateY(-50%);
+}
+
+.mark-6 {
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.mark-9 {
+  top: 50%;
+  left: 13px;
+  transform: translateY(-50%);
+}
+
+.hand {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform-origin: 50% 100%;
+  transform: translateX(-50%) rotate(0deg);
+  border-radius: 999px;
+}
+
+.hour-hand {
+  width: 6px;
+  height: 34px;
+  background: var(--ink);
+}
+
+.minute-hand {
+  width: 4px;
+  height: 46px;
+  background: var(--blue-deep);
+}
+
+.second-hand {
+  width: 2px;
+  height: 50px;
+  background: #e14b4b;
+}
+
+.pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--cyan);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px var(--blue-deep);
 }
 
 .clock-grid time {
@@ -431,6 +521,30 @@ h2 {
 .linkedin-link img {
   width: 18px;
   height: 18px;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 45;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  background: var(--blue);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.45);
+  box-shadow: 0 12px 28px rgba(6,63,145,0.22);
+  font-family: var(--font-nav);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-to-top:hover {
+  background: var(--blue-deep);
 }
 
 .disclaimer {
@@ -538,6 +652,15 @@ h2 {
     display: grid;
   }
 
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .hero img {
+    min-height: 320px;
+  }
+
   .footer-inner nav {
     justify-content: start;
   }
@@ -546,15 +669,11 @@ h2 {
 @media (max-width: 720px) {
   .hero,
   .hero-inner {
-    min-height: 430px;
+    min-height: 0;
   }
 
   .hero-inner {
     padding: 72px 0 100px;
-  }
-
-  .office-image img {
-    min-height: 260px;
   }
 
   .intro-section {
