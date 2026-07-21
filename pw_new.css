@@ -224,6 +224,15 @@ nav.at-top .nav-btn:hover {
   transition: color 0.2s, background 0.2s, border-color 0.2s;
 }
 
+.nav-links a:focus-visible,
+.drop-toggle:focus-visible,
+.nav-btn:focus-visible,
+.nav-toggle:focus-visible {
+  color: var(--white);
+  background: rgba(69,179,227,0.18);
+  border-radius: 4px;
+}
+
 .drop-toggle {
   display: inline-flex;
   align-items: center;
@@ -292,6 +301,10 @@ nav.at-top .nav-btn:hover {
   padding: 10px 16px;
   color: #000;
   font-size: 13px;
+}
+.nav-links .drop-links a:focus-visible {
+  background: var(--brand);
+  color: var(--white) !important;
 }
 
 /* when nav dark, dropdown bg should be near-black for legibility */

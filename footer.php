@@ -70,20 +70,77 @@ const dropdownToggles = document.querySelectorAll('.drop-toggle');
 dropdownToggles.forEach((toggle) => {
   const parent = toggle.closest('.dropdown');
   if (!parent) return;
+  const menu = document.getElementById(toggle.getAttribute('aria-controls'));
+  const menuLinks = menu ? Array.from(menu.querySelectorAll('a')) : [];
 
-  toggle.addEventListener('click', (event) => {
-    event.stopPropagation();
-    const isOpen = parent.classList.contains('open');
-
+  function closeOtherDropdowns() {
     dropdownToggles.forEach((otherToggle) => {
       const otherParent = otherToggle.closest('.dropdown');
       if (!otherParent) return;
       otherParent.classList.remove('open');
       otherToggle.setAttribute('aria-expanded', 'false');
     });
+  }
 
-    parent.classList.toggle('open', !isOpen);
-    toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+  function openDropdown() {
+    closeOtherDropdowns();
+    parent.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeDropdown() {
+    parent.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const isOpen = parent.classList.contains('open');
+    if (isOpen) closeDropdown(); else openDropdown();
+  });
+
+  toggle.addEventListener('focus', openDropdown);
+
+  toggle.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      openDropdown();
+      if (menuLinks[0]) menuLinks[0].focus();
+    }
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeDropdown();
+    }
+  });
+
+  parent.addEventListener('focusout', () => {
+    window.setTimeout(() => {
+      if (!parent.contains(document.activeElement)) closeDropdown();
+    }, 0);
+  });
+
+  menuLinks.forEach((link, index) => {
+    link.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeDropdown();
+        toggle.focus();
+      }
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        const delta = event.key === 'ArrowDown' ? 1 : -1;
+        const nextIndex = (index + delta + menuLinks.length) % menuLinks.length;
+        menuLinks[nextIndex].focus();
+      }
+      if (event.key === 'Home') {
+        event.preventDefault();
+        menuLinks[0].focus();
+      }
+      if (event.key === 'End') {
+        event.preventDefault();
+        menuLinks[menuLinks.length - 1].focus();
+      }
+    });
   });
 });
 
