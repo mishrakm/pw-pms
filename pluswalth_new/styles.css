@@ -110,6 +110,11 @@ button:focus-visible {
   color: var(--blue);
 }
 
+.nav-menu a.active {
+  color: var(--blue);
+  font-weight: 700;
+}
+
 .nav-toggle {
   display: none;
   width: 44px;
@@ -342,6 +347,86 @@ h2 {
   font-family: var(--font-display);
   font-size: clamp(28px, 4vw, 48px);
   line-height: 1.28;
+}
+
+.page-hero {
+  min-height: 430px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  background:
+    linear-gradient(90deg, rgba(6,63,145,0.82), rgba(6,63,145,0.28)),
+    url("assets/about-banner.png") center / cover no-repeat;
+}
+
+.page-hero h1 {
+  color: #fff;
+  font-size: clamp(44px, 6vw, 82px);
+}
+
+.page-hero p {
+  max-width: 620px;
+  margin: 14px 0 0;
+  color: #fff;
+  font-family: var(--font-nav);
+  font-size: clamp(18px, 2.2vw, 28px);
+  font-weight: 500;
+}
+
+.story-block {
+  padding: 76px 0;
+}
+
+.story-block:nth-of-type(odd) {
+  background: #fff;
+}
+
+.story-block:nth-of-type(even) {
+  background: var(--pale);
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 70px;
+  align-items: start;
+  background: url("assets/plus-wealth-mark.png") left bottom / 145px auto no-repeat;
+}
+
+.section-kicker {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--blue);
+  font-family: var(--font-nav);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+.story-block h2 {
+  font-size: clamp(30px, 4vw, 50px);
+}
+
+.story-copy p,
+.resource-row p {
+  margin: 0 0 18px;
+}
+
+.resource-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 58px;
+  align-items: center;
+}
+
+.resource-grid img {
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+
+.alternate .resource-grid {
+  background: url("assets/plus-wealth-mark.png") right bottom / 155px auto no-repeat;
 }
 
 .world-clocks {
@@ -640,6 +725,8 @@ h2 {
   }
 
   .intro-grid,
+  .story-grid,
+  .resource-grid,
   .footer-inner {
     grid-template-columns: 1fr;
     display: grid;
