@@ -441,62 +441,40 @@ h2 {
 }
 
 .clock-grid article {
-  min-height: 260px;
-  padding: 24px;
-  background: #fff;
+  min-height: 270px;
+  padding: 30px 24px 26px;
+  background:
+    linear-gradient(180deg, #ffffff, #f8fcff);
   text-align: center;
 }
 
 .clock-face {
   position: relative;
-  width: 138px;
-  height: 138px;
-  margin: 0 auto 18px;
-  border: 8px solid var(--blue);
+  width: 142px;
+  height: 142px;
+  margin: 0 auto 20px;
+  border: 1px solid rgba(23,48,84,0.24);
   border-radius: 50%;
-  background: radial-gradient(circle at center, #fff 0 63%, #eef8ff 64% 100%);
-  box-shadow: inset 0 0 0 2px rgba(6,63,145,0.12), 0 12px 28px rgba(13,83,151,0.14);
+  background:
+    radial-gradient(circle at center, #ffffff 0 8%, transparent 9%),
+    repeating-conic-gradient(from 0deg, rgba(23,48,84,0.58) 0deg 1.4deg, transparent 1.4deg 30deg),
+    radial-gradient(circle at center, #ffffff 0 68%, #f4f9fd 69% 100%);
+  box-shadow:
+    inset 0 0 0 8px #ffffff,
+    inset 0 0 0 9px rgba(15,111,201,0.18),
+    0 16px 34px rgba(13,83,151,0.12);
 }
 
 .clock-face::before {
   content: "";
   position: absolute;
-  inset: 10px;
-  border: 1px solid rgba(6,63,145,0.16);
+  inset: 18px;
+  border: 1px solid rgba(23,48,84,0.1);
   border-radius: 50%;
 }
 
 .mark {
-  position: absolute;
-  color: var(--ink);
-  font-family: var(--font-nav);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.mark-12 {
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.mark-3 {
-  top: 50%;
-  right: 13px;
-  transform: translateY(-50%);
-}
-
-.mark-6 {
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.mark-9 {
-  top: 50%;
-  left: 13px;
-  transform: translateY(-50%);
+  display: none;
 }
 
 .hand {
@@ -506,45 +484,47 @@ h2 {
   transform-origin: 50% 100%;
   transform: translateX(-50%) rotate(0deg);
   border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(23,48,84,0.18);
 }
 
 .hour-hand {
-  width: 6px;
+  width: 5px;
   height: 34px;
   background: var(--ink);
 }
 
 .minute-hand {
-  width: 4px;
-  height: 46px;
-  background: var(--blue-deep);
+  width: 3px;
+  height: 48px;
+  background: #21476f;
 }
 
 .second-hand {
   width: 2px;
-  height: 50px;
-  background: #e14b4b;
+  height: 54px;
+  background: var(--cyan);
+  opacity: 0.88;
 }
 
 .pin {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: var(--cyan);
+  background: var(--blue-deep);
   border: 2px solid #fff;
-  box-shadow: 0 0 0 2px var(--blue-deep);
+  box-shadow: 0 0 0 1px rgba(23,48,84,0.22);
 }
 
 .clock-grid time {
   display: block;
-  color: var(--blue);
+  color: var(--ink);
   font-family: var(--font-nav);
-  font-size: 23px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   line-height: 1.2;
 }
 
