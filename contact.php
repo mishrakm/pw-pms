@@ -19,8 +19,11 @@ include 'header.php';
 
       <form action="assets/mail.php" method="POST" id="contact-form" class="contact-form" style="margin-top:18px;">
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+          <label class="sr-only" for="name">Name</label>
           <input type="text" id="name" name="name" placeholder="Name" required style="padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:var(--panel);color:var(--white);" />
+          <label class="sr-only" for="email">Email address</label>
           <input type="email" id="email" name="email" placeholder="Email" required style="padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:var(--panel);color:var(--white);" />
+          <label class="sr-only" for="phone">Phone number</label>
           <input type="text" id="phone" name="phone" placeholder="Phone" style="padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:var(--panel);color:var(--white);" />
         </div>
         <div style="margin-top:16px;">

@@ -218,7 +218,7 @@ try {
     </div>
 
     <div class="reveal d3" style="margin-bottom:48px;">
-      <canvas id="catalystPerfChart" style="width:100%;max-height:360px;"></canvas>
+      <canvas id="catalystPerfChart" role="img" aria-label="Bar chart comparing PlusWealth Catalyst returns with benchmark returns across time periods" style="width:100%;max-height:360px;"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <script>
@@ -306,7 +306,7 @@ try {
     };
     ?>
     <div class="reveal d3" style="margin-bottom:48px;overflow-x:auto;-webkit-overflow-scrolling:touch;">
-      <div style="min-width:780px;">
+      <div style="min-width:780px;" role="table" aria-label="PlusWealth Catalyst period returns compared with benchmark">
       <div style="display:grid;grid-template-columns:160px repeat(9,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-bottom:none;">
         <div style="background:var(--panel);padding:10px 14px;font-family:var(--f-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--slate);">Strategy</div>
         <?php foreach ($periodLabels as $lbl): ?>
@@ -359,7 +359,7 @@ try {
         <div class="s-eyebrow reveal">Explore The Strategy</div>
         <h2 class="s-title reveal d1">Interested in Catalyst?<br><em>Speak with the team.</em></h2>
       </div>
-      <a href="contact.php" class="nav-btn reveal d2">Connect</a>
+      <a href="contact.php" class="nav-btn reveal d2" aria-label="Connect with PlusWealth about Catalyst">Connect</a>
     </div>
     <p class="s-body reveal d3" style="max-width:720px;margin:20px 0 0;">
       We can walk you through how Catalyst differs from Fusion, where it may fit within an overall allocation, and how the portfolio rules are intended to behave across market regimes.

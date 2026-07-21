@@ -25,30 +25,31 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
 
 <?php $current_strategy = isset($current_strategy) ? $current_strategy : ''; ?>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <!-- DEBUG: Loader + Error overlay -->
 <div id="site-loader" aria-hidden="true">
-  <div class="loader-inner">Loading…</div>
+  <div class="loader-inner">Loading...</div>
 </div>
 <div id="error-overlay" role="alert" aria-live="assertive" hidden>
   <div id="error-overlay-inner">
     <strong>Client-side error detected</strong>
     <pre id="error-log" style="white-space:pre-wrap;word-break:break-word;margin-top:8px;max-height:260px;overflow:auto;"></pre>
-    <button id="error-close">Hide</button>
+    <button id="error-close" type="button">Hide</button>
   </div>
 </div>
 
 <!-- NAVIGATION -->
-<nav id="nav">
+<nav id="nav" aria-label="Primary navigation">
   <a href="index.php" class="logo" aria-label="PlusWealth Home">
     <div class="logo-wrap">
-      <img src="logo.png" alt="PlusWealth" class="logo-img" />
+      <img src="logo.png" alt="PlusWealth logo" class="logo-img" />
     </div>
   </a>
 
-  <!-- mobile menu button -->
-  <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+  <button class="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav-links">&#9776;</button>
 
-  <div class="nav-right">
+  <div class="nav-right" id="primary-nav-links">
     <ul class="nav-links">
       <li class="dropdown">
         <button
@@ -57,12 +58,12 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
           aria-expanded="false"
           aria-controls="strategy-menu"
         >
-          Strategy
+          <span>Strategy</span>
           <span class="drop-caret" aria-hidden="true">&#9662;</span>
         </button>
         <ul class="drop-links" id="strategy-menu">
-          <li><a href="fusion.php"<?php echo $current_strategy === 'fusion' ? ' class="active"' : ''; ?>>Fusion</a></li>
-          <li><a href="catalyst.php"<?php echo $current_strategy === 'catalyst' ? ' class="active"' : ''; ?>>Catalyst</a></li>
+          <li><a href="fusion.php"<?php echo $current_strategy === 'fusion' ? ' class="active" aria-current="page"' : ''; ?>>Fusion strategy</a></li>
+          <li><a href="catalyst.php"<?php echo $current_strategy === 'catalyst' ? ' class="active" aria-current="page"' : ''; ?>>Catalyst strategy</a></li>
         </ul>
       </li>
       <li><a href="knowledge.php">Knowledge Center</a></li>
@@ -70,27 +71,26 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
       <li><a href="faq.php">FAQ</a></li>
     </ul>
 
-    <a href="contact.php" class="nav-btn">
+    <a href="contact.php" class="nav-btn" aria-label="Connect with PlusWealth">
       Connect
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </a>
   </div>
 </nav>
 
+<main id="main-content" tabindex="-1">
+
 <script>
-// Toggle `at-top` on the nav so the Connect button can switch to a dark style at page top
 (function(){
   var nav = document.getElementById('nav');
   if(!nav) return;
   function updateAtTop(){
     if(window.scrollY === 0) nav.classList.add('at-top'); else nav.classList.remove('at-top');
   }
-  // set initial state and listen for scroll
   updateAtTop();
   window.addEventListener('scroll', updateAtTop, {passive:true});
 })();
 </script>
-
 

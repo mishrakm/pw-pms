@@ -131,7 +131,7 @@ try {
     </div>
 
     <div class="strategy-performance" style="margin-bottom:24px;text-align:center;">
-      <img src="PlusWealth_Fusion_Jan-2026_return.jpeg" alt="Fusion Performance" style="width:100%;height:auto;max-width:800px;" class="reveal d3" />
+      <img src="PlusWealth_Fusion_Jan-2026_return.jpeg" alt="PlusWealth Fusion performance chart for January 2026" style="width:100%;height:auto;max-width:800px;" class="reveal d3" />
     </div>
 
     <div class="reveal d3" style="margin-bottom:12px;display:flex;justify-content:flex-end;">

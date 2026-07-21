@@ -295,7 +295,7 @@ try {
 
     <!-- MONTHLY RETURNS CHART -->
     <div class="reveal d3" style="margin-bottom:48px;">
-      <canvas id="perfChart" style="width:100%;max-height:360px;"></canvas>
+      <canvas id="perfChart" role="img" aria-label="Bar chart comparing PlusWealth Fusion returns with benchmark returns across time periods" style="width:100%;max-height:360px;"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <script>
@@ -384,7 +384,7 @@ try {
     };
     ?>
     <div class="reveal d3" style="margin-bottom:48px;overflow-x:auto;-webkit-overflow-scrolling:touch;">
-      <div style="min-width:780px;">
+      <div style="min-width:780px;" role="table" aria-label="PlusWealth Fusion period returns compared with benchmark">
       <!-- header row -->
       <div style="display:grid;grid-template-columns:160px repeat(9,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-bottom:none;">
         <div style="background:var(--panel);padding:10px 14px;font-family:var(--f-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--slate);">Strategy</div>

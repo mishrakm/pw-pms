@@ -114,8 +114,8 @@ function formatFileSize($bytes) {
                                     <?php echo htmlspecialchars($downloadCount, ENT_QUOTES, 'UTF-8'); ?>
                                 </td>
                                 <td style="padding: 16px; text-align: center; vertical-align: top;">
-                                    <a href="download_file.php?id=<?php echo urlencode((string) ($download['id'] ?? '')); ?>" class="btn-gold" style="padding: 8px 14px; font-size: 12px;">
-                                        <i class="lni lni-download"></i> Download
+                                    <a href="download_file.php?id=<?php echo urlencode((string) ($download['id'] ?? '')); ?>" class="btn-gold" aria-label="Download <?php echo htmlspecialchars((string) ($download['title'] ?? 'document'), ENT_QUOTES, 'UTF-8'); ?>" style="padding: 8px 14px; font-size: 12px;">
+                                        <i class="lni lni-download" aria-hidden="true"></i> Download
                                     </a>
                                 </td>
                             </tr>

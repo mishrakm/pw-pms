@@ -1,9 +1,11 @@
-<footer>
+</main>
+
+<footer aria-label="Site footer">
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="logo">
         <div class="logo-wrap">
-          <img src="logo.png" alt="PlusWealth" class="logo-img" />
+          <img src="logo.png" alt="PlusWealth logo" class="logo-img" />
         </div>
       </div>
       <p>A SEBI-registered Portfolio Management Service committed to disciplined, evidence-based, rules-driven wealth creation for long-term investors.</p>
@@ -13,7 +15,7 @@
       <h5>Company</h5>
       <ul>
         <li><a href="about.php">About PlusWealth</a></li>
-        <li><a href="compliance.php">Compliance</a></li>
+        <li><a href="compliance.php">Compliance and regulatory disclosures</a></li>
       </ul>
     </div>
 
@@ -22,10 +24,10 @@
     <div class="footer-col">
       <h5>Legal</h5>
       <ul>
-        <li><a href="compliance.php#sebi">SEBI Disclosures</a></li>
-        <li><a href="compliance.php#grievance">Grievance Redressal</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Use</a></li>
+        <li><a href="compliance.php">SEBI disclosures</a></li>
+        <li><a href="compliance.php">Grievance redressal process</a></li>
+        <li><a href="compliance.php">Privacy policy</a></li>
+        <li><a href="compliance.php">Terms of use</a></li>
       </ul>
     </div>
 
@@ -56,8 +58,10 @@ window.addEventListener('scroll', () => {
 const navToggle = document.querySelector('.nav-toggle');
 const navRight = document.querySelector('.nav-right');
 if (navToggle && navRight) {
+  navToggle.setAttribute('aria-expanded', navRight.classList.contains('open') ? 'true' : 'false');
   navToggle.addEventListener('click', () => {
-    navRight.classList.toggle('open');
+    const isOpen = navRight.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 }
 
@@ -94,6 +98,23 @@ document.addEventListener('click', (event) => {
   });
 });
 
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+
+  if (navRight && navToggle && navRight.classList.contains('open')) {
+    navRight.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.focus();
+  }
+
+  dropdownToggles.forEach((toggle) => {
+    const parent = toggle.closest('.dropdown');
+    if (!parent) return;
+    parent.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
 // Scroll reveal
 const revealEls = document.querySelectorAll('.reveal');
 const revObs = new IntersectionObserver((entries) => {
@@ -108,8 +129,19 @@ revealEls.forEach(el => revObs.observe(el));
 function toggleFaq(btn) {
   const item = btn.closest('.faq-item');
   const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    const q = i.querySelector('.faq-q');
+    const a = i.querySelector('.faq-a');
+    if (q) q.setAttribute('aria-expanded', 'false');
+    if (a) a.hidden = true;
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    const answer = item.querySelector('.faq-a');
+    if (answer) answer.hidden = false;
+  }
 }
 
 // Animate numbers on entry
@@ -156,7 +188,11 @@ document.addEventListener('click', (e) => {
   e.preventDefault();
   const id = a.getAttribute('href');
   const el = document.querySelector(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+    el.focus({ preventScroll: true });
+  }
 });
 </script>
 

@@ -10,7 +10,7 @@ include 'header.php';
     <h2 class="s-title reveal d1">Experienced. Credentialled.<br><em>Fully aligned with you.</em></h2>
     <div class="team-grid">
       <div class="t-card reveal d1">
-        <div class="t-avatar"><img src="team_gaurav.png" alt="Gaurav Chhabra"></div>
+        <div class="t-avatar"><img src="team_gaurav.png" alt="Portrait of Gaurav Chhabra, Designated Partner"></div>
         <div class="t-name">Gaurav Chhabra</div>
         <div class="t-role">Designated Partner</div>
         <div class="t-exp">20+ Years</div>
@@ -28,7 +28,7 @@ include 'header.php';
       </div>
 
       <div class="t-card reveal d2">
-        <div class="t-avatar"><img src="team_parmeet.png" alt="Parmeet Singh Chadha"></div>
+        <div class="t-avatar"><img src="team_parmeet.png" alt="Portrait of Parmeet Singh Chadha, Designated Partner"></div>
         <div class="t-name">Parmeet Singh Chadha</div>
         <div class="t-role">Designated Partner</div>
         <div class="t-exp">25+ Years</div>
@@ -46,7 +46,7 @@ include 'header.php';
       </div>
 
       <div class="t-card reveal d3">
-        <div class="t-avatar"><img src="team_pavit.png" alt="Pavit Singh"></div>
+        <div class="t-avatar"><img src="team_pavit.png" alt="Portrait of Pavit Singh, Strategy and Relations"></div>
         <div class="t-name">Pavit Singh</div>
         <div class="t-role">Strategy & Relations</div>
         <div class="t-exp">CFA All 3 Levels</div>

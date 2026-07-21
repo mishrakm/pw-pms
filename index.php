@@ -108,8 +108,8 @@ include 'header.php';
         <h2 class="s-title reveal d1" style="text-align:center;">Which PMS<br><em>is right for you?</em></h2>
 
         <div class="pms-tabs reveal d2" role="tablist" aria-label="PMS suitability">
-          <button class="pms-tab active" type="button" role="tab" aria-selected="true" aria-controls="fusion-suitability" id="fusion-tab" data-pms-tab="fusion">Fusion</button>
-          <button class="pms-tab" type="button" role="tab" aria-selected="false" aria-controls="catalyst-suitability" id="catalyst-tab" data-pms-tab="catalyst">Catalyst</button>
+          <button class="pms-tab active" type="button" role="tab" aria-selected="true" aria-controls="fusion-suitability" id="fusion-tab" tabindex="0" data-pms-tab="fusion">Fusion</button>
+          <button class="pms-tab" type="button" role="tab" aria-selected="false" aria-controls="catalyst-suitability" id="catalyst-tab" tabindex="-1" data-pms-tab="catalyst">Catalyst</button>
         </div>
 
         <div class="pms-tab-panel active" id="fusion-suitability" role="tabpanel" aria-labelledby="fusion-tab" data-pms-panel="fusion">
@@ -179,7 +179,7 @@ include 'header.php';
         </div>
 
         <div class="pms-know-more reveal d3">
-          <a href="fusion.php" class="nav-btn" data-pms-link>Know more about Fusion</a>
+          <a href="fusion.php" class="nav-btn" aria-label="Know more about Fusion strategy" data-pms-link>Know more about Fusion</a>
         </div>
       </div>
 
@@ -200,6 +200,7 @@ include 'header.php';
         const isActive = item === tab;
         item.classList.toggle('active', isActive);
         item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        item.setAttribute('tabindex', isActive ? '0' : '-1');
       });
 
       panels.forEach((panel) => {
@@ -213,7 +214,19 @@ include 'header.php';
         const label = target === 'catalyst' ? 'Catalyst' : 'Fusion';
         link.href = target + '.php';
         link.textContent = 'Know more about ' + label;
+        link.setAttribute('aria-label', 'Know more about ' + label + ' strategy');
       }
+    });
+
+    tab.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      const index = Array.prototype.indexOf.call(tabs, tab);
+      const nextIndex = event.key === 'ArrowRight'
+        ? (index + 1) % tabs.length
+        : (index - 1 + tabs.length) % tabs.length;
+      tabs[nextIndex].focus();
+      tabs[nextIndex].click();
     });
   });
 })();

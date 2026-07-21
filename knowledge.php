@@ -82,7 +82,7 @@ try {
               </div>
 
               <div>
-                <a href="download_file.php?id=<?= (int)$download['id'] ?>" class="btn-gold" style="padding:10px 18px;font-size:13px;white-space:nowrap;">Download</a>
+                <a href="download_file.php?id=<?= (int)$download['id'] ?>" class="btn-gold" aria-label="Download <?= htmlspecialchars((string)($download['title'] ?? 'document'), ENT_QUOTES) ?>" style="padding:10px 18px;font-size:13px;white-space:nowrap;">Download</a>
               </div>
             </div>
           <?php endforeach; ?>
