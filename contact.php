@@ -1,4 +1,12 @@
 <?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+$captcha_left = random_int(1, 9);
+$captcha_right = random_int(1, 9);
+$_SESSION['contact_captcha_answer'] = $captcha_left + $captcha_right;
+
 $page_title = 'Contact — PlusWealth PMS';
 include 'header.php';
 ?>
@@ -25,6 +33,8 @@ include 'header.php';
           <input type="email" id="email" name="email" placeholder="Email" required style="padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:var(--panel);color:var(--white);" />
           <label class="sr-only" for="phone">Phone number</label>
           <input type="text" id="phone" name="phone" placeholder="Phone" style="padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:var(--panel);color:var(--white);" />
+          <label class="sr-only" for="captcha">Security question</label>
+          <input type="number" id="captcha" name="captcha" placeholder="What is <?php echo $captcha_left; ?> + <?php echo $captcha_right; ?>?" required inputmode="numeric" autocomplete="off" style="padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:var(--panel);color:var(--white);" />
         </div>
         <div style="margin-top:16px;">
           <button type="submit" class="btn-gold">SEND MESSAGE</button>

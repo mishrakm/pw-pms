@@ -11,6 +11,10 @@ use PHPMailer\PHPMailer\SMTP;
 
 use PHPMailer\PHPMailer\Exception;
 
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
 
 
 require_once __DIR__ . '/../PHPMailer/src/PHPMailer.php';
@@ -53,6 +57,7 @@ function validate_email($email) {
 $name = isset($_POST['name']) ? sanitize_input($_POST['name']) : '';
 $email = isset($_POST['email']) ? sanitize_input($_POST['email']) : '';
 $phone = isset($_POST['phone']) ? sanitize_input($_POST['phone']) : '';
+$captcha = isset($_POST['captcha']) ? trim((string)$_POST['captcha']) : '';
 // city and ticket_size removed from form
 
 
@@ -78,6 +83,11 @@ if (empty($phone) || strlen($phone) < 7) {
     $errors[] = 'Please provide a valid phone number';
 }
 
+$expected_captcha = $_SESSION['contact_captcha_answer'] ?? null;
+if ($expected_captcha === null || $captcha === '' || !ctype_digit($captcha) || (int)$captcha !== (int)$expected_captcha) {
+    $errors[] = 'Please answer the security question correctly';
+}
+
 
 // Return validation errors
 
@@ -90,6 +100,9 @@ if (!empty($errors)) {
     ]);
     exit;
 }
+
+// A correct answer is valid for one successful submission only.
+unset($_SESSION['contact_captcha_answer']);
 
 
 // Save to database
