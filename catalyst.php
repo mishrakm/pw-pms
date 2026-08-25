@@ -346,8 +346,6 @@ try {
 
     <div class="perf-note reveal d3" style="margin-top:10px;">
       *Benchmark: NSE Multi Asset Index 2
-      <br><br>
-      Six months live. Monthly return breakdowns and independent category-ranking verification aren't yet available for Catalyst &mdash; shown here only once a custodian statement or PMS Bazaar listing publishes verified figures. Past performance is not indicative of future results.
     </div>
   </div>
 </div>
