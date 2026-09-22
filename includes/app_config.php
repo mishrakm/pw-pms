@@ -18,6 +18,7 @@ return [
         'to_emails' => [
             'amit.mishra@pluswealth.net',
             'pavit.singh@pluswealth.com',
+            'rahul.baghel@pluswealth.com',
         ],
     ],
     'leads_portal' => [
