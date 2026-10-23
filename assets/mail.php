@@ -146,9 +146,9 @@ if (!is_array($to_emails) || empty($to_emails)) {
 $email_body = "\nYou have received a new contact form submission from your website.\n\n\nDetails:\n---------\nName: " . $name . "\nEmail: " . $email . "\nPhone: " . $phone . "\n\nPlease respond to this inquiry at your earliest convenience.\n\n---\nThis is an automated message from PlusWealth PMS Website Contact Form.\n";
 
 
+// Email is best-effort. Submissions are already saved (DB / CSV export),
+// so always acknowledge receipt even if SMTP fails.
 try {
-
-    // Send email to admin using PHPMailer
     $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->SMTPDebug = 0;
@@ -163,18 +163,15 @@ try {
         (string)($mailConfig['from_name_admin'] ?? 'PlusWealth PMS Contact Form')
     );
     $mail->addReplyTo($email, $name);
-    
-    // Add multiple recipients
+
     foreach ($to_emails as $recipient) {
         $mail->addAddress($recipient);
     }
-    
+
     $mail->Subject = 'New Contact Form Submission from ' . $name;
     $mail->Body = $email_body;
-    
     $mail->send();
-    
-    // Optional: Send confirmation email to user
+
     $user_mail = new PHPMailer(true);
     $user_mail->isSMTP();
     $user_mail->SMTPDebug = 0;
@@ -189,27 +186,22 @@ try {
         (string)($mailConfig['from_name_user'] ?? 'PlusWealth Capital Management')
     );
     $user_mail->addAddress($email, $name);
-    
+
     $user_body = "\nDear " . $name . ",\n\nThank you for reaching out to PlusWealth Capital Management LLP.\n\nWe have received your inquiry and will get back to you within 24 business hours.\n\nDetails of your submission:\n---------------------------\nName: " . $name . "\nEmail: " . $email . "\nPhone: " . $phone . "\n\nIf you have any questions in the meantime, feel free to visit our website or call us directly.\n\nBest regards,\nPlusWealth Capital Management LLP\nSEBI Registration No: INZ000163752\nPortfolio Manager Registration No: INP000009144\n\n---\nThis is an automated message. Please do not reply to this email.\n";
-    
+
     $user_mail->Subject = 'Thank you for contacting PlusWealth PMS';
     $user_mail->Body = $user_body;
     $user_mail->send();
-    
-    http_response_code(200);
-    echo json_encode([
-        'success' => true,
-        'message' => 'Thank you! Your message has been sent successfully. We will get back to you soon.'
-    ]);
-    
 } catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'An error occurred while sending your message. Please try again later or contact us directly.',
-        'error' => isset($mail) ? $mail->ErrorInfo : $e->getMessage()
-    ]);
+    $smtpError = isset($mail) ? $mail->ErrorInfo : $e->getMessage();
+    error_log('Contact form SMTP failed (submission still saved): ' . $smtpError);
 }
+
+http_response_code(200);
+echo json_encode([
+    'success' => true,
+    'message' => 'Thank you! Your message has been received. We will get back to you soon.'
+]);
 
 exit;
 
